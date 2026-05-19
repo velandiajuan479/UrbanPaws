@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de PQRS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --azul-urbano: #1a3a5c;
+            --naranja-vital: #f58220;
+            --azul-hielo: #e8f4fd;
+            --gris-oscuro: #1f2937;
+        }
+        .header {
+            background-color: var(--azul-urbano);
+        }
+        .table th {
+            background-color: var(--azul-urbano);
+            color: white;
+        }
+        body {
+            color: var(--gris-oscuro);
+        }
+        .btn-primary {
+            background-color: var(--azul-urbano);
+            border-color: var(--azul-urbano);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <header class="header text-white py-3">
+        <div class="container">
+            <h1 class="h4">Urban Paws</h1>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Tipo de PQRS</th>
+                                <th>Descripción</th>
+                                <th>Fecha de Radicación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Petición</td><td>Solicitud de información sobre trámites</td><td>2026-01-15</td></tr>
+                            <tr><td>Queja</td><td>Retraso en respuesta a solicitud anterior</td><td>2026-01-20</td></tr>
+                            <tr><td>Reclamo</td><td>Servicio no conforme al solicitado</td><td>2026-02-03</td></tr>
+                            <tr><td>Sugerencia</td><td>Implementar portal web para trámites</td><td>2026-02-10</td></tr>
+                            <tr><td>Petición</td><td>Acceso a documentos públicos</td><td>2026-02-18</td></tr>
+                            <tr><td>Queja</td><td>Trato no respetuoso del personal</td><td>2026-03-05</td></tr>
+                            <tr><td>Reclamo</td><td>Facturación errónea en servicio</td><td>2026-03-12</td></tr>
+                            <tr><td>Sugerencia</td><td>Ampliar horarios de atención al público</td><td>2026-03-20</td></tr>
+                            <tr><td>Petición</td><td>Información sobre programas sociales</td><td>2026-04-01</td></tr>
+                            <tr><td>Queja</td><td>Infraestructura en mal estado</td><td>2026-04-10</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Urban Paws. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>   

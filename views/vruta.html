@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --azul-urbano: #1a3a5c;
+            --naranja-vital: #f58220;
+            --azul-hielo: #e8f4fd;
+            --gris-oscuro: #1f2937;
+        }
+
+        .header {
+            background-color: var(--azul-urbano);
+        }
+        .table th {
+            background-color: var(--azul-urbano);
+            color: white;
+        }
+        body {
+            color: var(--gris-oscuro);
+        }
+        .btn-primary {
+            background-color: var(--azul-urbano);
+            border-color: var(--azul-urbano);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <header class="header text-white py-3">
+        <div class="container">
+            <h1 class="h4">Urban Paws</h1>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Rutas</h2><!-- posiblemente redundante -->
+                    <button class="btn btn-primary">Nueva Ruta</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Nombre de la Ruta</th>
+                                <th>Descripción</th>
+                                <th>Paseador Asignado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Ruta Parque Central</td><td>Recorrido de 3km por senderos principales del parque, ideal para perros de tamaño mediano.</td><td>Laura Gómez</td></tr>
+                            <tr><td>Ruta Laguna Norte</td><td>Paseo de 4km con acceso a orilla de laguna para hidratación y juego.</td><td>Carlos Mendoza</td></tr>
+                            <tr><td>Ruta Urbana Express</td><td>Recorrido rápido de 1.5km por calles residenciales, perfecto para paseos cortos.</td><td>Andrés López</td></tr>
+                            <tr><td>Ruta Sendero Bosque</td><td>Trayecto de 5km por senderos naturales con áreas de sombra y descanso.</td><td>María Rodríguez</td></tr>
+                            <tr><td>Ruta Deportiva</td><td>Ruta de 6km con zonas para trote y ejercicios, recomendada para perros energéticos.</td><td>Diego Silva</td></tr>
+                            <tr><td>Ruta Familiar</td><td>Recorrido de 2km por zonas seguras y tranquilas, apto para perros y familias.</td><td>Andrea Pérez</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Urban Paws. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>   
