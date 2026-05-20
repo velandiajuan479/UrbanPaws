@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urban Paws — Validación de Paseador</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="logo.png" alt="Urban Paws" />
+        <div class="sidebar-logo-text">
+          <strong>URBAN PAWS</strong>
+          <span>Adventure & Care</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Módulo Usuario</div>
+
+        <a class="nav-item active" href="#">
+          <span class="nav-icon">🐕</span> Validación Paseador
+        </a>
+    </aside>
+
+
+    <main class="main">
+
+      <header class="topbar">
+        <div class="topbar-title">MÓDULO USUARIO — <span>Validación Paseador</span></div>
+        <div class="topbar-right">
+          <div class="badge-status">
+            <span class="badge-dot"></span>
+            EN REVISIÓN
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <div class="profile-header">
+          <div class="profile-avatar">🧑</div>
+          <div class="profile-info">
+            <h3>Micha Rafiqui Cruz Urrego</h3>
+            <p>Solicitud de paseador · Registrado el 16 may 2026</p>
+            <div class="profile-tags">
+              <span class="tag">Paseador</span>
+              <span class="tag orange">Pendiente validación</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-tabs">
+          <div class="step-tab active" onclick="showPage('datos')">
+            <span class="step-number">1</span>
+            Datos Personales
+          </div>
+          <div class="step-tab" onclick="showPage('antecedentes')">
+            <span class="step-number">2</span>
+            Antecedentes
+          </div>
+          <div class="step-tab" onclick="showPage('ubicacion')">
+            <span class="step-number">3</span>
+            Ubicación
+          </div>
+        </div>
+
+        <!-- PÁGINA 1: DATOS PERSONALES -->
+        <div class="page active" id="page-datos">
+
+          <div class="section-header">
+            <h2>DATOS PERSONALES</h2>
+            <p>Información básica del solicitante como paseador certificado.</p>
+          </div>
+
+          <div class="alert-info">
+            <span class="alert-icon">ℹ️</span>
+            <span>Todos los campos marcados son obligatorios. Los datos ingresados serán verificados antes de aprobar al
+              paseador.</span>
+          </div>
+
+          <!-- Info básica -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🪪</div>
+              <div>
+                <div class="card-title">INFORMACIÓN BÁSICA</div>
+                <div class="card-subtitle">Nombre, documento y contacto</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" placeholder="Nombre(s)" value="Micha Rafiqui" />
+              </div>
+              <div class="form-group">
+                <label>Apellido</label>
+                <input type="text" placeholder="Apellido(s)" value="Cruz Urrego" />
+              </div>
+              <div class="form-group">
+                <label>Tipo de Documento</label>
+                <select>
+                  <option>Cédula de Ciudadanía</option>
+                  <option>Pasaporte</option>
+                  <option>Cédula Extranjería</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Número de Documento</label>
+                <input type="text" placeholder="Ej: 1020304050" value="1023456789" />
+              </div>
+              <div class="form-group">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" value="1998-03-12" />
+              </div>
+              <div class="form-group">
+                <label>Género</label>
+                <select>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                  <option>No binario</option>
+                  <option>Prefiero no decir</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contacto -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">📞</div>
+              <div>
+                <div class="card-title">CONTACTO</div>
+                <div class="card-subtitle">Correo electrónico y teléfono</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" placeholder="correo@ejemplo.com" value="micha.cruz@mail.com" />
+              </div>
+              <div class="form-group">
+                <label>Teléfono / Celular</label>
+                <input type="tel" placeholder="+57 300 000 0000" value="+57 310 456 7890" />
+              </div>
+              <div class="form-group">
+                <label>Teléfono Alterno (opcional)</label>
+                <input type="tel" placeholder="+57 300 000 0000" />
+              </div>
+              <div class="form-group">
+                <label>Contacto de Emergencia</label>
+                <input type="text" placeholder="Nombre — Teléfono" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Perfil paseador -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🐕</div>
+              <div>
+                <div class="card-title">PERFIL COMO PASEADOR</div>
+                <div class="card-subtitle">Experiencia y disponibilidad</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Años de experiencia con mascotas</label>
+                <select>
+                  <option>Menos de 1 año</option>
+                  <option selected>1 a 3 años</option>
+                  <option>3 a 5 años</option>
+                  <option>Más de 5 años</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Foto de perfil</label>
+                <input type="file" accept="image/*" />
+              </div>
+              <div class="form-group span-2">
+                <label>Descripción personal</label>
+                <textarea
+                  placeholder="Cuéntanos sobre ti, tu experiencia con mascotas y por qué quieres ser paseador de Urban Paws..."></textarea>
+              </div>
+              <div class="form-group span-2">
+                <label>Disponibilidad horaria</label>
+                <div class="check-group">
+                  <label class="check-option">
+                    <input type="checkbox" checked /> Mañanas (6am–12pm)
+                  </label>
+                  <label class="check-option">
+                    <input type="checkbox" checked /> Tardes (12pm–6pm)
+                  </label>
+                  <label class="check-option">
+                    <input type="checkbox" /> Noches (6pm–10pm)
+                  </label>
+                  <label class="check-option">
+                    <input type="checkbox" checked /> Fines de semana
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-secondary">Cancelar</button>
+            <button class="btn btn-primary" onclick="showPage('antecedentes')">
+              Siguiente: Antecedentes →
+            </button>
+          </div>
+        </div>
+
+        <!-- PÁGINA 2: ANTECEDENTES -->
+        <div class="page" id="page-antecedentes">
+
+          <div class="section-header">
+            <h2>VALIDACIÓN DE ANTECEDENTES</h2>
+            <p>Documentos requeridos para certificar al paseador. Todos los archivos deben estar vigentes.</p>
+          </div>
+
+          <div class="alert-info">
+            <span class="alert-icon">⚠️</span>
+            <span>Los documentos deben ser legibles y estar en formato PDF, JPG o PNG. Máximo 5 MB por archivo. El
+              proceso de verificación puede tomar entre 24 y 72 horas.</span>
+          </div>
+
+          <!-- Upload documentos de identidad -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">📄</div>
+              <div>
+                <div class="card-title">DOCUMENTO DE IDENTIDAD</div>
+                <div class="card-subtitle">Cédula de ciudadanía — anverso y reverso</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Cédula — Parte delantera</label>
+                <div class="upload-area">
+                  <div class="upload-icon">🪪</div>
+                  <div class="upload-title">Cargar cara frontal</div>
+                  <div class="upload-sub">JPG, PNG o PDF — máx 5 MB</div>
+                  <button class="btn-upload">📁 Seleccionar archivo</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Cédula — Parte trasera</label>
+                <div class="upload-area">
+                  <div class="upload-icon">🔄</div>
+                  <div class="upload-title">Cargar cara trasera</div>
+                  <div class="upload-sub">JPG, PNG o PDF — máx 5 MB</div>
+                  <button class="btn-upload">📁 Seleccionar archivo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Antecedentes -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🔍</div>
+              <div>
+                <div class="card-title">CERTIFICADOS DE ANTECEDENTES</div>
+                <div class="card-subtitle">Documentos oficiales emitidos por entidades colombianas</div>
+              </div>
+            </div>
+            <div class="antecedentes-grid">
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">⚖️</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Antecedentes Judiciales</div>
+                  <div class="antecedente-desc">Vigencia: 90 días.</div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-pending">Pendiente</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">📰</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Antecedentes Disciplinarios</div>
+                  <div class="antecedente-desc">Vigencia: 90 días.</div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-pending">Pendiente</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">🏛️</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Antecedentes Fiscales</div>
+                  <div class="antecedente-desc">Vigencia: 90 días.</div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-ok">✓ Cargado</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">🩺</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Certificado Médico</div>
+                  <div class="antecedente-desc">Apto físico y mental para actividades con animales. Vigencia: 1 año.
+                  </div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-pending">Pendiente</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">📜</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Referencias Personales</div>
+                  <div class="antecedente-desc">Mínimo 2 referencias de personas no familiares con sus datos.</div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-ok">✓ Cargado</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="antecedente-item">
+                <div class="antecedente-icon">🐶</div>
+                <div class="antecedente-info">
+                  <div class="antecedente-name">Curso de Manejo Animal</div>
+                  <div class="antecedente-desc">Certificado de curso de manejo y cuidado de mascotas (deseable).</div>
+                  <div class="antecedente-upload">
+                    <button class="mini-upload"> Subir documento</button>
+                    <span class="status-badge status-pending">Opcional</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Declaración -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">✍️</div>
+              <div>
+                <div class="card-title">DECLARACIÓN JURADA</div>
+                <div class="card-subtitle">El solicitante acepta los términos para ejercer como paseador</div>
+              </div>
+            </div>
+            <div class="form-grid full">
+              <div class="form-group">
+                <label class="check-option" style="width:100%; padding:16px;">
+                  <input type="checkbox" />
+                  &nbsp; Declaro que la información suministrada es verídica y autorizo a Urban Paws Adventure & Care
+                  para verificar mis antecedentes y datos personales conforme a la Ley 1581 de 2012 (Habeas Data).
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="showPage('datos')">← Anterior</button>
+            <button class="btn btn-primary" onclick="showPage('ubicacion')">Siguiente: Ubicación →</button>
+          </div>
+        </div>
+
+        <!-- PÁGINA 3: UBICACIÓN -->
+        <div class="page" id="page-ubicacion">
+
+          <div class="section-header">
+            <h2>UBICACIÓN</h2>
+            <p>Dirección de residencia y zona de operación del paseador.</p>
+          </div>
+
+          <!-- Dirección de residencia -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🏠</div>
+              <div>
+                <div class="card-title">DIRECCIÓN DE RESIDENCIA</div>
+                <div class="card-subtitle">Lugar donde habita actualmente el paseador</div>
+              </div>
+            </div>
+            <div class="form-grid cols-3">
+              <div class="form-group">
+                <label>Departamento</label>
+                <select>
+                  <option>Cundinamarca</option>
+                  <option>Antioquia</option>
+                  <option>Valle del Cauca</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Municipio / Ciudad</label>
+                <select>
+                  <option>Bogotá D.C.</option>
+                  <option>Chía</option>
+                  <option>Cajicá</option>
+                  <option>Zipaquirá</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Localidad / Barrio</label>
+                <input type="text" placeholder="Ej: Chapinero, Usaquén..." />
+              </div>
+              <div class="form-group span-2">
+                <label>Dirección</label>
+                <input type="text" placeholder="Calle, carrera, número, apto..." value="Cra 15 # 85-20, Apto 301" />
+              </div>
+              <div class="form-group span-3">
+                <label>Información adicional</label>
+                <input type="text" placeholder="Torre, edificio, referencias del lugar..." />
+              </div>
+            </div>
+          </div>
+
+          <!-- Mapa -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">📍</div>
+              <div>
+                <div class="card-title">UBICACIÓN EN MAPA</div>
+                <div class="card-subtitle">Confirmar o ajustar el pin de la dirección</div>
+              </div>
+            </div>
+            <div class="map-container">
+              <div class="map-grid"></div>
+              <div class="map-pin"></div>
+              <div class="map-overlay">
+                <div class="map-icon">🗺️</div>
+                <p>Integrar Google Maps API<br>o Leaflet para geolocalización</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Latitud</label>
+                <input type="text" placeholder="4.7110° N" readonly />
+              </div>
+              <div class="form-group">
+                <label>Longitud</label>
+                <input type="text" placeholder="74.0721° W" readonly />
+              </div>
+            </div>
+          </div>
+
+          <!-- Zona de operación -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🐾</div>
+              <div>
+                <div class="card-title">ZONA DE OPERACIÓN</div>
+                <div class="card-subtitle">Área donde el paseador prestará sus servicios</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Radio de cobertura</label>
+                <select>
+                  <option>1 km</option>
+                  <option selected>3 km</option>
+                  <option>5 km</option>
+                  <option>10 km</option>
+                  <option>Sin restricción</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Transporte propio</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="transporte" checked /> Sí
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="transporte" /> No
+                  </label>
+                </div>
+              </div>
+              <div class="form-group span-2">
+                <label>Barrios o zonas de cobertura (separar con comas)</label>
+                <input type="text" placeholder="Ej: Chapinero, Rosales, La Cabrera, Chicó..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="showPage('antecedentes')">← Anterior</button>
+            <button class="btn btn-danger">Rechazar solicitud</button>
+            <button class="btn btn-primary" onclick="aprobar()">✔ Aprobar Paseador</button>
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </main>
+  </div><!-- /layout -->
+
+  <script>
+    function showPage(name) {
+      // Pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      // Tabs
+      const tabs = document.querySelectorAll('.step-tab');
+      const order = ['datos', 'antecedentes', 'ubicacion'];
+      tabs.forEach((t, i) => {
+        t.classList.toggle('active', order[i] === name);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function aprobar() {
+      if (confirm('¿Confirmar aprobación del paseador Carlos Andres Ramírez?')) {
+        alert('✅ Paseador aprobado exitosamente. Se enviará notificación al usuario.');
+      }
+    }
+  </script>
+
+</body>
+
+</html>

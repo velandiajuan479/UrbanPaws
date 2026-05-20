@@ -1,0 +1,307 @@
+/* ===== URBAN PAWS - Estilos básicos ===== */
+
+/* Fuente de Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Colores principales */
+:root {
+  --azul:      #1a1f5e;
+  --amarillo:  #c8d400;
+  --naranja:   #e85d04;
+  --fondo:     #f5f6fa;
+  --blanco:    #ffffff;
+  --gris:      #6b7280;
+  --borde:     #e0e0e0;
+}
+
+/* Modo oscuro automático según el sistema */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo:   #111318;
+    --blanco:  #1c1f2e;
+    --gris:    #9095b5;
+    --borde:   #2a2d40;
+  }
+  body { color: #e8eaf6; }
+  input, select, textarea {
+    background: #252840;
+    color: #e8eaf6;
+    border-color: #2a2d40;
+  }
+}
+
+/* Reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--fondo);
+  color: #1a1a2e;
+}
+
+/* ===== ENCABEZADO ===== */
+header {
+  background: var(--azul);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+header img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--amarillo);
+}
+
+header p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+main {
+  max-width: 780px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+/* ===== TÍTULO DE SECCIÓN ===== */
+.titulo-seccion {
+  margin-bottom: 24px;
+}
+
+.titulo-seccion h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 4px;
+}
+
+.titulo-seccion p {
+  font-size: 13px;
+  color: var(--gris);
+}
+
+/* ===== PASOS (TABS) ===== */
+.pasos {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.paso {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gris);
+  cursor: pointer;
+}
+
+.paso.activo {
+  background: var(--azul);
+  color: var(--amarillo);
+}
+
+/* ===== TARJETA ===== */
+.tarjeta {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.tarjeta h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--amarillo);
+}
+
+/* ===== FORMULARIO ===== */
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.fila.una-columna {
+  grid-template-columns: 1fr;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input, select, textarea {
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--azul);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== SUBIR ARCHIVO ===== */
+.subir-archivo {
+  border: 2px dashed var(--borde);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  margin-bottom: 16px;
+}
+
+.subir-archivo:hover {
+  border-color: var(--amarillo);
+}
+
+.subir-archivo p {
+  font-size: 13px;
+  color: var(--gris);
+  margin-bottom: 8px;
+}
+
+/* ===== ANTECEDENTE ITEM ===== */
+.antecedente {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.antecedente-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.antecedente-info span.icono {
+  font-size: 24px;
+}
+
+.antecedente-info p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.antecedente-info small {
+  font-size: 11px;
+  color: var(--gris);
+  display: block;
+}
+
+.etiqueta {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.etiqueta.pendiente {
+  background: #fff0e6;
+  color: var(--naranja);
+  border: 1px solid var(--naranja);
+}
+
+.etiqueta.listo {
+  background: #f0f7e6;
+  color: #4a7c0e;
+  border: 1px solid #4a7c0e;
+}
+
+/* ===== BOTONES ===== */
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+button {
+  padding: 11px 24px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+button:hover { opacity: 0.85; }
+
+.btn-cancelar {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--gris);
+}
+
+.btn-siguiente {
+  background: var(--azul);
+  color: var(--amarillo);
+}
+
+.btn-rechazar {
+  background: #fff0e6;
+  border: 1px solid var(--naranja);
+  color: var(--naranja);
+}
+
+.btn-aprobar {
+  background: var(--amarillo);
+  color: var(--azul);
+}
+
+/* ===== PÁGINA OCULTA/VISIBLE ===== */
+.pagina { display: none; }
+.pagina.activa { display: block; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .fila { grid-template-columns: 1fr; }
+  .pasos { flex-direction: column; }
+}
