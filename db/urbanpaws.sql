@@ -1,151 +1,187 @@
 CREATE DATABASE UrbanPaws;
 USE UrbanPaws;
 
-CREATE TABLE usuario(
-idusuario BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-nomusu VARCHAR(100),
-telefono VARCHAR(20),
-foto VARCHAR(255),
-contraseña VARCHAR(255)
-);
-
-CREATE TABLE duenomasc(
-iddueno BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-idusuario BIGINT(10),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
-);
-
-CREATE TABLE mascotas(
-idmas BIGINT(30) PRIMARY KEY AUTO_INCREMENT,
-nombre VARCHAR(50),
-sxmas VARCHAR(10),
-edad INT(2),
-razmas VARCHAR(70),
-desmas TEXT,
-enfermas TEXT,
-fotmas VARCHAR(255),
-iddueno BIGINT(10),
-FOREIGN KEY (iddueno) REFERENCES duenomasc(iddueno)
-);
-
-CREATE TABLE paseo(
-idpaseo BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-estpas VARCHAR(20),
-preini DECIMAL(6,1),
-iddueno BIGINT(10),
-idusuario BIGINT(10),
-FOREIGN KEY (iddueno) REFERENCES duenomasc(iddueno),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
-);
-
-CREATE TABLE ruta(
-idruta BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-iddueno BIGINT(10),
-FOREIGN KEY (iddueno) REFERENCES duenomasc(iddueno)
-);
-
 CREATE TABLE ubicacion(
 idubi BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-pais VARCHAR(100),
-departamento VARCHAR(50),
-ciudad VARCHAR(120),
-nomubi VARCHAR(35)
+nomubi VARCHAR(35),
+depubi VARCHAR(20)
+);
+
+CREATE TABLE dominio(
+iddom BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
+nomdom VARCHAR(70)
+);
+
+CREATE TABLE perfil(
+idperf BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+nomperf VARCHAR(50),
+estper INT(3)
+);
+
+CREATE TABLE pagina(
+idpag INT(3) PRIMARY KEY AUTO_INCREMENT,
+nompag VARCHAR(25),
+mospag INT(3),
+ordpag INT(3),
+despag TEXT
+);
+
+CREATE TABLE usuario(
+idusr BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+docusr BIGINT(12),
+nomusr VARCHAR(255),
+emlusr VARCHAR(255),
+tefusr VARCHAR(20),
+fotusr VARCHAR(255),
+passusr VARCHAR(255),
+estusr TINYINT(1),
+civusr VARCHAR(255),
+fhsolusr DATETIME,
+ECMusr TINYINT(1),
+idubi BIGINT(10),
+FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
 );
 
 CREATE TABLE pqrsf(
 idpqr BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-nompqr VARCHAR(50),
-tipoqpr VARCHAR(20),
-descripcion TEXT,
-fecha DATE,
-idusuario BIGINT(10),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
+tippqr VARCHAR(50),
+despqr TEXT,
+fecpqr DATE
 );
 
-CREATE TABLE factura(
-idfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-fecha DATE,
-estado BOOLEAN,
-iddueno BIGINT(10),
-idpqr BIGINT(10),
-idusuario BIGINT(10),
-FOREIGN KEY (iddueno) REFERENCES duenomasc(iddueno),
-FOREIGN KEY (idpqr) REFERENCES pqrsf(idpqr),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
+CREATE TABLE antecedente(
+idante BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+tipante VARCHAR(50),
+desante TEXT,
+fecante DATE,
+idusr BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr)
 );
 
-CREATE TABLE perfil(
-idper BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-nomper VARCHAR(50)
+CREATE TABLE userxante(
+idusr BIGINT(10),
+idante BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr),
+FOREIGN KEY (idante) REFERENCES antecedente(idante)
 );
 
 CREATE TABLE userxper(
-idusuario BIGINT(10),
-idper BIGINT(10),
-PRIMARY KEY (idusuario, idper),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
-FOREIGN KEY (idper) REFERENCES perfil(idper)
+idusr BIGINT(10),
+idperf BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr),
+FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
-CREATE TABLE pagina(
-idpag BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-nompag VARCHAR(25),
-despag TEXT
+CREATE TABLE mascotas(
+idmas BIGINT(30) PRIMARY KEY AUTO_INCREMENT,
+nommas VARCHAR(50),
+sxmas VARCHAR(10),
+fotvacn VARCHAR(255),
+fotmas VARCHAR(255),
+razmas VARCHAR(70),
+desmas TEXT,
+enfermas TEXT,
+idusr BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr)
 );
 
-CREATE TABLE pagxper(
-idpag BIGINT(10),
-idper BIGINT(10),
-PRIMARY KEY (idpag, idper),
-FOREIGN KEY (idpag) REFERENCES pagina(idpag),
-FOREIGN KEY (idper) REFERENCES perfil(idper)
+CREATE TABLE duenomasc(
+idduenomasc BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+idusr BIGINT(10),
+idmas BIGINT(30),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr),
+FOREIGN KEY (idmas) REFERENCES mascotas(idmas)
+);
+
+CREATE TABLE ruta(
+idrut INT(6) PRIMARY KEY AUTO_INCREMENT,
+nomrut VARCHAR(50),
+distrut DECIMAL(7,2),
+idusr BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr)
+);
+
+CREATE TABLE paseo(
+idpas BIGINT(5) PRIMARY KEY AUTO_INCREMENT,
+estpas VARCHAR(20),
+precioini DECIMAL(6,2),
+idmas BIGINT(30),
+idrut INT(6),
+idusr BIGINT(10),
+FOREIGN KEY (idmas) REFERENCES mascotas(idmas),
+FOREIGN KEY (idrut) REFERENCES ruta(idrut),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr)
 );
 
 CREATE TABLE servicio(
 idserv BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-tipo VARCHAR(100),
-descripcion TEXT,
-idpaseo BIGINT(10),
-idruta BIGINT(10),
-iddueno BIGINT(10),
-idusuario BIGINT(10),
-FOREIGN KEY (idpaseo) REFERENCES paseo(idpaseo),
-FOREIGN KEY (idruta) REFERENCES ruta(idruta),
-FOREIGN KEY (iddueno) REFERENCES duenomasc(iddueno),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
+tipserv VARCHAR(100),
+desserv TEXT,
+timpest TIME,
+idpas BIGINT(10),
+idrut INT(6),
+idusr BIGINT(10),
+FOREIGN KEY (idpas) REFERENCES paseo(idpas),
+FOREIGN KEY (idrut) REFERENCES ruta(idrut),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr)
 );
 
-CREATE TABLE modulo(
-idmod BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-nommod VARCHAR(50),
-ordmod INT(3),
-estado BOOLEAN
+CREATE TABLE detallefac(
+iddetfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+timpfn TIME,
+subtotal DECIMAL(6,2),
+idrut INT(6),
+idserv BIGINT(10),
+idmas BIGINT(30),
+FOREIGN KEY (idrut) REFERENCES ruta(idrut),
+FOREIGN KEY (idserv) REFERENCES servicio(idserv),
+FOREIGN KEY (idmas) REFERENCES mascotas(idmas)
+);
+
+CREATE TABLE factura(
+idfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+fecfac DATE,
+preciolin DECIMAL(6,2),
+estfac BOOLEAN,
+comtfac TEXT,
+idusr BIGINT(10),
+iddetfac BIGINT(10),
+FOREIGN KEY (idusr) REFERENCES usuario(idusr),
+FOREIGN KEY (iddetfac) REFERENCES detallefac(iddetfac)
 );
 
 CREATE TABLE config(
 idconf BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
 nomconfg VARCHAR(25),
-tema INT(1)
+logoconfg VARCHAR(255),
+emlcong VARCHAR(255),
+tefconfg VARCHAR(20),
+estconfg INT(3)
 );
 
-CREATE TABLE detallefac(
-iddetfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-idserv BIGINT(10),
-idfac BIGINT(10),
-FOREIGN KEY (idserv) REFERENCES servicio(idserv),
-FOREIGN KEY (idfac) REFERENCES factura(idfac)
+CREATE TABLE modulo(
+idmod BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+nommod VARCHAR(50),
+estmod BOOLEAN,
+ordmod INT(3),
+idpag INT(3),
+idperf BIGINT(10),
+FOREIGN KEY (idpag) REFERENCES pagina(idpag),
+FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
-CREATE TABLE antecedente(
-idante BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-desante TEXT,
-fecante DATE
+CREATE TABLE pagxper(
+idpag INT(3),
+idperf BIGINT(10),
+FOREIGN KEY (idpag) REFERENCES pagina(idpag),
+FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
-CREATE TABLE userxante(
-idusuario BIGINT(10),
-idante BIGINT(10),
-PRIMARY KEY (idusuario, idante),
-FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
-FOREIGN KEY (idante) REFERENCES antecedente(idante)
+CREATE TABLE valor(
+idval BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
+codval VARCHAR(255),
+parval VARCHAR(255),
+eslval TINYINT(1),
+iddom BIGINT(11),
+FOREIGN KEY (iddom) REFERENCES dominio(iddom)
 );
