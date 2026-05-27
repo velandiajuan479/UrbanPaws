@@ -1,7 +1,7 @@
   <header class="header-main">
     <div class="header-inner">
       <a href="#" class="logo-container">
-        <img class="logo" src="img/logurpa.png" alt="">
+        <img class="logo" src="img/logo.png" alt="">
         <div class="logo-text">
           <div class="brand">Urban<span>Paws</span></div>
           <div class="tagline">Mi Espacio Personal</div>

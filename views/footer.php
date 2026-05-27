@@ -2,7 +2,7 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="img/logurpa.png" alt="">
+          <img src="img/logo.png" alt="">
           <span class="brand-name">Urban<span>Paws</span></span>
         </div>
         <p>Tu espacio personal para el cuidado y seguimiento de tus mascotas. Hecho con cariño en Colombia.</p>
