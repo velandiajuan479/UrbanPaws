@@ -1,4 +1,5 @@
-CREATE DATABASE UrbanPaws;
+DROP DATABASE IF EXISTS UrbanPaws;
+CREATE DATABASE IF NOT EXISTS UrbanPaws;
 USE UrbanPaws;
 
 CREATE TABLE ubicacion(
@@ -32,7 +33,7 @@ CREATE TABLE usuario(
     prinom VARCHAR(100),
     seconom VARCHAR(100),
     priapel VARCHAR(100),
-    emailu VARCHAR(255) REQUIRED UNIQUE,
+    emailu VARCHAR(255) UNIQUE,
     teleu VARCHAR(20) UNIQUE,
     foto VARCHAR(255),
     passusu VARCHAR(255) UNIQUE,
@@ -161,14 +162,12 @@ CREATE TABLE config(
 );
 
 CREATE TABLE modulo(
-    idmod BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-    nommod VARCHAR(50),
-    estamod BOOLEAN,
-    ordmod INT(3),
-    idpag INT(3),
-    idperf BIGINT(10),
-    FOREIGN KEY (idpag) REFERENCES pagina(idpag),
-    FOREIGN KEY (idperf) REFERENCES perfil(idperf)
+    idmod   BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
+    nommod  VARCHAR(50),
+    icomod VARCHAR(50) NULL,
+    estamod INT(1),
+    ordmod  INT(3),
+    idperf BIGINT(10)
 );
 
 CREATE TABLE pagxper(
