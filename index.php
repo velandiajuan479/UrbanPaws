@@ -14,7 +14,7 @@
 </head>
 <body>
   <?php
-    $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
+    $pg = isset($_GET["pg"]) ? $_GET["pg"]:3;
     include'views/header.php';
   ?>
 
@@ -22,7 +22,7 @@
   <?php
     if($pg==1) include 'views/mascotas.php';
     elseif ($pg==2) include 'views/configuracion.php';
-    elseif ($pg==3) include 'views/modulo.php';
+    elseif ($pg==3) include 'views/vcofmod.php';
     elseif ($pg==4) include 'views/pagina.php';
   ?>
 
