@@ -14,16 +14,20 @@
 </head>
 <body>
   <?php
-    $pg = isset($_GET["pg"]) ? $_GET["pg"]:3;
+    $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
     include'views/header.php';
   ?>
 
-
+    <section class="menu">
+            <?php include 
+                'views/vmen.php'; 
+            ?>
+    </section>
   <?php
     if($pg==1) include 'views/mascotas.php';
-    elseif ($pg==2) include 'views/configuracion.php';
+    elseif ($pg==2) include 'views/vconfiguracion.php';
     elseif ($pg==3) include 'views/vcofmod.php';
-    elseif ($pg==4) include 'views/pagina.php';
+    elseif ($pg==4) include 'views/vpagina.php';
   ?>
 
 
