@@ -20,6 +20,10 @@
                         <div class="col-12 mb-3">
                             <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark">*</span></label>
                             <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
+                            <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="showPassword">
+                                    <label class="form-check-label small" for="showPassword">Mostrar contraseña</label>
+                                </div>
                         </div>
 
                         <div class="col-12 mb-3">
