@@ -69,6 +69,11 @@ ul { list-style: none; }
   letter-spacing: 2px;
 }
 
+.hero-section{
+  background-color: #1a3a5c;
+}
+
+
 /* --- NAVIGATION --- */
 .nav-links { display: flex; gap: 0.25rem; align-items: center; }
 

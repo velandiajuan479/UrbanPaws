@@ -1,8 +1,8 @@
-<main class="main-content">
+<div class="card card-form p-4">
     <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
     <section id="registro-modulo">
         <h2 class="section-title">
-            <span class="icon-circle"><i class="bi bi-plus-lg"></i></span>
+            <i class="fa-solid fa-box-open"></i>
             Nuevo Módulo
         </h2>
         

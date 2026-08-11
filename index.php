@@ -58,10 +58,6 @@
     elseif ($pg==31) include 'views/vextolv.php';
   ?>
 
-
-
-
-
   <?php include
     'views/footer.php';
   ?>
