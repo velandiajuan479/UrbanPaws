@@ -35,6 +35,6 @@
     </div>
     <div class="footer-bottom">
       <span>© 2025 <a href="#">UrbanPaws</a>. Todos los derechos reservados. Hecho con <i class="bi bi-heart-fill" style="color:#f58220"></i> en Bogotá.</span>
-      <span>Versión 2.4.0 | Panel Personal</span>
+      <span>Versión 0.0.3 | Panel Personal</span>
     </div>
   </footer>

@@ -1,6 +1,4 @@
 <main class="main-content">
-    
-    <!-- SECCIÓN 1: FORMULARIO DE CREACIÓN -->
     <section id="registro-modulo">
         <h2 class="section-title">
             <span class="icon-circle"><i class="bi bi-plus-lg"></i></span>
@@ -9,7 +7,7 @@
 
         <div class="form-card">
             <form action="guardar_modulo.php" method="post">
-                <div class="row g-3"> <!-- Usando Bootstrap Grid para la estructura -->
+                <div class="row g-3">
                     
                     <!-- ID Módulo -->
                     <div class="col-md-4">
@@ -48,8 +46,14 @@
                         </div>
                     </div>
 
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Icono</label>
+                        </div>
+                    </div>
+
                     <!-- Usuarios con Acceso (Permisos) -->
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="mb-2 d-block">
                                 <i class="bi bi-people-fill"></i> Usuarios con acceso al módulo
