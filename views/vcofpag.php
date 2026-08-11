@@ -1,6 +1,4 @@
 <main class="main-content">
-    
-    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
     <section id="registro-pagina">
         <h2 class="section-title">
             <span class="icon-circle"><i class="bi bi-file-earmark-plus"></i></span>
@@ -9,39 +7,37 @@
 
         <div class="form-card">
             <form action="guardar_pagina.php" method="post">
-                <div class="form-grid">
-                    
-                    <!-- ID Página -->
-                    <div class="form-group">
-                        <label for="idpag">
-                            <i class="bi bi-hash"></i> ID Página <span class="required">*</span>
-                        </label>
-                        <input type="number" id="idpag" name="idpag" class="form-control-custom" placeholder="Ej: 1" min="1" max="999" required>
-                    </div>
+                <div class="row g-3">
 
                     <!-- Nombre de Página -->
-                    <div class="form-group">
-                        <label for="nompag">
-                            <i class="bi bi-tag-fill"></i> Nombre de Página <span class="required">*</span>
-                        </label>
-                        <input type="text" id="nompag" name="nompag" class="form-control-custom" placeholder="Ej: Inicio" maxlength="25" required>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="nompag">
+                                <i class="bi bi-tag-fill"></i> Nombre de Página <span class="required">*</span>
+                            </label>
+                            <input type="text" id="nompag" name="nompag" class="form-control-custom" placeholder="Ej: Inicio" maxlength="25" required>
+                        </div>
                     </div>
 
                     <!-- Archivo -->
-                    <div class="form-group">
-                        <label for="archpag">
-                            <i class="bi bi-file-earmark-code"></i> Archivo <span class="required">*</span>
-                        </label>
-                        <input type="text" id="archpag" name="archpag" class="form-control-custom" placeholder="Ej: index.php" required>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="archpag">
+                                <i class="bi bi-file-earmark-code"></i> Archivo <span class="required">*</span>
+                            </label>
+                            <input type="text" id="archpag" name="archpag" class="form-control-custom" placeholder="Ej: index.php" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="mospag">
-                            <i class="bi bi-eye-fill"></i> Mostrar en Menú <span class="required">*</span>
-                        </label>
-                        <select id="mospag" name="mospag" class="form-control-custom select-yes-no" required>
-                            <option value="1">Sí</option>
-                            <option value="0">No</option>
-                        </select>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="mospag">
+                                <i class="bi bi-eye-fill"></i> Mostrar en Menú <span class="required">*</span>
+                            </label>
+                            <select id="mospag" name="mospag" class="form-control-custom select-yes-no" required>
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group full-width">
                         <label for="despag">
@@ -70,14 +66,10 @@
         </div>
     </section>
 
-    <section id="listado-paginas">
-        <h2 class="section-title">
-            <span class="icon-circle"><i class="bi bi-grid-3x3-gap-fill"></i></span>
-            Listado de Páginas Registradas
-        </h2>
-
-        <div class="table-section">
-            <div class="table-header">
+<!-- Tabla -->
+<div class="table-section">
+    
+    <div class="table-header">
                 <h2><i class="bi bi-collection-fill"></i> Páginas del Sistema <span class="table-badge">3</span></h2>
                 <div class="search-container">
                     <i class="bi bi-search"></i>
@@ -104,43 +96,13 @@
                             <td class="td-description">index.php</td>
                             <td><span class="badge-male">Sí</span></td>
                             <td class="td-description">Página principal del sistema</td>
-                                <td>
-                                <button class="btn btn-sm btn-outline-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>                        
-                        <tr>
-                            <td class="td-number">2</td>
-                            <td class="td-name">Usuarios</td>
-                            <td class="td-description">usuarios.php</td>
-                            <td><span class="badge-male">Sí</span></td>
-                            <td class="td-description">Gestión de usuarios</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-number">3</td>
-                            <td class="td-name">Facturas</td>
-                            <td class="td-description">factura.php</td>
-                            <td><span class="badge-female">No</span></td>
-                            <td class="td-description">Visualización de facturas</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td class="td-actions">
+                            <a href="home.php?pg=29&ope=edi&idmod=<?=$dt["idmod"]?>" title="Editar" class="btn btn-sm btn-outline-primary">
+                                <i class="fa-solid fa-regular fa-pen-to-square"></i> <!--Botón de editar-->
+                            </a>
+                            <a href="home.php?pg=29&ope=eli&idmod=<?=$dt["idmod"]?>" onclick="return eliminar('<?= $dt['nommod'] ?>')" title="Eliminar" class="btn btn-sm btn-outline-danger">
+                                <i class="fa-solid fa-regular fa-trash-can"></i> <!--Botón de eliminar-->
+                            </a>
                             </td>
                         </tr>
                     </tbody>
