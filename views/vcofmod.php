@@ -1,89 +1,73 @@
-<main class="main-content">
+<div class="card card-form p-4">
+    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
     <section id="registro-modulo">
         <h2 class="section-title">
-            <span class="icon-circle"><i class="bi bi-plus-lg"></i></span>
+            <i class="fa-solid fa-box-open"></i>
             Nuevo Módulo
         </h2>
-
-        <div class="form-card">
+        
+        <div class="card">
             <form action="guardar_modulo.php" method="post">
-                <div class="row g-3">
-                    
+                <div class="form-grid">
                     <!-- ID Módulo -->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="idmod">
-                                <i class="bi bi-hash"></i> Id Módulo <span class="required">*</span>
-                            </label>
-                            <input type="number" id="idmod" name="idmod" class="form-control-custom" placeholder="Ej: 1" required>
-                        </div>
+                    <div class="">
+                        <label for="idmod">
+                            <i class="bi bi-hash"></i> Id Módulo <span class="required">*</span>
+                        </label>
+                        <input type="number" id="idmod" name="idmod" class="form-control" placeholder="Ej: 1" required>
                     </div>
 
                     <!-- Nombre Módulo -->
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label for="nommod">
-                                <i class="bi bi-tag-fill"></i> Nombre Módulo <span class="required">*</span>
-                            </label>
-                            <input type="text" id="nommod" name="nommod" class="form-control-custom" placeholder="Ej: Configuración" required>
-                        </div>
+                    <div>
+                        <label for="nommod">
+                            <i class="bi bi-tag-fill"></i> Nombre Módulo <span class="required">*</span>
+                        </label>
+                        <input type="text" id="nommod" name="nommod" class="form-control" placeholder="Ej: Configuración" required>
                     </div>
 
                     <!-- Estado Actual -->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="mb-2 d-block">
-                                <i class="bi bi-toggle-on"></i> Estado Actual <span class="required">*</span>
-                            </label>
-                            <div class="radio-group mt-2">
-                                <label>
-                                    <input type="radio" name="estmod" value="1" checked> Activo
-                                </label>
-                                <label>
-                                    <input type="radio" name="estmod" value="0"> Inactivo
-                                </label>
-                            </div>
+                    <div class="form-group">
+                        <label class="mb-2 d-block">
+                            <i class="bi bi-toggle-on"></i> Estado Actual <span class="required">*</span>
+                        </label>
+                        <div class="radio-group mt-2">
+                            <label><input type="radio" name="estmod" value="1" checked> Activo</label>
+                            <label><input type="radio" name="estmod" value="0"> Inactivo</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Icono</label>
-                        </div>
+                    <!-- Icono (Placeholder visual) -->
+                    <div class="form-group">
+                        <label><i class="bi bi-palette-fill"></i> Icono</label>
+                        <select class="form-control-custom select-yes-no">
+                            <option value="">Seleccionar...</option>
+                            <option value="gear">⚙️ Configuración</option>
+                            <option value="home">🏠 Inicio</option>
+                            <option value="paw">🐾 Mascotas</option>
+                        </select>
                     </div>
 
                     <!-- Usuarios con Acceso (Permisos) -->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="mb-2 d-block">
-                                <i class="bi bi-people-fill"></i> Usuarios con acceso al módulo
-                            </label>
-                            <div class="checkbox-group mt-2 p-3 border rounded" style="background-color: var(--gris-claro); border-color: var(--gris-medio) !important;">
-                                <div class="row">
-                                    <div class="col-6 col-md-3">
-                                        <label><input type="checkbox" name="permisos[]" value="admin"> Admin</label>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <label><input type="checkbox" name="permisos[]" value="Paseador"> Paseador</label>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <label><input type="checkbox" name="permisos[]" value="acudiente"> Acudiente</label>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <label><input type="checkbox" name="permisos[]" value="Cliente"> Cliente</label>
-                                    </div>
-                                </div>
+                    <div class="form-group full-width">
+                        <label class="mb-2 d-block">
+                            <i class="bi bi-people-fill"></i> Usuarios con acceso al módulo
+                        </label>
+                        <div class="checkbox-group mt-2 p-3 border rounded" style="background-color: var(--gris-claro); border-color: var(--gris-medio) !important; border-radius: 8px;">
+                            <div class="form-grid" style="gap: 0.75rem;">
+                                <label><input type="checkbox" name="permisos[]" value="admin"> Admin</label>
+                                <label><input type="checkbox" name="permisos[]" value="Paseador"> Paseador</label>
+                                <label><input type="checkbox" name="permisos[]" value="acudiente"> Acudiente</label>
+                                <label><input type="checkbox" name="permisos[]" value="Cliente"> Cliente</label>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn-secondary-custom">
+                    <button type="button" class="btn btn-outline">
                         <i class="bi bi-x-lg"></i> Cancelar
                     </button>
-                    <button type="submit" class="btn-primary-custom">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Crear Módulo
                     </button>
                 </div>
@@ -113,7 +97,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>idmod</th>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Estado</th>
                             <th>Permisos</th>
@@ -125,35 +109,33 @@
                         <tr>
                             <td class="td-number">1</td>
                             <td class="td-name">Inicio</td>
-                            <td><span class="badge bg-success text-white">Activo</span></td>
+                            <td><span class="badge-activo"><i class="bi bi-check-circle-fill"></i> Activo</span></td>
                             <td class="fw-bold">Admin</td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                <button class="btn-action-sm" style="border-color: var(--azul-celeste); color: var(--azul-medio);"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action-sm" style="border-color: #fca5a5; color: #dc2626;"><i class="bi bi-trash"></i></button>
                             </td>
                         </tr>
-                        
                         <!-- Registro 2 -->
                         <tr>
                             <td class="td-number">2</td>
                             <td class="td-name">Mascotas</td>
-                            <td><span class="badge bg-success text-white">Activo</span></td>
+                            <td><span class="badge-activo"><i class="bi bi-check-circle-fill"></i> Activo</span></td>
                             <td class="fw-bold">Admin, Cliente, Paseador</td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                <button class="btn-action-sm" style="border-color: var(--azul-celeste); color: var(--azul-medio);"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action-sm" style="border-color: #fca5a5; color: #dc2626;"><i class="bi bi-trash"></i></button>
                             </td>
                         </tr>
-
                         <!-- Registro 3 -->
                         <tr>
                             <td class="td-number">3</td>
                             <td class="td-name">Configuración</td>
-                            <td><span class="badge bg-danger text-white">Inactivo</span></td>
+                            <td><span class="badge-inactivo"><i class="bi bi-x-circle-fill"></i> Inactivo</span></td>
                             <td class="fw-bold">Admin</td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                <button class="btn-action-sm" style="border-color: var(--azul-celeste); color: var(--azul-medio);"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action-sm" style="border-color: #fca5a5; color: #dc2626;"><i class="bi bi-trash"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -169,5 +151,4 @@
             </div>
         </div>
     </section>
-
 </main>
