@@ -24,10 +24,37 @@
             ?>
     </section>
   <?php
-    if($pg==1) include 'views/mascotas.php';
-    elseif ($pg==2) include 'views/vconfiguracion.php';
-    elseif ($pg==3) include 'views/vcofmod.php';
-    elseif ($pg==4) include 'views/vpagina.php';
+    if($pg==1) include 'vusucli.php';
+    elseif ($pg==2) include 'vusuadmin.php';
+    elseif ($pg==3) include 'vusupas.php';
+    elseif ($pg==4) include 'vusupef.php';
+    elseif ($pg==5) include 'vusulisusu.php';
+    elseif ($pg==6) include 'vusuval.php';
+    elseif ($pg==7) include 'vusudatper.php';
+    elseif ($pg==8) include 'vusuubi.php';
+    elseif ($pg==9) include 'vmasmas.php';
+    elseif ($pg==10) include 'vmasdue.php';
+    elseif ($pg==11) include 'vserrut.php';
+    elseif ($pg==12) include 'vserlisrut.php';
+    elseif ($pg==13) include 'vserpas.php';
+    elseif ($pg==14) include 'vserser.php';
+    elseif ($pg==15) include 'vserlisser.php';
+    elseif ($pg==16) include 'vserrepser.php';
+    elseif ($pg==17) include 'vfacfac.php';
+    elseif ($pg==18) include 'vfatdatfac.php';
+    elseif ($pg==19) include 'vfaclisfac.php';
+    elseif ($pg==20) include 'vfacrepfac.php';
+    elseif ($pg==21) include 'vreppqr.php|';
+    elseif ($pg==22) include 'vreplispqr.php';
+    elseif ($pg==23) include 'vcofpag.php';
+    elseif ($pg==24) include 'vcofmod.php';
+    elseif ($pg==25) include 'vcofcof.php';
+    elseif ($pg==26) include 'vcofdom.php';
+    elseif ($pg==27) include 'vcofval.php';
+    elseif ($pg==28) include 'vextregis.php';
+    elseif ($pg==29) include 'vextini.php';
+    elseif ($pg==30) include 'vextreccon.php';
+    elseif ($pg==31) include 'vextolv.php';
   ?>
 
 
