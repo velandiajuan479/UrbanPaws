@@ -13,7 +13,7 @@
           <li><a href="#"><i class="bi bi-plus-circle-fill"></i> Servicios</a></li>
           <li><a href="#"><i class="bi bi-table"></i> Facturas</a></li>
           <li><a href="#"><i class="bi bi-bar-chart-fill"></i> Cuenta</a></li>
-          <li><a href="views/vcofmod.php"><i class="bi bi-gear-fill"></i> Configuración</a></li>
+          <li><a href=""><i class="bi bi-gear-fill"></i> Configuración</a></li>
         </ul>
       </nav>
     </div>
