@@ -28,6 +28,7 @@
     elseif ($pg==2) include 'views/vconfiguracion.php';
     elseif ($pg==3) include 'views/vcofmod.php';
     elseif ($pg==4) include 'views/vpagina.php';
+    
   ?>
 
 
