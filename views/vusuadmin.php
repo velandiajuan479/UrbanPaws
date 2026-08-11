@@ -1,26 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['idusuario']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: login.php');
-    exit();
-}
-
-require_once 'config/database.php';
-
-// Obtener estadísticas
-$stmt = $pdo->query("SELECT COUNT(*) as total FROM usuario WHERE idubi IS NOT NULL");
-$totalUsuarios = $stmt->fetch()['total'];
-
-$stmt = $pdo->query("SELECT COUNT(*) as total FROM paseador");
-$totalPaseadores = $stmt->fetch()['total'];
-
-$stmt = $pdo->query("SELECT COUNT(*) as total FROM mascotas");
-$totalMascotas = $stmt->fetch()['total'];
-
-$stmt = $pdo->query("SELECT COUNT(*) as total FROM paseo WHERE estado = 'activo'");
-$paseosActivos = $stmt->fetch()['total'];
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
