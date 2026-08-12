@@ -1,5 +1,5 @@
 
-<div>
+<div class="card card-form p-4 mb-5 d-flex flex-column align-items-center justify-content-center">
 <div style="max-width: 400px; margin: 50px auto; font-family: sans-serif;">
     
     <div style="margin-bottom: 20px;">
