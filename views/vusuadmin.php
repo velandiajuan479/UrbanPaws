@@ -3,138 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - UrbanPaws</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Administrador | Urban Paws</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav style="background-color: var(--primary-blue); padding: 1rem 2rem;">
-        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <div style="color: white; font-size: 1.5rem; font-weight: bold;">
-                <i class="fas fa-paw"></i> UrbanPaws Admin
-            </div>
-            <div style="display: flex; gap: 2rem; align-items: center;">
-                <a href="admin_dashboard.php" style="color: white; text-decoration: none;">Dashboard</a>
-                <a href="admin_usuarios.php" style="color: white; text-decoration: none;">Usuarios</a>
-                <a href="admin_paseadores.php" style="color: white; text-decoration: none;">Paseadores</a>
-                <a href="admin_paseos.php" style="color: white; text-decoration: none;">Paseos</a>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: white;">
-                    <i class="fas fa-user-circle"></i>
-                    <span><?php echo $_SESSION['nombre']; ?></span>
-                    <a href="logout.php" style="color: white; margin-left: 1rem;">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
-        <!-- Stats Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            <div class="card" style="border-left: 4px solid var(--primary-blue);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Total Usuarios</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $totalUsuarios; ?></h3>
-                    </div>
-                    <i class="fas fa-users" style="font-size: 2.5rem; color: var(--primary-blue); opacity: 0.3;"></i>
-                </div>
+<header class="hero-section">
+    <div class="container">
+        <a href="vusuadmin.php" class="logo-container">
+            <div class="logo-text">
+                <span class="brand">Urban<span>Paws</span></span>
+                <span class="tagline">Panel administrativo</span>
             </div>
+        </a>
 
-            <div class="card" style="border-left: 4px solid var(--primary-orange);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Paseadores</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $totalPaseadores; ?></h3>
-                    </div>
-                    <i class="fas fa-walking" style="font-size: 2.5rem; color: var(--primary-orange); opacity: 0.3;"></i>
-                </div>
-            </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="vusuadmin.php" class="nav-link active">Inicio</a></li>
+                <li><a href="vmen.php" class="nav-link">Usuarios</a></li>
+                <li><a href="vusupas.php" class="nav-link">Paseadores</a></li>
+                <li><a href="vruta.html" class="nav-link">Rutas</a></li>
+                <li><a href="vservicios.html" class="nav-link">Servicios</a></li>
+                <li><a href="vcofpag.php" class="nav-link">Facturas</a></li>
+                <li><a href="vpqrs.html" class="nav-link">PQRSF</a></li>
+                <li><a href="vcofmod.php" class="nav-link">Configuración</a></li>
+                <li><a href="vusupef.php" class="nav-link">Perfil</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-            <div class="card" style="border-left: 4px solid var(--success);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Mascotas Registradas</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $totalMascotas; ?></h3>
-                    </div>
-                    <i class="fas fa-dog" style="font-size: 2.5rem; color: var(--success); opacity: 0.3;"></i>
-                </div>
-            </div>
-
-            <div class="card" style="border-left: 4px solid var(--dark-orange);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Paseos Activos</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $paseosActivos; ?></h3>
-                    </div>
-                    <i class="fas fa-route" style="font-size: 2.5rem; color: var(--dark-orange); opacity: 0.3;"></i>
-                </div>
-            </div>
+<main class="container">
+    <section style="padding: 3rem 0 2rem;">
+        <div class="section-title">
+            <div class="icon-circle">A</div>
+            Administrador
         </div>
 
-        <!-- Pending Walker Validations -->
         <div class="card">
-            <h3 style="margin-bottom: 1.5rem; color: var(--dark-blue);">
-                <i class="fas fa-clock"></i> Validaciones de Paseadores Pendientes
-            </h3>
-            <?php
-            $stmt = $pdo->query("
-                SELECT u.idusuario, u.nomusu, u.email, p.antecedentes, u.telefono
-                FROM paseador p
-                JOIN usuario u ON p.idpase = u.idusuario
-                WHERE p.validado = 0
-            ");
-            $paseadoresPendientes = $stmt->fetchAll();
-            ?>
-            
-            <?php if (count($paseadoresPendientes) > 0): ?>
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background-color: var(--bg-gray);">
-                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--border-gray);">Nombre</th>
-                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--border-gray);">Email</th>
-                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--border-gray);">Teléfono</th>
-                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--border-gray);">Antecedentes</th>
-                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--border-gray);">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($paseadoresPendientes as $paseador): ?>
-                                <tr style="border-bottom: 1px solid var(--border-gray);">
-                                    <td style="padding: 12px;"><?php echo htmlspecialchars($paseador['nomusu']); ?></td>
-                                    <td style="padding: 12px;"><?php echo htmlspecialchars($paseador['email']); ?></td>
-                                    <td style="padding: 12px;"><?php echo htmlspecialchars($paseador['telefono']); ?></td>
-                                    <td style="padding: 12px;">
-                                        <?php if ($paseador['antecedentes']): ?>
-                                            <span style="color: var(--success);"><i class="fas fa-check"></i> Verificado</span>
-                                        <?php else: ?>
-                                            <span style="color: var(--danger);"><i class="fas fa-times"></i> Pendiente</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td style="padding: 12px;">
-                                        <a href="validar_paseador.php?id=<?php echo $paseador['idusuario']; ?>&accion=aprobar" 
-                                           class="btn-primary" style="padding: 6px 12px; font-size: 0.875rem;">
-                                            <i class="fas fa-check"></i> Aprobar
-                                        </a>
-                                        <a href="validar_paseador.php?id=<?php echo $paseador['idusuario']; ?>&accion=rechazar" 
-                                           class="btn-secondary" style="padding: 6px 12px; font-size: 0.875rem; background-color: var(--danger);">
-                                            <i class="fas fa-times"></i> Rechazar
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php else: ?>
-                <p style="color: var(--text-gray); text-align: center; padding: 2rem;">
-                    No hay validaciones pendientes
-                </p>
-            <?php endif; ?>
+            <h1>Panel de administración</h1>
+            <p>Gestiona los módulos y procesos generales de Urban Paws según los permisos del administrador.</p>
+        </div>
+    </section>
+
+    <section class="form-grid">
+        <a href="vmen.php" class="card">
+            <div class="icon-circle">U</div>
+            <h3>Usuarios</h3>
+            <p>Consulta y administra los usuarios registrados en el sistema.</p>
+            <span class="btn btn-primary">Gestionar usuarios</span>
+        </a>
+
+        <a href="vusupas.php" class="card">
+            <div class="icon-circle">P</div>
+            <h3>Paseadores</h3>
+            <p>Consulta la información de los paseadores y sus procesos de validación.</p>
+            <span class="btn btn-primary">Gestionar paseadores</span>
+        </a>
+
+        <a href="vruta.html" class="card">
+            <div class="icon-circle">R</div>
+            <h3>Rutas</h3>
+            <p>Administra las rutas creadas y sus estados dentro del sistema.</p>
+            <span class="btn btn-primary">Gestionar rutas</span>
+        </a>
+
+        <a href="vservicios.html" class="card">
+            <div class="icon-circle">S</div>
+            <h3>Servicios</h3>
+            <p>Configura y administra los tipos de servicios ofrecidos.</p>
+            <span class="btn btn-accent">Gestionar servicios</span>
+        </a>
+
+        <a href="vcofpag.php" class="card">
+            <div class="icon-circle">F</div>
+            <h3>Facturación</h3>
+            <p>Consulta la información de facturas y sus detalles.</p>
+            <span class="btn btn-primary">Ver facturación</span>
+        </a>
+
+        <a href="vpqrs.html" class="card">
+            <div class="icon-circle">Q</div>
+            <h3>PQRSF</h3>
+            <p>Gestiona las peticiones, quejas, reclamos, sugerencias y felicitaciones.</p>
+            <span class="btn btn-accent">Gestionar PQRSF</span>
+        </a>
+
+        <a href="vcofmod.php" class="card">
+            <div class="icon-circle">C</div>
+            <h3>Configuración</h3>
+            <p>Administra la configuración general y los módulos del sistema.</p>
+            <span class="btn btn-outline">Configurar</span>
+        </a>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <span>Urban Paws</span>
+            <span>Panel administrativo</span>
         </div>
     </div>
+</footer>
+
 </body>
 </html>

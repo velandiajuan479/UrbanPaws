@@ -1,232 +1,114 @@
-<?php
-session_start();
-if (!isset($_SESSION['idusuario'])) {
-    header('Location: login.php');
-    exit();
-}
-
-require_once 'config/database.php';
-$idPaseador = $_SESSION['idusuario'];
-
-// Verificar si es paseador y está validado
-$stmt = $pdo->prepare("SELECT * FROM paseador WHERE idpase = ?");
-$stmt->execute([$idPaseador]);
-$paseador = $stmt->fetch();
-
-if (!$paseador) {
-    header('Location: registro_paseador.php');
-    exit();
-}
-
-// Obtener paseos asignados
-$stmt = $pdo->prepare("
-    SELECT p.*, m.nombre as nombre_mascota, u.nomusu as nombre_dueno, u.telefono
-    FROM paseo p
-    JOIN mascotas m ON p.idmasc = m.idmasc
-    JOIN duenomasc d ON m.iddueno = d.iddueno
-    JOIN usuario u ON d.iddueno = u.idusuario
-    WHERE p.idpase = ?
-    ORDER BY p.fecha DESC
-");
-$stmt->execute([$idPaseador]);
-$paseosAsignados = $stmt->fetchAll();
-
-// Estadísticas del paseador
-$stmt = $pdo->prepare("
-    SELECT COUNT(*) as total, 
-           SUM(CASE WHEN estado = 'completado' THEN 1 ELSE 0 END) as completados,
-           SUM(CASE WHEN estado = 'activo' THEN 1 ELSE 0 END) as activos
-    FROM paseo
-    WHERE idpase = ?
-");
-$stmt->execute([$idPaseador]);
-$estadisticas = $stmt->fetch();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Paseador - UrbanPaws</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Paseador | Urban Paws</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav style="background-color: var(--primary-orange); padding: 1rem 2rem;">
-        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <div style="color: white; font-size: 1.5rem; font-weight: bold;">
-                <i class="fas fa-walking"></i> UrbanPaws Paseadores
-            </div>
-            <div style="display: flex; gap: 2rem; align-items: center;">
-                <a href="paseador_dashboard.php" style="color: white; text-decoration: none;">Inicio</a>
-                <a href="mis_paseos.php" style="color: white; text-decoration: none;">Mis Paseos</a>
-                <a href="mi_disponibilidad.php" style="color: white; text-decoration: none;">Disponibilidad</a>
-                <a href="mis_ganancias.php" style="color: white; text-decoration: none;">Ganancias</a>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: white;">
-                    <i class="fas fa-user-circle"></i>
-                    <span><?php echo $_SESSION['nombre']; ?></span>
-                    <a href="logout.php" style="color: white; margin-left: 1rem;">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
-        <!-- Validación Status -->
-        <?php if (!$paseador['validado']): ?>
-            <div class="card" style="background-color: #fef3c7; border-left: 4px solid var(--primary-orange);">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: var(--primary-orange);"></i>
-                    <div>
-                        <h4 style="color: #92400e; margin-bottom: 0.25rem;">Cuenta en validación</h4>
-                        <p style="color: #78350f;">
-                            Tu perfil está siendo revisado. Incluye validación de antecedentes, datos personales y ubicación.
-                        </p>
-                    </div>
-                </div>
+<header class="hero-section">
+    <div class="container">
+        <a href="vusupas.php" class="logo-container">
+            <img src="../img/logo.png" alt="Urban Paws" class="logo-img">
+            <div class="logo-text">
+                <span class="brand">Urban<span>Paws</span></span>
+                <span class="tagline">Espacio del paseador</span>
             </div>
-        <?php endif; ?>
+        </a>
 
-        <!-- Stats -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            <div class="card" style="border-left: 4px solid var(--primary-orange);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Total Paseos</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $estadisticas['total']; ?></h3>
-                    </div>
-                    <i class="fas fa-route" style="font-size: 2.5rem; color: var(--primary-orange); opacity: 0.3;"></i>
-                </div>
-            </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="vusupas.php" class="nav-link active">Inicio</a></li>
+                <li><a href="vpaseo.html" class="nav-link">Paseos</a></li>
+                <li><a href="vruta.html" class="nav-link">Rutas</a></li>
+                <li><a href="vservicios.html" class="nav-link">Servicios</a></li>
+                <li><a href="vusupef.php" class="nav-link">Perfil</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-            <div class="card" style="border-left: 4px solid var(--success);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Completados</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $estadisticas['completados']; ?></h3>
-                    </div>
-                    <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--success); opacity: 0.3;"></i>
-                </div>
-            </div>
-
-            <div class="card" style="border-left: 4px solid var(--primary-blue);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="color: var(--text-gray); font-size: 0.875rem;">Paseos Activos</p>
-                        <h3 style="font-size: 2rem; margin-top: 0.5rem;"><?php echo $estadisticas['activos']; ?></h3>
-                    </div>
-                    <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--primary-blue); opacity: 0.3;"></i>
-                </div>
-            </div>
+<main class="container">
+    <section style="padding: 3rem 0 2rem;">
+        <div class="section-title">
+            <div class="icon-circle">P</div>
+            Paseador
         </div>
 
-        <!-- Paseos Asignados -->
         <div class="card">
-            <h3 style="color: var(--dark-blue); margin-bottom: 1.5rem;">
-                <i class="fas fa-clipboard-list"></i> Mis Paseos Asignados
-            </h3>
-
-            <?php if (count($paseosAsignados) > 0): ?>
-                <div style="display: grid; gap: 1rem;">
-                    <?php foreach ($paseosAsignados as $paseo): ?>
-                        <div style="border: 2px solid var(--border-gray); border-radius: 8px; padding: 1.5rem; 
-                                    background-color: <?php echo $paseo['estado'] == 'activo' ? '#eff6ff' : 'white'; ?>;">
-                            <div style="display: flex; justify-content: space-between; align-items: start;">
-                                <div style="flex: 1;">
-                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                        <h4 style="font-size: 1.25rem; color: var(--dark-blue);">
-                                            <?php echo htmlspecialchars($paseo['nombre_mascota']); ?>
-                                        </h4>
-                                        <span style="padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600;
-                                                    background-color: <?php 
-                                                        echo $paseo['estado'] == 'activo' ? 'var(--primary-blue)' : 
-                                                            ($paseo['estado'] == 'completado' ? 'var(--success)' : 'var(--bg-gray)'); 
-                                                    ?>; color: white;">
-                                            <?php echo ucfirst($paseo['estado']); ?>
-                                        </span>
-                                    </div>
-                                    
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; color: var(--text-gray);">
-                                        <p><i class="fas fa-calendar"></i> <?php echo date('d/m/Y', strtotime($paseo['fecha'])); ?></p>
-                                        <p><i class="fas fa-clock"></i> <?php echo date('H:i', strtotime($paseo['fecha'])); ?></p>
-                                        <p><i class="fas fa-user"></i> <?php echo htmlspecialchars($paseo['nombre_dueno']); ?></p>
-                                        <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($paseo['telefono']); ?></p>
-                                    </div>
-                                </div>
-                                
-                                <div style="display: flex; gap: 0.5rem;">
-                                    <a href="ver_detalle_paseo.php?id=<?php echo $paseo['idpaseo']; ?>" 
-                                       class="btn-secondary" style="padding: 8px 16px;">
-                                        <i class="fas fa-eye"></i> Ver
-                                    </a>
-                                    <?php if ($paseo['estado'] == 'activo'): ?>
-                                        <a href="iniciar_paseo.php?id=<?php echo $paseo['idpaseo']; ?>" 
-                                           class="btn-primary" style="padding: 8px 16px;">
-                                            <i class="fas fa-play"></i> Iniciar
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <div style="text-align: center; padding: 3rem; color: var(--text-gray);">
-                    <i class="fas fa-inbox" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                    <p>No tienes paseos asignados aún</p>
-                </div>
-            <?php endif; ?>
+            <h1>Panel del paseador</h1>
+            <p>Consulta tu información, disponibilidad y las actividades relacionadas con los servicios de paseo.</p>
         </div>
+    </section>
 
-        <!-- Información del Paseador -->
-        <div class="card" style="margin-top: 1.5rem;">
-            <h3 style="color: var(--dark-blue); margin-bottom: 1.5rem;">
-                <i class="fas fa-user-check"></i> Mi Perfil de Paseador
-            </h3>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div style="padding: 1rem; background-color: var(--bg-gray); border-radius: 8px;">
-                    <p style="color: var(--text-gray); font-size: 0.875rem; margin-bottom: 0.25rem;">Antecedentes</p>
-                    <p style="font-weight: 600;">
-                        <?php if ($paseador['antecedentes']): ?>
-                            <span style="color: var(--success);"><i class="fas fa-check"></i> Verificados</span>
-                        <?php else: ?>
-                            <span style="color: var(--danger);"><i class="fas fa-times"></i> Pendiente</span>
-                        <?php endif; ?>
-                    </p>
+    <section class="form-grid">
+        <article class="card">
+            <div class="icon-circle">V</div>
+            <h3>Estado de validación</h3>
+            <p>Consulta el estado de validación de tu perfil como paseador.</p>
+            <span class="badge badge-active">Estado pendiente de consulta</span>
+        </article>
+
+        <a href="vpaseo.html" class="card">
+            <div class="icon-circle">P</div>
+            <h3>Mis paseos</h3>
+            <p>Consulta los paseos asignados y el seguimiento de los servicios.</p>
+            <span class="btn btn-primary">Ver paseos</span>
+        </a>
+
+        <a href="vruta.html" class="card">
+            <div class="icon-circle">R</div>
+            <h3>Rutas</h3>
+            <p>Consulta las rutas disponibles y la información necesaria para realizar los servicios.</p>
+            <span class="btn btn-primary">Ver rutas</span>
+        </a>
+
+        <a href="vservicios.html" class="card">
+            <div class="icon-circle">S</div>
+            <h3>Servicios</h3>
+            <p>Consulta los servicios relacionados con tu actividad como paseador.</p>
+            <span class="btn btn-accent">Ver servicios</span>
+        </a>
+
+        <a href="vusupef.php" class="card">
+            <div class="icon-circle">P</div>
+            <h3>Mi perfil</h3>
+            <p>Consulta y actualiza la información general asociada a tu cuenta.</p>
+            <span class="btn btn-outline">Ver perfil</span>
+        </a>
+    </section>
+
+    <section style="padding: 2rem 0 3rem;">
+        <div class="card">
+            <h3>Información del paseador</h3>
+            <div class="form-grid" style="margin-top: 1.25rem;">
+                <div>
+                    <span class="form-label">Disponibilidad</span>
+                    <p>Información gestionada por el sistema.</p>
                 </div>
-                
-                <div style="padding: 1rem; background-color: var(--bg-gray); border-radius: 8px;">
-                    <p style="color: var(--text-gray); font-size: 0.875rem; margin-bottom: 0.25rem;">Estado de Validación</p>
-                    <p style="font-weight: 600;">
-                        <?php if ($paseador['validado']): ?>
-                            <span style="color: var(--success);"><i class="fas fa-check"></i> Validado</span>
-                        <?php else: ?>
-                            <span style="color: var(--primary-orange);"><i class="fas fa-clock"></i> En revisión</span>
-                        <?php endif; ?>
-                    </p>
+                <div>
+                    <span class="form-label">Experiencia</span>
+                    <p>Información registrada en el perfil.</p>
                 </div>
-                
-                <div style="padding: 1rem; background-color: var(--bg-gray); border-radius: 8px;">
-                    <p style="color: var(--text-gray); font-size: 0.875rem; margin-bottom: 0.25rem;">Foto de Perfil</p>
-                    <p style="font-weight: 600;">
-                        <?php if ($paseador['foto']): ?>
-                            <span style="color: var(--success);"><i class="fas fa-check"></i> Cargada</span>
-                        <?php else: ?>
-                            <span style="color: var(--danger);"><i class="fas fa-times"></i> No cargada</span>
-                        <?php endif; ?>
-                    </p>
+                <div>
+                    <span class="form-label">Zona de cobertura</span>
+                    <p>Información asociada a las rutas asignables.</p>
                 </div>
             </div>
-            
-            <a href="editar_perfil_paseador.php" class="btn-primary" style="margin-top: 1rem;">
-                <i class="fas fa-edit"></i> Editar Información
-            </a>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <span>Urban Paws</span>
+            <span>Espacio del paseador</span>
         </div>
     </div>
+</footer>
+
 </body>
 </html>
