@@ -28,7 +28,7 @@
                             <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark"></span></label>
                             <div class="input-group">
                                 <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">Mostrar</button>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye"></i></button>
                             </div>
                         </div>
 
@@ -36,7 +36,7 @@
                             <label class="form-label fw-semibold">Confirmar Contraseña<span class="required-mark"></span></label>
                             <div class="input-group">
                                 <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword2">Mostrar</button>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword2" aria-label="Mostrar confirmar contraseña"><i class="fa-solid fa-eye"></i></button>
                             </div>
                         </div>
 
