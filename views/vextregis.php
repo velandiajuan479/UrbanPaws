@@ -1,9 +1,9 @@
 
 <div class="card card-form p-4 mb-5 d-flex flex-column align-items-center justify-content-center">
-<div style="max-width: 400px; margin: 50px auto; font-family: sans-serif;">
+<div style="max-width: 320px; margin: 30px auto; font-family: sans-serif;">
     
-    <div style="margin-bottom: 20px;">
-        <h2>Registrarse</h2>
+    <div style="margin-bottom: 15px;">
+        <h2 style="font-size: 1.4rem; margin: 0;">Registrarse</h2>
     </div>
 
     <!-- Mostrar mensaje si existe -->
