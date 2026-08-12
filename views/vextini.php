@@ -37,7 +37,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="width: 100px; background-color: #ff7f00; color: #ffffff; border-color: #ff7f00;">
-                                <i class="fa-solid fa-circle-user"></i> Registrarse
+                                <i class="fa-solid fa-circle-user"></i> Ingresar
                             </button>
 
                     </form>
