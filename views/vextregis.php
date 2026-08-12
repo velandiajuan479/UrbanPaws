@@ -1,5 +1,8 @@
 
     <div class="login-box w-100">
+
+
+
         <div class="row justify-content-center">
             <div class="col-md-8">                
                 <div class="card card-form p-4">
@@ -24,11 +27,8 @@
                             <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
                         </div>
 
-                        <div class="col-12 mt-4 text-end">
-                            <button type="submit" class="btn btn-institutional shadow">
-                                <i class="bi bi-save me-2"></i>Guardar Contraseña
-                            </button>
-                        </div>
+                            <button type="submit" class="form-control btn btn-institutional mb-2">
+                            <i class="fa-solid fa-circle-user"></i> Iniciar Sesión</button>
             
 
                     </form>
