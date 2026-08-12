@@ -36,7 +36,7 @@
                             ?>
                         </div>
 
-                        <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00;">
+                        <button type="submit" class="btn btn-institutional btn-sm mb-2" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; display:inline-block; padding: .25rem .6rem; font-size: .95rem;">
                                 <i class="fa-solid fa-circle-user"></i> Ingresar
                             </button>
 
