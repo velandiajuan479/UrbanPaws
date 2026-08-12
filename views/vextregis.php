@@ -1,3 +1,5 @@
+
+<div>
 <div style="max-width: 400px; margin: 50px auto; font-family: sans-serif;">
     
     <div style="margin-bottom: 20px;">
@@ -44,7 +46,5 @@
         </div>
 
     </form>
-
-    
-
+</div>
 </div>
