@@ -1,11 +1,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-
-            <h2>Bienvenido a UrbanPaws</h2>
-            <h3>Inicia sesión</h3>
-
             <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
+
+                <h2>Bienvenido a UrbanPaws</h2>
+                    <h3>Inicio de sesión</h3>
+
+
                 <div class="login-box w-100">
                     <form action="models/control.php" method="POST">
 
