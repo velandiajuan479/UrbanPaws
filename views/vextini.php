@@ -4,7 +4,7 @@
             <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
 
                 
-                        <h2 class="text-center mb-4">Inicio de sesión</h2>
+                        <h2 class="text-center mb-4">Inicio de sesión Urban Paws</h2>
 
 
                 <div class="login-box w-100">
