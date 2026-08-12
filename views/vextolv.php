@@ -7,7 +7,9 @@
                 <label for="emaper" class="form-label d-block ">Ingrese su correo electrónico vinculado</label>
                 <input type="email" name="emaper" class="form-control" placeholder="ejemplo@ejem.com" required>
             </div>
-            <button type="submit" class="btn btn-primary mb-3 d-block mx-auto">Enviar</button>
+            <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; padding: .5rem 1rem; font-size: 1.1rem;">
+                            <i class="fa-solid fa-envelope"></i> Enviar
+            </button>
         </form>
         <table class="table table-striped">
             <tbody id="tableBody">
