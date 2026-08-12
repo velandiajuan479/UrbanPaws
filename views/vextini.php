@@ -20,11 +20,6 @@
                                     <input type="checkbox" class="form-check-input" id="showPassword">
                                     <label class="form-check-label small" for="showPassword">Mostrar contraseña</label>
                                 </div>
-
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember">
-                                    <label class="form-check-label small" for="remember">Recordarme</label>
-                                </div>
                             </div>
 
                             <?php
