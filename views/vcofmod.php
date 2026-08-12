@@ -76,8 +76,8 @@
         <table id="mitabla" class="table table-striped">
             <thead>
                 <tr>
-                    <th>Módulo</th>
-                    <th>Estado</th>
+                    <th>Módulos</th>
+                    <th>Estados</th>
                     <th></th>
                 </tr>
             </thead>
@@ -117,3 +117,5 @@
 
     </div>
 </div>
+
+Lorem ipsum dolor sit amet consectetur, adipisicing elit.
