@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                            <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="width: 200px;">
+                            <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="width: 200px; #darkblue;">
                                 <i class="fa-solid fa-circle-user"></i> Registrarse
                             </button>
             
