@@ -9,22 +9,22 @@
                     <form>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label fw-semibold">Nombre<span class="required-mark">*</span></label>
+                            <label class="form-label fw-semibold">Nombre<span class="required-mark"></span></label>
                             <input type="text" class="form-control" id="nombre" required placeholder="Nombre">
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label fw-semibold">Apellido<span class="required-mark">*</span></label>
+                            <label class="form-label fw-semibold">Apellido<span class="required-mark"></span></label>
                             <input type="text" class="form-control" id="apellido" required placeholder="Apellido">
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark">*</span></label>
+                            <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark"></span></label>
                             <input type="email" class="form-control" id="correo" required placeholder="correo@ejemplo.com">
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark">*</span></label>
+                            <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark"></span></label>
                             <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
                             <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="showPassword">
@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label fw-semibold">Confirmar Contraseña<span class="required-mark">*</span></label>
+                            <label class="form-label fw-semibold">Confirmar Contraseña<span class="required-mark"></span></label>
                             <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
                         </div>
 
