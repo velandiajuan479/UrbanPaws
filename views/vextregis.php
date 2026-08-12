@@ -2,11 +2,10 @@
     <div class="login-box w-100">
 
         <div class="row justify-content-center">
-            <h1>
-            <i class="fa-solid fa-circle-user"></i> Registro de Usuario
-        </h1>
-        
             <div class="col-md-8">                
+                <h1 class="text-center mb-3">
+                    <i class="fa-solid fa-circle-user"></i> Registro de Usuario
+                </h1>
                 <div class="card card-form p-4">
                     <form>
 
