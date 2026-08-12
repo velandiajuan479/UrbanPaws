@@ -65,5 +65,55 @@
             </button>
         </div>
     </form>
+</div>
 
+<div class="table-container mt-4">
+    <h5 class="mb-3">
+        <i class="fa-solid fa-table-list"></i>
+        Lista de módulos
+    </h5>
+    <div class="table-responsive">
+        <table id="mitabla" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Módulo</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>
+                            <i class=""></i>
+                        </strong>
+                        <small>
+                            <strong>id: 1</strong>
+                            <strong>Módulo</strong>
+                            <br>
+                            <strong>Orden: 16</strong>
+                            <strong>Admin</strong>
+                        </small>
+                    </td>
+                    <td>Activo</td>
+                    <td>
+                        <a href="" title="editar">
+                            <i class="fa-solid fa-pencil fa-2x"></i>
+                        </a>
+                        <a href="" title="borrar">
+                            <i class="fa-solid fa-trash-can fa-2x"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Módulo</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
 </div>
