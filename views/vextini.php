@@ -32,8 +32,10 @@
                             ?>
                         </div>
 
-                        <button type="submit" class="form-control btn btn-institutional mb-2">
-                            <i class="fa-solid fa-circle-user"></i> Iniciar Sesión</button>
+                        <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="width: 200px; background-color: #ff7f00; color: #ffffff; border-color: #ff7f00;">
+                                <i class="fa-solid fa-circle-user"></i> Registrarse
+                            </button>
+
                     </form>
                     <div class="text-center">
                         <a href="#" class="text-decoration-none small">Olvidé mi contraseña</a><br>
