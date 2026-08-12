@@ -1,50 +1,46 @@
+<div class="card card-form p-4 mb-5 d-flex flex-column align-items-center justify-content-center"
+     style="min-height: 80vh; width: 50%; margin: 0 auto;">
 
-<div class="card card-form p-4 mb-5 d-flex flex-column align-items-center justify-content-center">
-<div style="max-width: 320px; margin: 30px auto; font-family: sans-serif;">
-    
-    <div style="margin-bottom: 15px;">
-        <h2 style="font-size: 1.4rem; margin: 0;">Registrarse</h2>
+    <div class="d-flex align-items-center justify-content-center mb-4 gap-2">
+        <i class="bi bi-shield-lock" style="font-size: 1.8rem;"></i>
+        <h1 class="display-title mb-0">Recuperar contraseña</h1>
     </div>
 
-    <!-- Mostrar mensaje si existe -->
-    <?php if(isset($mensaje) && $mensaje != ""): ?>
-        <div style="padding: 10px; background-color: #f8d7da; color: #721c24; margin-bottom: 15px; border: 1px solid #f5c6cb;">
-            <?= $mensaje ?>
-        </div>
-    <?php endif; ?>
+    <div class="login-box w-100">
+        <div class="row justify-content-center">
+            <div class="col-md-8">                
+                <div class="card card-form p-4">
+                    <form>
 
-    <form action="cextregis.php?ope=save" method="POST">
-        
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Nombre*</label>
-            <input type="text" name="prinom" style="width: 100%; padding: 8px; box-sizing: border-box;" required>
-        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark">*</span></label>
+                            <input type="email" class="form-control" id="correo" required placeholder="correo@ejemplo.com">
+                        </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Apellido*</label>
-            <input type="text" name="priapel" style="width: 100%; padding: 8px; box-sizing: border-box;" required>
-        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark">*</span></label>
+                            <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
+                            <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="showPassword">
+                                    <label class="form-check-label small" for="showPassword">Mostrar contraseña</label>
+                                </div>
+                        </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Gmail*</label>
-            <input type="email" name="emailu" style="width: 100%; padding: 8px; box-sizing: border-box;" required>
-        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">Confirmar Contraseña<span class="required-mark">*</span></label>
+                            <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
+                        </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Contraseña*</label>
-            <input type="password" name="passusu" id="passReg" style="width: 100%; padding: 8px; box-sizing: border-box;" required>
-            <div style="margin-top: 5px;">
-                <input type="checkbox" onclick="var x=document.getElementById('passReg');x.type=x.type==='password'?'text':'password';"> 
-                <span style="font-size: 12px;">Mostrar contraseña</span>
+                        <div class="col-12 mt-4 text-end">
+                            <button type="submit" class="btn btn-institutional shadow">
+                                <i class="bi bi-save me-2"></i>Guardar Contraseña
+                            </button>
+                        </div>
+            
+
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div style="margin-top: 20px;">
-            <button type="submit" style="width: 100%; padding: 10px; background-color: #333; color: white; border: none; cursor: pointer;">
-                Registrarse
-            </button>
-        </div>
-
-    </form>
-</div>
+    </div>
 </div>
