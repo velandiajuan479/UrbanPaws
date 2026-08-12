@@ -1,122 +1,133 @@
-<main class="main-content">
-    <section id="registro-pagina">
-        <h2 class="section-title">
-            <span class="icon-circle"><i class="bi bi-file-earmark-plus"></i></span>
-            Nuevo Registro
-        </h2>
-
-        <div class="form-card">
-            <form action="guardar_pagina.php" method="post">
-                <div class="row g-3">
-
-                    <!-- Nombre de Página -->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="nompag">
-                                <i class="bi bi-tag-fill"></i> Nombre de Página <span class="required">*</span>
-                            </label>
-                            <input type="text" id="nompag" name="nompag" class="form-control-custom" placeholder="Ej: Inicio" maxlength="25" required>
-                        </div>
-                    </div>
-
-                    <!-- Archivo -->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="archpag">
-                                <i class="bi bi-file-earmark-code"></i> Archivo <span class="required">*</span>
-                            </label>
-                            <input type="text" id="archpag" name="archpag" class="form-control-custom" placeholder="Ej: index.php" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="mospag">
-                                <i class="bi bi-eye-fill"></i> Mostrar en Menú <span class="required">*</span>
-                            </label>
-                            <select id="mospag" name="mospag" class="form-control-custom select-yes-no" required>
-                                <option value="1">Sí</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="despag">
-                            <i class="bi bi-text-paragraph"></i> Descripción <span class="required">*</span>
-                        </label>
-                        <textarea id="despag" name="despag" class="form-control-custom" rows="2" placeholder="Ej: Página principal del sistema" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ordpag">
-                            <i class="bi bi-sort-numeric-down"></i> Orden
-                        </label>
-                        <input type="number" id="ordpag" name="ordpag" class="form-control-custom" placeholder="Ej: 1" min="0" max="999" value="0">
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="reset" class="btn-secondary-custom">
-                        <i class="bi bi-arrow-counterclockwise"></i> Limpiar
-                    </button>
-                    <button type="submit" class="btn-primary-custom">
-                        <i class="bi bi-save"></i> Registrar Página
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-<!-- Tabla -->
-<div class="table-section">
+<div class="card card-form p-4">
+    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
+    <h4 class="section-title">
+        <i class="fa-solid fa-box-open"></i>
+        Nueva Página
+    </h4> 
     
-    <div class="table-header">
-                <h2><i class="bi bi-collection-fill"></i> Páginas del Sistema <span class="table-badge">3</span></h2>
-                <div class="search-container">
-                    <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Buscar página...">
-                </div>
+    <form action="" method="POST" class="row g-3">
+    <!--Nombre del módulo-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-hashtag"></i>
+            <label for="" class="form-label">Nombre de la página</label>
+            <input type="text" class="form-control" placeholder="Servicio" required>
+        </div>
+        <div class="col-md-4">
+            <i class="fa-solid fa-hashtag"></i>
+            <label for="" class="form-label">Titulo de la página</label>
+            <input type="text" class="form-control" placeholder="Reporte de PQRS" required>
+        </div>
+    <!--Estado del Módulo-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-toggle-on"></i>
+            <label for="" class="form-label">Mostrar Página</label>
+            <div class="w-100"></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="estado" id="si" value="" required>
+            <label class="form-check-label" for="actv">Si</label>
             </div>
-
-            <div class="table-responsive-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Archivo</th>
-                            <th>Mostrar</th>
-                            <th>Descripción</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="td-number">1</td>
-                            <td class="td-name">Inicio</td>
-                            <td class="td-description">index.php</td>
-                            <td><span class="badge-male">Sí</span></td>
-                            <td class="td-description">Página principal del sistema</td>
-                            <td class="td-actions">
-                            <a href="home.php?pg=29&ope=edi&idmod=<?=$dt["idmod"]?>" title="Editar" class="btn btn-sm btn-outline-primary">
-                                <i class="fa-solid fa-regular fa-pen-to-square"></i> <!--Botón de editar-->
-                            </a>
-                            <a href="home.php?pg=29&ope=eli&idmod=<?=$dt["idmod"]?>" onclick="return eliminar('<?= $dt['nommod'] ?>')" title="Eliminar" class="btn btn-sm btn-outline-danger">
-                                <i class="fa-solid fa-regular fa-trash-can"></i> <!--Botón de eliminar-->
-                            </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Footer de la tabla -->
-            <div class="table-footer">
-                <div class="table-footer-info">Mostrando <strong>1</strong> a <strong>3</strong> de <strong>3</strong> páginas</div>
-                <ul class="pagination-css">
-                    <li class="active"><a href="#">1</a></li>
-                </ul>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="estado" id="no" value="" required>
+            <label class="form-check-label" for="inactv">No</label>
             </div>
         </div>
-    </section>
+    <!--Selección del icono-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-shapes"></i>
+            <label class="form-label" for="">Icono</label>
+            <div class="input-group">
+                <select name="icono" id="" class="form-control form-select">
+                    <option value="0">Selecciona un icono...</option>
+                    <option value="1">Logo</option>
+                </select>
+            </div>
+        </div>
+        
+    <!--Ruta de la página-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-folder"></i>
+            <label class="form-label" for="">Ruta de la página</label>
+            <input class="form-control" type="text" name="" id="" placeholder="views/vcofcof.php">
+        </div>
+    <!--Orden de carga-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-sort"></i>
+            <label class="form-label" for="">Orden de carga</label>
+            <input type="number" class="form-control" name="" id="" placeholder="Ej:10">
+        </div>
+        <div class="col-md-4"></div>
+    <!--Descripción de la página-->
+        <div class="col-md-4">
+            <i class="fa-solid fa-clipboard"></i>
+            <label class="form-label" for="">Descripción corta</label>
+            <input class="form-control" type="text" name="" id="" placeholder="descripción">
+        </div>
+        <div class="col-md-2"></div>
+    <!--Botones-->
+        <div class="col-md-12 mt-4 text-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk fa-xl"></i>
+            </button>
+            <button type="reset" class="btn btn-accent">
+                <i class="fa-solid fa-trash fa-xl"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
-</main>
+<div class="table-container mt-4">
+    <h5 class="mb-3">
+        <i class="fa-solid fa-table-list"></i>
+        Lista de módulos
+    </h5>
+    <div class="table-responsive">
+        <table id="mitabla" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Página</th>
+                    <th>Descripcion</th>
+                    <th>Mostrar</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>
+                            <i class="fa fa-box"></i>
+                            1 Módulo
+                            <br>
+                        </strong>
+                        <small>
+                            Titulo: Módulo Ruta: views/vcofmod.php
+                            <br>
+                            Orden: 1
+                        </small>
+                    </td>
+                    <td>
+                        <small>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt architecto voluptatibus distinctio commodi neque aperiam voluptate labore. Adipisci, eveniet. Esse ad quibusdam voluptates aliquam blanditiis quidem. Quas voluptatibus excepturi iusto.
+                        </small>
+                    </td>
+                    <td>No</td>
+                    <td>
+                        <a href="" title="editar">
+                            <i class="fa-solid fa-pencil fa-2x"></i>
+                        </a>
+                        <a href="" title="borrar">
+                            <i class="fa-solid fa-trash-can fa-2x"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Módulo</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
