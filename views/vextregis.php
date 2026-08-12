@@ -37,8 +37,9 @@
                             <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
                         </div>
 
-                            <button type="submit" class="form-control btn btn-institutional mb-2">
-                            <i class="fa-solid fa-circle-user"></i> Registrarse </button>
+                            <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto">
+                                <i class="fa-solid fa-circle-user"></i> Registrarse
+                            </button>
             
 
                     </form>
