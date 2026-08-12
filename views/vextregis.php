@@ -3,10 +3,10 @@
 
         <div class="row justify-content-center">
             <div class="col-md-8">                
-                <h1 class="text-center mb-3">
-                    <i class="fa-solid fa-circle-user"></i> Registro de Usuario
-                </h1>
                 <div class="card card-form p-4">
+
+                    <h2 class="text-center mb-4">Registro de Usuario</h2>
+
                     <form>
 
                         <div class="col-12 mb-3">
