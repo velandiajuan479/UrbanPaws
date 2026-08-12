@@ -78,7 +78,7 @@
 <div class="table-container mt-4">
     <h5 class="mb-3">
         <i class="fa-solid fa-table-list"></i>
-        Lista de módulos
+        Lista de páginas
     </h5>
     <div class="table-responsive">
         <table id="mitabla" class="table table-striped">
@@ -122,8 +122,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Módulo</th>
-                    <th>Estado</th>
+                    <th>Página</th>
+                    <th>Mostrar</th>
                     <th></th>
                 </tr>
             </tfoot>
