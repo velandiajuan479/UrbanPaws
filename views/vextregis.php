@@ -22,7 +22,7 @@
                             <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark"></span></label>
                             <input type="email" class="form-control" id="correo" required placeholder="correo@ejemplo.com">
                         </div>
-    
+
                         <div class="col-12 mb-3">
                             <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark"></span></label>
                             <div class="input-group">
@@ -35,7 +35,12 @@
 
                         <div class="col-12 mb-3">
                             <label class="form-label fw-semibold">Confirmar Contraseña<span class="required-mark"></span></label>
-                            <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="clave2" required placeholder="Repite tu contraseña">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
 
                             <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto">
