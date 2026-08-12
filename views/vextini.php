@@ -3,8 +3,8 @@
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
             <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
 
-                <h2>Bienvenido a UrbanPaws</h2>
-                    <h3>Inicio de sesión</h3>
+                
+                        <h2 class="text-center mb-4">Inicio de sesión</h2>
 
 
                 <div class="login-box w-100">
