@@ -1,0 +1,10 @@
+@import url('style.css');
+
+i{
+    color: #f58220;
+    font-size: 10px;
+}
+
+.btn-accent i{
+    color: var(--bg-soft-orange);
+}
