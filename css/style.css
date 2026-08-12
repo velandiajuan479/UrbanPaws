@@ -137,7 +137,7 @@ ul { list-style: none; }
   color: var(--brand-dark);
   text-transform: uppercase;
   margin-bottom: 0.35rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
@@ -157,10 +157,21 @@ ul { list-style: none; }
   outline: none;
 }
 
+.form-check-input:checked {
+  background-color: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+.form-check-input:focus {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(245, 130, 32, 0.25);
+  outline: 0;
+}
+
 /* --- BUTTON SYSTEM (Unified) --- */
 .btn {
-  padding: 0.7rem 2rem;
-  border-radius: 8px;
+  padding: 1.5rem 4rem;
+  border-radius: 10px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
@@ -175,6 +186,7 @@ ul { list-style: none; }
 .btn-primary {
   background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary));
   color: #fff;
+  margin: 10px;
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,58,92,0.3); }
 
