@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="row justify-content-end">
-        <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
-            <div class="card card-form p-3 my-5">
+            <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
                 <div class="login-box w-100">
                     <form action="models/control.php" method="POST">
 
