@@ -22,14 +22,15 @@
                             <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark"></span></label>
                             <input type="email" class="form-control" id="correo" required placeholder="correo@ejemplo.com">
                         </div>
-
+    
                         <div class="col-12 mb-3">
                             <label class="form-label fw-semibold">Nueva Contraseña<span class="required-mark"></span></label>
-                            <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
-                            <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="showPassword">
-                                    <label class="form-check-label small" for="showPassword">Mostrar contraseña</label>
-                                </div>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="clave" required placeholder="Mínimo 8 caracteres" minlength="8">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="col-12 mb-3">
