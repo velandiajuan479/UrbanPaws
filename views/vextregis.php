@@ -9,6 +9,16 @@
                     <form>
 
                         <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">Nombre<span class="required-mark">*</span></label>
+                            <input type="text" class="form-control" id="nombre" required placeholder="Nombre">
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">Apellido<span class="required-mark">*</span></label>
+                            <input type="text" class="form-control" id="apellido" required placeholder="Apellido">
+                        </div>
+
+                        <div class="col-12 mb-3">
                             <label class="form-label fw-semibold">Correo Electrónico<span class="required-mark">*</span></label>
                             <input type="email" class="form-control" id="correo" required placeholder="correo@ejemplo.com">
                         </div>
@@ -28,7 +38,7 @@
                         </div>
 
                             <button type="submit" class="form-control btn btn-institutional mb-2">
-                            <i class="fa-solid fa-circle-user"></i> Iniciar Sesión</button>
+                            <i class="fa-solid fa-circle-user"></i> Registrarse </button>
             
 
                     </form>
