@@ -1,23 +1,23 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-            <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
+            <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.25rem;">
 
                 
-                        <h2 class="text-center mb-4">Inicio de sesión Urban Paws</h2>
+                        <h2 class="text-center mb-4" style="font-size:1.8rem;">Inicio de sesión Urban Paws</h2>
 
 
                 <div class="login-box w-100">
                     <form action="models/control.php" method="POST">
 
                         <div class="mb-2">
-                            <label class="form-label mb-1">Usuario o E-mail</label>
-                            <input type="text" name="user" class="form-control" placeholder="Ingresa tu Usuario o E-mail" required>
+                            <label class="form-label mb-1" style="font-size:1.05rem;">Usuario o E-mail</label>
+                            <input type="text" name="user" class="form-control" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Usuario o E-mail" required>
                         </div>
 
                         <div class="mb-2">
-                            <label class="form-label mb-1">Contraseña</label>
-                            <input type="password" name="pass" class="form-control mb-2" placeholder="Ingresa tu Contraseña" required>
+                            <label class="form-label mb-1" style="font-size:1.05rem;">Contraseña</label>
+                            <input type="password" name="pass" class="form-control mb-2" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Contraseña" required>
 
                             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-1">
                                 <div class="form-check">
@@ -36,7 +36,7 @@
                             ?>
                         </div>
 
-                        <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; padding: .25rem .6rem; font-size: .95rem;">
+                        <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; padding: .5rem 1rem; font-size: 1.1rem;">
                             <i class="fa-solid fa-circle-user"></i> Ingresar
                         </button>
 
