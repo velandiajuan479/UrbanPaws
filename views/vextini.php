@@ -1,5 +1,9 @@
 <div class="container">
     <div class="row justify-content-center">
+
+        <h2>Bienvenido a UrbanPaws</h2>
+        <h3>Inicia sesión</h3>
+
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
             <div class="card card-form p-3 my-5" style="max-width:520px;margin:auto;font-size:1.05rem;">
