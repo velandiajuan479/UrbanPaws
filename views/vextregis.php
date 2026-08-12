@@ -1,10 +1,3 @@
-<div class="card card-form p-4 mb-5 d-flex flex-column align-items-center justify-content-center"
-     style="min-height: 80vh; width: 50%; margin: 0 auto;">
-
-    <div class="d-flex align-items-center justify-content-center mb-4 gap-2">
-        <i class="bi bi-shield-lock" style="font-size: 1.8rem;"></i>
-        <h1 class="display-title mb-0">Recuperar contraseña</h1>
-    </div>
 
     <div class="login-box w-100">
         <div class="row justify-content-center">
@@ -43,4 +36,3 @@
             </div>
         </div>
     </div>
-</div>
