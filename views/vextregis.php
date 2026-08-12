@@ -1,7 +1,9 @@
 
     <div class="login-box w-100">
 
-
+        <h1>
+            <i class="fa-solid fa-circle-user"></i> Registro de Usuario
+        </h1>
 
         <div class="row justify-content-center">
             <div class="col-md-8">                
