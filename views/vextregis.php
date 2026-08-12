@@ -45,10 +45,6 @@
 
     </form>
 
-    <div style="margin-top: 15px; text-align: center;">
-        <a href="cextini.php" style="color: #007bff; text-decoration: none; font-size: 14px;">
-            ¿Ya tienes cuenta? Iniciar Sesión
-        </a>
-    </div>
+    
 
 </div>
