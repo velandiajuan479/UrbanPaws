@@ -20,6 +20,7 @@ $datAll = $val->getPendientes();
                     <th>Antecedentes</th>
                     <th></th>
                 </tr>
+                <tr></tr>
             </thead>
             <tbody>
                 <?php if($datAll){ foreach ($datAll as $dt) { ?>
@@ -59,6 +60,7 @@ $datAll = $val->getPendientes();
                     <th>Antecedentes</th>
                     <th></th>
                 </tr>
+                <tr></tr>
             </tfoot>
         </table>
     </div>
