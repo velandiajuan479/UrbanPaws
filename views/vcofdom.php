@@ -26,11 +26,11 @@ require_once("controllers/ccofdom.php");
             <label for="" class="form-label">Estado</label>
             <div class="w-100"></div>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estaval" id="actv" value="1" <?= ($dtOn && $dtOn['estaval'] == 1) ? 'checked' : '' ?> required>
+            <input class="form-check-input" type="radio" name="actdom" id="actv" value="1" <?= ($dtOn && $dtOn['actdom'] == 1) ? 'checked' : '' ?> required>
             <label class="form-check-label" for="actv">Activo</label>
             </div>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estaval" id="inactv" value="2" <?= ($dtOn && $dtOn['estaval'] == 2) ? 'checked' : '' ?> required>
+            <input class="form-check-input" type="radio" name="actdom" id="inactv" value="2" <?= ($dtOn && $dtOn['actdom'] == 2) ? 'checked' : '' ?> required>
             <label class="form-check-label" for="inactv">Inactivo</label>
             </div>
         </div>
@@ -73,8 +73,8 @@ require_once("controllers/ccofdom.php");
                         </strong>
                     </td>
                     <td>
-                        <span class="badge <?= $dt['estaval'] == 1 ? 'bg-success' : 'bg-danger' ?>">
-                            <?= $dt['estaval'] == 1 ? 'Activo' : 'Inactivo' ?>
+                        <span class="badge <?= $dt['actdom'] == 1 ? 'bg-success' : 'bg-danger' ?>">
+                            <?= $dt['actdom'] == 1 ? 'Activo' : 'Inactivo' ?>
                         </span> 
                     </td>
                     <td>
@@ -90,6 +90,7 @@ require_once("controllers/ccofdom.php");
             </tbody>
             <tfoot>
                 <tr>
+                    <th>Id</th>
                     <th>Dominio</th>
                     <th>Estado</th>
                     <th></th>

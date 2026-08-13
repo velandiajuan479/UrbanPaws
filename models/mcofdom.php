@@ -16,7 +16,10 @@ class mCofdom{
 
     public function getAll(){
     try{
-        $sql = "SELECT iddom, nomdom, actmod FROM dominio";
+        $sql = "SELECT d.iddom, d.nomdom, d.actdom,
+                    v.codval AS estado
+                FROM dominio d
+                LEFT JOIN valor v ON d.actdom = v.idval";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -25,12 +28,15 @@ class mCofdom{
     }catch(Exception $e){
         echo "Error 1" . $e;
     }
-    }
+}
 
-    // CONSULTAR UN REGISTRO
-    public function getOne(){
+public function getOne(){
     try{
-        $sql = "SELECT iddom, nomdom, actdom FROM dominio WHERE iddom=:iddom";
+        $sql = "SELECT d.iddom, d.nomdom, d.actdom,
+                    v.codval AS estado
+                FROM dominio d
+                LEFT JOIN valor v ON d.actdom = v.idval
+                WHERE d.iddom = :iddom";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -41,7 +47,7 @@ class mCofdom{
     }catch(Exception $e){
         echo "Error 2" . $e;
     }
-    }
+}
 
     // GUARDAR
     public function save(){
@@ -70,26 +76,27 @@ class mCofdom{
     try{
         $sql = "UPDATE dominio
                 SET nomdom = :nomdom,
-                actmod = :actmod
+                    actdom = :actdom
                 WHERE iddom = :iddom";
 
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
-
         $result = $conexion->prepare($sql);
 
         $iddom = $this->getIddom();
         $nomdom = $this->getNomdom();
+        $actdom = $this->getActdom();
 
-        $result->bindParam(":iddom",$iddom);
-        $result->bindParam(":nomdom",$nomdom);
-        $result->bindParam(":actmod",$actdom);
+        $result->bindParam(":iddom", $iddom);
+        $result->bindParam(":nomdom", $nomdom);
+        $result->bindParam(":actdom", $actdom);
 
         return $result->execute();
+
     }catch(Exception $e){
-        echo "Error 4" . $e;
+        echo "Error 4: " . $e->getMessage();
     }
-    }
+}
 
     // ELIMINAR
     public function del(){
