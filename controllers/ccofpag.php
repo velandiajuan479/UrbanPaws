@@ -22,22 +22,22 @@ if($ope == "save") {
     if($idpag){
         $mcofpag->upd();
     }else{
-        $mcofpag->del();
+        $mcofpag->save();
     }
-
+    header("Location: index.php?pg=26"); 
     exit();
 }
 
 if($ope == "eli" AND $idpag) {
     $mcofpag->setIdpag($idpag);
     $mcofpag->del();
-    
+    header("Location: index.php?pg=26");
     exit();
 }
 
 if($ope == "edi" AND $idpag) {
     $mcofpag->setIdpag($idpag);
-    $datOne = $mcofpag->getOne();
+    $dtOn = $mcofpag->getOne();
 }
 
 $datAll = $mcofpag->getAll();

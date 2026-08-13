@@ -178,10 +178,10 @@ CREATE TABLE pagxper(
 );
 
 CREATE TABLE valor(
-    idval BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
+    idval  BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
     codval VARCHAR(255),
     PARAVAL VARCHAR(255),
     estaval TINYINT(1),
-    iddom BIGINT(11),
+    iddom  BIGINT(11),
     FOREIGN KEY (iddom) REFERENCES dominio(iddom)
 );
