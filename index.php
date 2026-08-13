@@ -25,6 +25,7 @@
   <?php
     $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
     include'views/header.php';
+
   ?>
 
     <section class="menu">
@@ -69,6 +70,7 @@
   <?php include
     'views/footer.php';
   ?>
+
 <script src="js/mytable.js"></script>
 </body>
 </html>

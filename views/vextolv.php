@@ -1,3 +1,8 @@
+
+<?php
+    require_once("controllers/cextolv.php");
+?>
+
 <div class="table-container mt-6 mx-auto" style="max-width: 600px;">
 
     <div class="table-responsive">
@@ -13,12 +18,16 @@
         </form>
         <table class="table table-striped">
             <tbody id="tableBody">
-                <?php if($datAll){ foreach ($datAll as $dt) {?>
-                <tr>
-                    <td><?php echo $dt["emaper"]; ?></td>                           
-                    <td><?php echo $dt["pasper"]; ?></td>
-                </tr>
-                <?php }} ?>
+                <?php if($datAll){ foreach ($datAll as $dt) { ?>
+             <tr>
+    <!-- Mostramos Nombre (prinom + priapel) -->
+            <td><?= htmlspecialchars($dt['prinom'] . ' ' . $dt['priapel']) ?></td>
+    <!-- Mostramos Correo (emailu) -->
+            td><?= htmlspecialchars($dt['emailu']) ?></td>
+                <!-- Mostramos Clave Temporal (claveu) -->
+            <td><?= !empty($dt['claveu']) ? htmlspecialchars($dt['claveu']) : '-' ?></td>
+            </tr>
+            <?php }} ?>
             </tbody>
         </table>
     </div>                          
