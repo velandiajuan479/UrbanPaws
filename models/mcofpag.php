@@ -44,7 +44,7 @@ public function getOne(){
         $idpag = $this->getIdpag();
         $result->bindParam(":idpag", $idpag);
         $result->execute();
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetch(PDO::FETCH_ASSOC);
     }catch(Exception $e){
         echo "Error 2" . $e;
     }

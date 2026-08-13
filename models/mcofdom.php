@@ -8,38 +8,29 @@ class mcofdom{
     public function getIddom(){ return $this->iddom;}
     public function getNomdom(){ return $this->nomdom;}
 
+    public function setIddom($iddom){ $this->iddom = $iddom;}
     public function setNomdom($nomdom){ $this->nomdom = $nomdom;}
 
     public function getAll(){
 
-        $sql = "SELECT * FROM dominio ORDER BY iddom ASC";
-
+        $sql = "SELECT iddom, nomdom FROM dominio";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
-
         $result = $conexion->prepare($sql);
         $result->execute();
-
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // CONSULTAR UN REGISTRO
     public function getOne(){
 
-        $sql = "SELECT * FROM dominio
-                WHERE iddom = :iddom";
-
+        $sql = "SELECT iddom, nomdom FROM dominio WHERE iddom=:iddom";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
-
         $result = $conexion->prepare($sql);
-
         $iddom = $this->getIddom();
-
         $result->bindParam(":iddom", $iddom);
-
         $result->execute();
-
         return $result->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -100,4 +91,7 @@ class mcofdom{
         return $result->execute();
     }
 }
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas perspiciatis sequi, corporis enim suscipit asperiores blanditiis vel! Labore nisi delectus molestiae reiciendis ut doloribus sit molestias odio. Omnis, minima mollitia.;
 ?>
