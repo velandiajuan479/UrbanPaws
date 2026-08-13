@@ -2,7 +2,7 @@
 require_once 'conexion.php';
 
 class mExtolv {
-    // Atributos (Basados en la tabla 'usuario' de urbanpaws.sql)
+    // Atributos (Tabla usuario)
     private $iduser;
     private $docu;
     private $prinom;
@@ -49,7 +49,7 @@ class mExtolv {
 
     // --- FUNCIONES CRUD ---
 
-    // 1. getAll (Listar todos)
+    // 1. getAll
     public function getAll() {
         try {
             $sql = "SELECT iduser, prinom, priapel, emailu, claveu FROM usuario ORDER BY iduser DESC";
@@ -63,7 +63,7 @@ class mExtolv {
         }
     }
 
-    // 2. getOne (Buscar uno por ID)
+    // 2. getOne
     public function getOne($id) {
         try {
             $sql = "SELECT * FROM usuario WHERE iduser = :id";
@@ -78,16 +78,14 @@ class mExtolv {
         }
     }
 
-    // 3. save (Guardar nuevo usuario)
+    // 3. save
     public function save() {
         try {
             $sql = "INSERT INTO usuario (docu, prinom, seconom, priapel, emailu, teleu, foto, passusu, claveu, estusr, ECMusr, idubi) 
                     VALUES (:docu, :prinom, :seconom, :priapel, :emailu, :teleu, :foto, :passusu, :claveu, :estusr, :ECMusr, :idubi)";
-            
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-
             $result->bindParam(':docu',    $this->getDocu());
             $result->bindParam(':prinom',  $this->getPrinom());
             $result->bindParam(':seconom', $this->getSeconom());
@@ -100,7 +98,6 @@ class mExtolv {
             $result->bindParam(':estusr',  $this->getEstusr());
             $result->bindParam(':ECMusr',  $this->getECMusr());
             $result->bindParam(':idubi',   $this->getIdubi());
-
             return $result->execute();
         } catch (PDOException $e) {
             echo "Error al guardar: " . $e->getMessage();
@@ -108,15 +105,13 @@ class mExtolv {
         }
     }
 
-    // 4. upd (Actualizar todo)
+    // 4. upd
     public function upd() {
         try {
             $sql = "UPDATE usuario SET docu=:docu, prinom=:prinom, seconom=:seconom, priapel=:priapel, emailu=:emailu, teleu=:teleu, foto=:foto, passusu=:passusu, claveu=:claveu, estusr=:estusr, ECMusr=:ECMusr, idubi=:idubi WHERE iduser=:iduser";
-            
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-
             $result->bindParam(':iduser',  $this->getIduser());
             $result->bindParam(':docu',    $this->getDocu());
             $result->bindParam(':prinom',  $this->getPrinom());
@@ -130,7 +125,6 @@ class mExtolv {
             $result->bindParam(':estusr',  $this->getEstusr());
             $result->bindParam(':ECMusr',  $this->getECMusr());
             $result->bindParam(':idubi',   $this->getIdubi());
-
             return $result->execute();
         } catch (PDOException $e) {
             echo "Error al actualizar: " . $e->getMessage();
@@ -138,7 +132,7 @@ class mExtolv {
         }
     }
 
-    // 5. del (Eliminar)
+    // 5. del
     public function del() {
         try {
             $sql = "DELETE FROM usuario WHERE iduser = :iduser";
@@ -155,7 +149,6 @@ class mExtolv {
 
     // --- FUNCIONES ESPECÍFICAS PARA "OLVIDÓ CONTRASEÑA" ---
 
-    // Buscar por Email (para verificar si existe)
     public function getByEmail() {
         try {
             $sql = "SELECT * FROM usuario WHERE emailu = :emailu AND estusr = 1";
@@ -171,17 +164,14 @@ class mExtolv {
         }
     }
 
-    // Guardar Clave Temporal (Solo actualiza la columna claveu)
     public function saveClave() {
         try {
             $sql = "UPDATE usuario SET claveu = :claveu WHERE iduser = :iduser";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            
             $iduser = $this->getIduser();
             $claveu = $this->getClaveu();
-            
             $result->bindParam(':iduser', $iduser);
             $result->bindParam(':claveu', $claveu);
             return $result->execute();

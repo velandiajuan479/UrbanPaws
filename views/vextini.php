@@ -58,10 +58,6 @@
                         </div>
 
                     </form>
-                    <div class="text-center">
-                        <a href="#" class="text-decoration-none small">Olvidé mi contraseña</a><br>
-                        <a href="#" class="text-decoration-none small">Registrarse</a>
-                    </div>
                 </div>
             </div>
 
