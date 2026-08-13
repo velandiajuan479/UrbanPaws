@@ -33,7 +33,7 @@
         <div class="col-md-4">
             <i class="fa-solid fa-hashtag"></i>
             <label for="" class="form-label">Parametros</label>
-            <input type="text" class="form-control" name="PARAVAL" required value="<?= $dtOn ? $dtOn['PARAVAL'] : ''?>">
+            <input type="text" class="form-control" name="PARAVAL" value="<?= $dtOn ? $dtOn['PARAVAL'] : ''?>">
         </div>
     <!--Estado del Módulo-->
         <div class="col-md-4">

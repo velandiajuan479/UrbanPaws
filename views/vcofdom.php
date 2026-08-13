@@ -26,11 +26,11 @@ require_once("controllers/ccofdom.php");
             <label for="" class="form-label">Estado</label>
             <div class="w-100"></div>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="actv" value="" required>
+            <input class="form-check-input" type="radio" name="estaval" id="actv" value="1" <?= ($dtOn && $dtOn['estaval'] == 1) ? 'checked' : '' ?> required>
             <label class="form-check-label" for="actv">Activo</label>
             </div>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="inactv" value="" required>
+            <input class="form-check-input" type="radio" name="estaval" id="inactv" value="2" <?= ($dtOn && $dtOn['estaval'] == 2) ? 'checked' : '' ?> required>
             <label class="form-check-label" for="inactv">Inactivo</label>
             </div>
         </div>
@@ -72,7 +72,11 @@ require_once("controllers/ccofdom.php");
                             <br>
                         </strong>
                     </td>
-                    <td>Activo</td>
+                    <td>
+                        <span class="badge <?= $dt['estaval'] == 1 ? 'bg-success' : 'bg-danger' ?>">
+                            <?= $dt['estaval'] == 1 ? 'Activo' : 'Inactivo' ?>
+                        </span> 
+                    </td>
                     <td>
                         <a href="index.php?pg=26&ope=edi&iddom=<?= $dt["iddom"] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>

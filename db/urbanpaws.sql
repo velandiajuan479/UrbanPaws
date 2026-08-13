@@ -10,7 +10,8 @@ CREATE TABLE ubicacion(
 
 CREATE TABLE dominio(
     iddom BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
-    nomdom VARCHAR(70)
+    nomdom VARCHAR(70),
+    actdom VARCHAR()
 );
 
 CREATE TABLE perfil(
@@ -23,7 +24,7 @@ CREATE TABLE pagina(
     idpag INT(3) PRIMARY KEY AUTO_INCREMENT,
     titpag VARCHAR(100),
     nompag VARCHAR(25),
-    mostpag INT(3), -- MOSTRAR PÁGINA
+    mostpag VARCHAR(3), -- MOSTRAR PÁGINA
     icopag VARCHAR(100),
     rutpag VARCHAR(255),
     ordpag INT(3),
@@ -170,7 +171,7 @@ CREATE TABLE modulo(
     idmod   BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nommod  VARCHAR(50),
     icomod VARCHAR(50) NULL,
-    estamod INT(1),
+    estamod VARCHAR(3),
     ordmod  INT(3),
     idperf BIGINT(10)
 );
@@ -186,7 +187,7 @@ CREATE TABLE valor(
     idval  BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
     codval VARCHAR(255),
     PARAVAL VARCHAR(255),
-    estaval TINYINT(1),
+    estaval VARCHAR(3),
     iddom  BIGINT(11),
     FOREIGN KEY (iddom) REFERENCES dominio(iddom)
 );
