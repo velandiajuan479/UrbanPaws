@@ -45,6 +45,18 @@
                             <i class="fa-solid fa-circle-user"></i> Ingresar
                         </button>
 
+                        <!-- Enlace para Olvidó Contraseña (pg=31) -->
+                        <div class="text-center mt-3">
+                            <a href="index.php?pg=31" class="text-decoration-none d-block mb-2" style="color: #555;">
+                                Olvidé mi contraseña
+                            </a>
+                            
+                            <!-- Enlace para Registrarse (pg=28) -->
+                            <a href="index.php?pg=28" class="text-decoration-none d-block" style="color: #555;">
+                                Registrarse
+                            </a>
+                        </div>
+
                     </form>
                     <div class="text-center">
                         <a href="#" class="text-decoration-none small">Olvidé mi contraseña</a><br>
