@@ -1,3 +1,6 @@
+<?php 
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,8 +26,10 @@
 </head>
 <body>
   <?php
+  require_once('models/conexion.php');
     $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
     include'views/header.php';
+
   ?>
 
     <section class="menu">
