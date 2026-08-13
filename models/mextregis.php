@@ -70,7 +70,7 @@ class mExtregis {
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $result->bindParam(':id', $id);
+            $result->bindValue(':id', $id);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -78,7 +78,7 @@ class mExtregis {
         }
     }
 
-    // 3. save
+    // 3. save (CORREGIDO: incluye docu + claveu=NULL + bindValue)
     public function save() {
         try {
             $sql = "INSERT INTO usuario (docu, prinom, seconom, priapel, emailu, teleu, passusu, claveu, estusr, ECMusr, idubi) 
@@ -86,17 +86,30 @@ class mExtregis {
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $result->bindParam(':docu',    $this->getDocu());
-            $result->bindParam(':prinom',  $this->getPrinom());
-            $result->bindParam(':seconom', $this->getSeconom());
-            $result->bindParam(':priapel', $this->getPriapel());
-            $result->bindParam(':emailu',  $this->getEmailu());
-            $result->bindParam(':teleu',   $this->getTeleu());
-            $result->bindParam(':passusu', $this->getPassusu());
-            $result->bindParam(':claveu',  $this->getClaveu());
-            $result->bindParam(':estusr',  $this->getEstusr());
-            $result->bindParam(':ECMusr',  $this->getECMusr());
-            $result->bindParam(':idubi',   $this->getIdubi());
+
+            $docu    = $this->getDocu();
+            $prinom  = $this->getPrinom();
+            $seconom = $this->getSeconom();
+            $priapel = $this->getPriapel();
+            $emailu  = $this->getEmailu();
+            $teleu   = $this->getTeleu();
+            $passusu = $this->getPassusu();
+            $estusr  = $this->getEstusr();
+            $ECMusr  = $this->getECMusr();
+            $idubi   = $this->getIdubi();
+
+            $result->bindValue(':docu',    $docu);
+            $result->bindValue(':prinom',  $prinom);
+            $result->bindValue(':seconom', $seconom);
+            $result->bindValue(':priapel', $priapel);
+            $result->bindValue(':emailu',  $emailu);
+            $result->bindValue(':teleu',   $teleu);
+            $result->bindValue(':passusu', $passusu);
+            $result->bindValue(':claveu',  NULL, PDO::PARAM_NULL);  // ← NULL evita Duplicate entry
+            $result->bindValue(':estusr',  $estusr);
+            $result->bindValue(':ECMusr',  $ECMusr);
+            $result->bindValue(':idubi',   NULL, PDO::PARAM_NULL);
+
             return $result->execute();
         } catch (PDOException $e) {
             echo "Error al registrar: " . $e->getMessage();
@@ -107,22 +120,34 @@ class mExtregis {
     // 4. upd
     public function upd() {
         try {
-            $sql = "UPDATE usuario SET docu=:docu, prinom=:prinom, seconom=:seconom, priapel=:priapel, emailu=:emailu, teleu=:teleu, passusu=:passusu, claveu=:claveu, estusr=:estusr, ECMusr=:ECMusr, idubi=:idubi WHERE iduser=:iduser";
+            $sql = "UPDATE usuario SET docu=:docu, prinom=:prinom, seconom=:seconom, priapel=:priapel, emailu=:emailu, teleu=:teleu, passusu=:passusu, claveu=:claveu, estusr=:estusr, ECMusr=:ECMusr WHERE iduser=:iduser";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $result->bindParam(':iduser',  $this->getIduser());
-            $result->bindParam(':docu',    $this->getDocu());
-            $result->bindParam(':prinom',  $this->getPrinom());
-            $result->bindParam(':seconom', $this->getSeconom());
-            $result->bindParam(':priapel', $this->getPriapel());
-            $result->bindParam(':emailu',  $this->getEmailu());
-            $result->bindParam(':teleu',   $this->getTeleu());
-            $result->bindParam(':passusu', $this->getPassusu());
-            $result->bindParam(':claveu',  $this->getClaveu());
-            $result->bindParam(':estusr',  $this->getEstusr());
-            $result->bindParam(':ECMusr',  $this->getECMusr());
-            $result->bindParam(':idubi',   $this->getIdubi());
+
+            $iduser  = $this->getIduser();
+            $docu    = $this->getDocu();
+            $prinom  = $this->getPrinom();
+            $seconom = $this->getSeconom();
+            $priapel = $this->getPriapel();
+            $emailu  = $this->getEmailu();
+            $teleu   = $this->getTeleu();
+            $passusu = $this->getPassusu();
+            $estusr  = $this->getEstusr();
+            $ECMusr  = $this->getECMusr();
+
+            $result->bindValue(':iduser',  $iduser);
+            $result->bindValue(':docu',    $docu);
+            $result->bindValue(':prinom',  $prinom);
+            $result->bindValue(':seconom', $seconom);
+            $result->bindValue(':priapel', $priapel);
+            $result->bindValue(':emailu',  $emailu);
+            $result->bindValue(':teleu',   $teleu);
+            $result->bindValue(':passusu', $passusu);
+            $result->bindValue(':claveu',  NULL, PDO::PARAM_NULL);
+            $result->bindValue(':estusr',  $estusr);
+            $result->bindValue(':ECMusr',  $ECMusr);
+
             return $result->execute();
         } catch (PDOException $e) {
             echo "Error al actualizar: " . $e->getMessage();
@@ -137,7 +162,8 @@ class mExtregis {
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $result->bindParam(':iduser', $this->getIduser());
+            $iduser = $this->getIduser();
+            $result->bindValue(':iduser', $iduser);
             return $result->execute();
         } catch (PDOException $e) {
             echo "Error al eliminar: " . $e->getMessage();
@@ -147,7 +173,6 @@ class mExtregis {
 
     // --- FUNCIÓN ESPECÍFICA PARA REGISTRO ---
 
-    // Buscar por Email (para verificar si ya existe)
     public function getByEmail() {
         try {
             $sql = "SELECT * FROM usuario WHERE emailu = :emailu";
@@ -155,7 +180,7 @@ class mExtregis {
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
             $emailu = $this->getEmailu();
-            $result->bindParam(':emailu', $emailu);
+            $result->bindValue(':emailu', $emailu);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

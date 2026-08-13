@@ -1,7 +1,7 @@
 <?php
 require_once("models/mextregis.php");
 
-// Capturamos TODAS las variables (como en tu ejemplo de mrcn.php)
+// Capturamos TODAS las variables
 $iduser   = isset($_POST["iduser"])   ? $_POST["iduser"]   : "NULL";
 $docu     = isset($_POST["docu"])     ? $_POST["docu"]     : "NULL";
 $prinom   = isset($_POST["prinom"])   ? $_POST["prinom"]   : "NULL";
@@ -17,28 +17,24 @@ $idubi    = isset($_POST["idubi"])    ? $_POST["idubi"]    : "NULL";
 $ope      = isset($_REQUEST["ope"])   ? $_REQUEST["ope"]   : "NULL";
 
 $mcextregis = new mExtregis();
-$datAll = $mcextregis->getAll(); // Cargamos la lista para la tabla
+$datAll = $mcextregis->getAll();
 $mensaje = "";
 
 if($ope == "save") {
-    // Verificar que las contraseñas coincidan
     if($passusu === $confirm_pass) {
-        // Verificar que el correo no esté registrado
         $mcextregis->setEmailu($emailu);
         $existe = $mcextregis->getByEmail();
 
         if($existe) {
             $mensaje = "⚠️ El correo ya está registrado.";
         } else {
-            // Generar documento aleatorio si no se proporciona
+            // Generar documento aleatorio (docu es NOT NULL en la BD)
             if($docu == "NULL" || empty($docu)) {
                 $docu = rand(100000000, 999999999);
             }
 
-            // Encriptar contraseña
             $passHash = password_hash($passusu, PASSWORD_DEFAULT);
 
-            // Setear todos los valores
             $mcextregis->setDocu($docu);
             $mcextregis->setPrinom($prinom);
             $mcextregis->setSeconom($seconom);
@@ -46,14 +42,14 @@ if($ope == "save") {
             $mcextregis->setEmailu($emailu);
             $mcextregis->setTeleu($teleu);
             $mcextregis->setPassusu($passHash);
-            $mcextregis->setClaveu('');
+            $mcextregis->setClaveu(NULL);   // ← NULL evita Duplicate entry
             $mcextregis->setEstusr(1);
             $mcextregis->setECMusr(0);
             $mcextregis->setIdubi(NULL);
 
             if($mcextregis->save()) {
                 $mensaje = "✅ Registro exitoso. Ya puedes iniciar sesión.";
-                $datAll = $mcextregis->getAll(); // Recargar tabla
+                $datAll = $mcextregis->getAll();
             } else {
                 $mensaje = "❌ Error al registrar.";
             }
