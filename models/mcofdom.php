@@ -91,7 +91,4 @@ class mcofdom{
         return $result->execute();
     }
 }
-
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas perspiciatis sequi, corporis enim suscipit asperiores blanditiis vel! Labore nisi delectus molestiae reiciendis ut doloribus sit molestias odio. Omnis, minima mollitia.;
 ?>
