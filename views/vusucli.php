@@ -20,7 +20,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="vusucli.php" class="nav-link active">Inicio</a></li>
-                <li><a href="vmascotas.php" class="nav-link">Mascotas</a></li>
+                <li><a href="vmascotas.php" class="nav-link">Mascotas </a></li>
                 <li><a href="vruta.html" class="nav-link">Rutas</a></li>
                 <li><a href="vservicios.html" class="nav-link">Servicios</a></li>
                 <li><a href="vcofpag.php" class="nav-link">Facturas</a></li>
@@ -45,22 +45,19 @@
 
     <section class="form-grid">
         <a href="vmascotas.php" class="card">
-            <div class="icon-circle">M</div>
-            <h3>Mis mascotas</h3>
+            <h3><i class="fa-solid fa-paw fa-lg"></i> Mis mascotas</h3>
             <p>Consulta y gestiona las mascotas asociadas a tu cuenta.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
         <a href="vruta.html" class="card">
-            <div class="icon-circle">R</div>
-            <h3>Mis rutas</h3>
+            <h3><i class="fa-solid fa-route fa-lg"></i> Mis rutas</h3>
             <p>Consulta y gestiona las rutas disponibles para los paseos.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
         <a href="vpaseo.html" class="card">
-            <div class="icon-circle">P</div>
-            <h3>Paseos</h3>
+            <h3><i class="fa-solid fa-dog-leashed fa-lg"></i> Paseos</h3>
             <p>Consulta y realiza la gestión de los paseos de tus mascotas.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
