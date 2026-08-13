@@ -11,7 +11,7 @@ CREATE TABLE ubicacion(
 CREATE TABLE dominio(
     iddom BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
     nomdom VARCHAR(70),
-    actdom VARCHAR()
+    actdom VARCHAR(3)
 );
 
 CREATE TABLE perfil(
