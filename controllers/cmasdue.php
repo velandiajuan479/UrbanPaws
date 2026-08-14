@@ -1,43 +1,32 @@
 <?php
 require_once("models/mmasdue.php");
 
+/* Este módulo NO tiene vista propia, por lo tanto NO se usan
+   redirecciones (header). La relación dueño-mascota se crea y se
+   elimina automáticamente desde cmasmas al guardar/borrar una mascota.
+   Este controlador queda disponible para operaciones manuales si las necesitas. */
+
 $iddueno = isset($_REQUEST["iddueno"]) ? $_REQUEST["iddueno"] : NULL;
-$iduser  = !empty($_POST["iduser"])    ? $_POST["iduser"]     : NULL;
-$idmasc  = !empty($_POST["idmasc"])    ? $_POST["idmasc"]     : NULL;
+$iduser  = !empty($_REQUEST["iduser"]) ? $_REQUEST["iduser"]  : NULL;
+$idmasc  = !empty($_REQUEST["idmasc"]) ? $_REQUEST["idmasc"]  : NULL;
 $ope     = isset($_REQUEST["ope"])     ? $_REQUEST["ope"]     : NULL;
 
 $dtOn = null;
 $mmasdue = new mCofdue;
-$mmasdue->setIddueno($iddueno);
 
-if($ope == "save") {
+if($ope == "saveDue" AND $iduser AND $idmasc) {
     $mmasdue->setIduser($iduser);
     $mmasdue->setIdmasc($idmasc);
-
-    if($iddueno){
-        $mmasdue->upd();
-    } else {
+    if(!$mmasdue->existe()){
         $mmasdue->save();
     }
-    header("Location: index.php?pg=28"); // <-- cambia por tu página de dueños
-    exit();
+    // SIN header: el flujo lo controla quien lo invoque
 }
 
-if($ope == "eli" AND $iddueno) {
+if($ope == "eliDue" AND $iddueno) {
     $mmasdue->setIddueno($iddueno);
     $mmasdue->del();
-    header("Location: index.php?pg=28");
-    exit();
 }
 
-if($ope == "edi" AND $iddueno) {
-    $mmasdue->setIddueno($iddueno);
-    $dtOn = $mmasdue->getOne();
-}
-
-// Datos para los selects del formulario
-$datDuen = $mmasdue->getDuenos();
-$datMasc = $mmasdue->getMascotas();
-
-$datAll = $mmasdue->getAll();
+$datAllDue = $mmasdue->getAll();
 ?>

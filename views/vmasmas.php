@@ -4,8 +4,33 @@
         <i class="fa-solid fa-paw"></i>
         Nuevo Registro de Mascota
     </h4>
+
+    <!-- Dueño actual: se muestra el nombre, sin select y sin sesión -->
+    <?php if ($dtDuen) { ?>
+    <div class="alert alert-info d-flex align-items-center gap-2">
+        <?php if ($dtDuen['foto']) { ?>
+            <img src="<?= $dtDuen['foto'] ?>" alt="foto dueño" height="40" class="rounded-circle">
+        <?php } else { ?>
+            <i class="fa-solid fa-user fa-xl"></i>
+        <?php } ?>
+        <div>
+            <strong>Dueño:</strong>
+            <?= $dtDuen['prinom'] . ' ' . ($dtDuen['seconom'] ? $dtDuen['seconom'] . ' ' : '') . $dtDuen['priapel'] ?>
+            <br>
+            <small>Documento: <?= $dtDuen['docu'] ?></small>
+        </div>
+    </div>
+    <?php } else { ?>
+    <div class="alert alert-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        No hay dueño seleccionado. Entra con: <code>index.php?pg=??&iduser=X</code>
+    </div>
+    <?php } ?>
+
     <form action="index.php?pg=27&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
         <input type="hidden" name="idmasc" value="<?= $dtOn ? $dtOn['idmasc'] : '' ?>">
+        <!-- El dueño viaja oculto: no hay select ni sesión -->
+        <input type="hidden" name="iduser" value="<?= $iduser ? $iduser : '' ?>">
 
         <!-- Nombre -->
         <div class="col-md-4">
@@ -26,38 +51,23 @@
             </select>
         </div>
 
-        <!-- Raza -->
+        <!-- Raza: alimentada desde la tabla valor (dominio raza) -->
         <div class="col-md-4">
             <i class="fa-solid fa-paw"></i>
             <label class="form-label">Raza <span class="text-danger">*</span></label>
             <select name="razamasc" class="form-control form-select" required>
                 <option value="">Seleccionar raza...</option>
-                <?php
-                $razas = ["Labrador Retriever","Pastor Alemán","Bulldog (Inglés / Francés)","Poodle / Caniche",
-                          "Cocker Spaniel","Schnauzer","Beagle","Criollo Colombiano","Golden Retriever","Mestizo / Mixto"];
-                foreach($razas AS $rz){ ?>
-                <option value="<?= $rz ?>" <?= ($dtOn && $dtOn['razamasc']==$rz) ? 'selected' : '' ?>><?= $rz ?></option>
-                <?php } ?>
-            </select>
-        </div>
-
-        <!-- Dueño -->
-        <div class="col-md-4">
-            <i class="fa-solid fa-user"></i>
-            <label class="form-label">Dueño</label>
-            <select name="iduser" class="form-control form-select">
-                <option value="">Sin dueño</option>
-                <?php if ($datDuen) { foreach ($datDuen AS $du) { ?>
-                <option value="<?= $du['iduser'] ?>"
-                    <?= ($dtOn && $dtOn['iduser'] == $du['iduser']) ? 'selected' : '' ?>>
-                    <?= $du['nomuser'] ?> (<?= $du['docu'] ?>)
+                <?php if ($datRaz) { foreach ($datRaz AS $rz) { ?>
+                <option value="<?= $rz['codval'] ?>"
+                    <?= ($dtOn && $dtOn['razamasc'] == $rz['codval']) ? 'selected' : '' ?>>
+                    <?= $rz['codval'] ?>
                 </option>
                 <?php }} ?>
             </select>
         </div>
 
         <!-- Foto de la mascota -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <i class="fa-solid fa-camera"></i>
             <label class="form-label">Foto de la mascota</label>
             <input type="file" class="form-control" name="fotomasc" accept=".jpg,.jpeg,.png">
@@ -68,7 +78,7 @@
         </div>
 
         <!-- Carnet de vacunas -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <i class="fa-solid fa-syringe"></i>
             <label class="form-label">Carnet de Vacunas <small>(JPG, PNG o PDF máx. 5MB)</small></label>
             <input type="file" class="form-control" name="fotovacu" accept=".pdf,.jpg,.jpeg,.png">
@@ -119,6 +129,7 @@
                 <tr>
                     <th>Mascota</th>
                     <th>Sexo</th>
+                    <th>Raza</th>
                     <th>Dueño</th>
                     <th>Detalles</th>
                     <th>Carnet</th>
@@ -137,8 +148,6 @@
                             <?php } ?>
                             <?= $dt["idmasc"] ?> <?= $dt["nommasc"] ?>
                         </strong>
-                        <br>
-                        <small>Raza: <?= $dt["razamasc"] ?></small>
                     </td>
                     <td>
                         <?php if ($dt["sexmasc"] == 'Hembra') { ?>
@@ -147,6 +156,7 @@
                             <span class="badge bg-primary"><i class="fa-solid fa-mars"></i> Macho</span>
                         <?php } ?>
                     </td>
+                    <td><?= $dt["razamasc"] ?></td>
                     <td><?= $dt["nomdueno"] ? $dt["nomdueno"] : 'Sin dueño' ?></td>
                     <td>
                         <small>
@@ -163,10 +173,10 @@
                         <?php } else { echo '—'; } ?>
                     </td>
                     <td>
-                        <a href="index.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>" title="editar">
+                        <a href="index.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="index.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>" title="borrar"
+                        <a href="index.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="borrar"
                            onclick="return confirm('¿Eliminar la mascota?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>

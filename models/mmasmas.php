@@ -73,7 +73,7 @@ class mCofmas
         }
     }
 
-    // Método save
+    // Método save — DEVUELVE el id de la mascota recién creada (lastInsertId)
     public function save(){
         try{
             $sql = "INSERT INTO mascotas(nommasc, sexmasc, fotovacu, fotomasc, razamasc, descmasc, enfermasc, iduser)
@@ -100,6 +100,8 @@ class mCofmas
             $result->bindParam(":enfermasc",$enfermasc);
             $result->bindParam(":iduser",   $iduser);
             $result->execute();
+
+            return $conexion->lastInsertId(); // <-- para registrar duenomasc
         }catch(Exception $e){
             echo "Error 3: " . $e->getMessage();
         }
@@ -159,21 +161,6 @@ class mCofmas
             $result->execute();
         }catch(Exception $e){
             echo "Error 5: " . $e->getMessage();
-        }
-    }
-
-    // Método getDuenos: llena el select de dueño
-    public function getDuenos(){
-        try{
-            $sql = "SELECT iduser, docu, CONCAT(prinom, ' ', priapel) AS nomuser
-                    FROM usuario ORDER BY prinom ASC";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $result->execute();
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        }catch(Exception $e){
-            echo "Error 6: " . $e->getMessage();
         }
     }
 }
