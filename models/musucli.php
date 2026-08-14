@@ -1,4 +1,5 @@
 <?php
+    require_once("conexion.php");
 
 class mUsucli
 {
@@ -178,7 +179,10 @@ class mUsucli
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
 
-        } catch (Exception $e) 
+        } catch (Exception $e) {
+
+            ManejoError($e);
+        }
     }
 
 
@@ -186,7 +190,9 @@ class mUsucli
     {
         try {
 
-            $sql = "SELECT * FROM usuario WHERE idusu = :idusu";
+            $sql = "SELECT *
+                    FROM usuario
+                    WHERE idusu = :idusu";
 
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
@@ -204,7 +210,6 @@ class mUsucli
         } catch (Exception $e) {
 
             ManejoError($e);
-
         }
     }
 
@@ -259,7 +264,6 @@ class mUsucli
         } catch (Exception $e) {
 
             ManejoError($e);
-
         }
     }
 
@@ -316,7 +320,6 @@ class mUsucli
         } catch (Exception $e) {
 
             ManejoError($e);
-
         }
     }
 
@@ -342,8 +345,8 @@ class mUsucli
         } catch (Exception $e) {
 
             ManejoError($e);
-
         }
     }
 }
+
 ?>
