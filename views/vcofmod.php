@@ -1,61 +1,79 @@
+<?php require_once("controllers/ccofmod.php"); ?>
 <div class="card card-form p-4">
-    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
     <h4 class="section-title">
         <i class="fa-solid fa-box-open"></i>
         Nuevo Módulo
-    </h4> 
-    
-    <form action="" method="POST" class="row g-3">
-    <!--Nombre del módulo-->
+    </h4>
+    <form action="index.php?pg=24&ope=save" method="POST" class="row g-3">
+        <input type="hidden" id="idmod" name="idmod" value="<?= $dtOn ? $dtOn['idmod'] : '' ?>">
+
+        <!-- Nombre del módulo -->
         <div class="col-md-4">
             <i class="fa-solid fa-hashtag"></i>
-            <label for="" class="form-label">Nombre del módulo</label>
-            <input type="text" class="form-control" placeholder="Módulo" required>
+            <label class="form-label">Nombre del módulo</label>
+            <input type="text" class="form-control" name="nommod" placeholder="Usuarios" required
+                   value="<?= $dtOn ? $dtOn['nommod'] : '' ?>">
         </div>
-    <!--Estado del Módulo-->
+
+        <!-- Estado -->
         <div class="col-md-4">
             <i class="fa-solid fa-toggle-on"></i>
-            <label for="" class="form-label">Estado</label>
+            <label class="form-label">Estado</label>
             <div class="w-100"></div>
+            <?php if ($datEst) { foreach ($datEst AS $est) { ?>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="actv" value="" required>
-            <label class="form-check-label" for="actv">Activo</label>
+                <input class="form-check-input" type="radio" name="estamod"
+                       id="est<?= $est['idval'] ?>" value="<?= $est['idval'] ?>" required
+                       <?= ($dtOn && $dtOn['estamod'] == $est['idval']) ? 'checked' : '' ?>>
+                <label class="form-check-label" for="est<?= $est['idval'] ?>"><?= $est['codval'] ?></label>
             </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="inactv" value="" required>
-            <label class="form-check-label" for="inactv">Inactivo</label>
-            </div>
+            <?php }} ?>
         </div>
-    <!--Selección del icono-->
+
+        <!-- Iconos-->
         <div class="col-md-4">
             <i class="fa-solid fa-shapes"></i>
-            <label class="form-label" for="">Icono</label>
+            <label class="form-label" for="icomod">Icono</label>
             <div class="input-group">
-                <select name="icono" id="" class="form-control form-select">
-                    <option value="0">Selecciona un icono...</option>
-                    <option value="1">Logo</option>
+                <select name="icomod" id="icomod" class="form-control form-select" required>
+                    <option value="">Selecciona un icono...</option>
+                    <?php if ($datIco) { foreach ($datIco AS $ico) { ?>
+                    <option value="<?= $ico['codval'] ?>"
+                        <?= ($dtOn && $dtOn['icomod'] == $ico['codval']) ? 'selected' : '' ?>>
+                        <?= $ico['codval'] ?>
+                    </option>
+                    <?php }} ?>
                 </select>
+                <span class="input-group-text">
+                    <i class="<?= $dtOn ? $dtOn['icomod'] : '' ?>"></i>
+                </span>
             </div>
         </div>
-        <div class="col-md-2"></div>
-    <!--Selección de usuarios-->
+
+        <!-- Usuarios con acceso-->
         <div class="col-md-4">
-            <i class="fa-solid fa-user"></i>
-            <label class="form-label" for="">Usuarios con acceso</label>
-            <div class="input-group">
-                <select name="icono" id="" class="form-control form-select">
-                    <option value="0">Sin usuarios</option>
-                    <option value="1">Admin</option>
-                </select>
-            </div>
+            <i class="fa-solid fa-users"></i>
+            <label class="form-label" for="idperf">Usuarios con acceso</label>
+            <select name="idperf" id="idperf" class="form-control form-select">
+                <option value="">Sin usuarios</option>
+                <?php if ($datPer) { foreach ($datPer AS $per) { ?>
+                <option value="<?= $per['idperf'] ?>"
+                    <?= ($dtOn && $dtOn['idperf'] == $per['idperf']) ? 'selected' : '' ?>>
+                    <?= $per['nomperf'] ?>
+                </option>
+                <?php }} ?>
+            </select>
         </div>
-    <!--Orden de carga-->
-        <div class="col-md-3">
+
+        <!-- Orden de carga -->
+        <div class="col-md-4">
             <i class="fa-solid fa-sort"></i>
-            <label class="form-label" for="">Orden de carga</label>
-            <input type="number" class="form-control" name="" id="" placeholder="Ej:10">
+            <label class="form-label">Orden de carga</label>
+            <input type="number" class="form-control" name="ordmod" placeholder="Ej:10"
+                value="<?= $dtOn ? $dtOn['ordmod'] : '' ?>">
         </div>
-    <!--Botones-->
+
+        <!-- Botones -->
         <div class="col-md-12 mt-4 text-end">
             <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
@@ -67,7 +85,7 @@
     </form>
 </div>
 
-<div class="table-container mt-4">
+<div class="card card-form mt-4">
     <h5 class="mb-3">
         <i class="fa-solid fa-table-list"></i>
         Lista de módulos
@@ -76,35 +94,41 @@
         <table id="mitabla" class="table table-striped">
             <thead>
                 <tr>
-                    <th>Módulos</th>
-                    <th>Estados</th>
+                    <th>Módulo</th>
+                    <th>Acceso</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+                <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
                 <tr>
                     <td>
                         <strong>
-                            <i class=""></i>
-                        </strong>
-                        <small>
-                            <strong>id: 1</strong>
-                            <strong>Módulo</strong>
+                            <i class="<?= $dt['icomod'] ?>"></i>
+                            <?= $dt["idmod"] ?> <?= $dt["nommod"] ?>
                             <br>
-                            <strong>Orden: 16</strong>
-                            <strong>Admin</strong>
-                        </small>
+                        </strong>
+                        <small>Orden: <?= $dt["ordmod"] ?></small>
                     </td>
-                    <td>Activo</td>
+                    <td><?= $dt["nomperf"] ? $dt["nomperf"] : 'Sin usuarios' ?></td>
+                    <!-- Traducido por el LEFT JOIN con valor -->
                     <td>
-                        <a href="" title="editar">
+                        <span class="badge <?= $dt['estamod'] == '1' ? 'bg-success' : 'bg-danger' ?>">
+                            <?= $dt['estamod'] == 1 ? 'Activo' : 'Inactivo' ?>
+                        </span> 
+                    </td>
+                    <td>
+                        <a href="index.php?pg=24&ope=edi&idmod=<?= $dt['idmod'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="" title="borrar">
+                        <a href="index.php?pg=24&ope=eli&idmod=<?= $dt['idmod'] ?>" title="borrar"
+                           onclick="return confirm('¿Eliminar el módulo?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>
                     </td>
                 </tr>
+                <?php }} ?>
             </tbody>
             <tfoot>
                 <tr>
@@ -114,8 +138,5 @@
                 </tr>
             </tfoot>
         </table>
-
     </div>
 </div>
-
-Lorem ipsum dolor sit amet consectetur, adipisicing elit.

@@ -66,7 +66,7 @@
                     value="<?= $dtOn ? $dtOn['rutpag'] : '' ?>">
         </div>
 
-        <!-- Orden de carga (se agregó name="ordpag" que faltaba) -->
+        <!-- Orden de carga -->
         <div class="col-md-4">
             <i class="fa-solid fa-sort"></i>
             <label class="form-label">Orden de carga</label>
@@ -125,7 +125,9 @@
                         </small>
                     </td>
                     <td><small><?= $dt["descpag"] ?></small></td>
-                    <td><?= $dt["nommost"] ?></td>
+                    <td><span class="badge <?= $dt['mostpag'] == '1' ? 'bg-success' : 'bg-danger' ?>">
+                            <?= $dt['mostpag'] == 1 ? 'Activo' : 'Inactivo' ?>
+                        </span> </td>
                     <td>
                         <a href="index.php?pg=23&ope=edi&idpag=<?= $dt['idpag'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
