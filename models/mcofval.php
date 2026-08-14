@@ -53,6 +53,25 @@ class mCofVal{
         }
     }
 
+    public function getByDom(){
+        try{
+            $sql = "SELECT v.idval, v.codval, v.PARAVAL, v.estaval, v.iddom, d.nomdom
+                    FROM valor v
+                    INNER JOIN dominio d ON v.iddom = d.iddom
+                    WHERE v.iddom = :iddom AND v.estaval = 1
+                    ORDER BY v.idval ASC";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $iddom = $this->getIddom();
+            $result->bindParam(":iddom", $iddom);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            echo "Error 6: " . $e->getMessage();
+        }
+    }
+
     public function save(){
         try{
             $sql = "INSERT INTO valor (codval, PARAVAL, estaval, iddom) VALUES (:codval, :PARAVAL, :estaval, :iddom)";

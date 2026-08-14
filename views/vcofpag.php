@@ -1,69 +1,88 @@
+<?php require_once("controllers/ccofpag.php"); ?>
 <div class="card card-form p-4">
-    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
     <h4 class="section-title">
         <i class="fa-solid fa-box-open"></i>
         Nueva Página
-    </h4> 
-    
-    <form action="" method="POST" class="row g-3">
-    <!--Nombre del módulo-->
+    </h4>
+    <form action="index.php?pg=23&ope=save" method="POST" class="row g-3">
+        <input type="hidden" id="idpag" name="idpag" value="<?= $dtOn ? $dtOn['idpag'] : '' ?>">
+
+        <!-- Nombre de la página -->
         <div class="col-md-4">
             <i class="fa-solid fa-hashtag"></i>
-            <label for="" class="form-label">Nombre de la página</label>
-            <input type="text" class="form-control" placeholder="Servicio" required>
+            <label class="form-label">Nombre de la página</label>
+            <input type="text" class="form-control" name="nompag" placeholder="Servicio" required
+                value="<?= $dtOn ? $dtOn['nompag'] : '' ?>">
         </div>
+
+        <!-- Título de la página -->
         <div class="col-md-4">
             <i class="fa-solid fa-hashtag"></i>
-            <label for="" class="form-label">Titulo de la página</label>
-            <input type="text" class="form-control" placeholder="Reporte de PQRS" required>
+            <label class="form-label">Titulo de la página</label>
+            <input type="text" class="form-control" name="titpag" placeholder="Reporte de PQRS" required
+                value="<?= $dtOn ? $dtOn['titpag'] : '' ?>">
         </div>
-    <!--Estado del Módulo-->
+
+        <!-- Mostrar Página: radios generados desde valor (dominio 1) -->
         <div class="col-md-4">
             <i class="fa-solid fa-toggle-on"></i>
-            <label for="" class="form-label">Mostrar Página</label>
+            <label class="form-label">Mostrar Página</label>
             <div class="w-100"></div>
+            <?php if ($datEst) { foreach ($datEst AS $est) { ?>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="si" value="" required>
-            <label class="form-check-label" for="actv">Si</label>
+                <input class="form-check-input" type="radio" name="mostpag"
+                    id="est<?= $est['idval'] ?>" value="<?= $est['idval'] ?>" required
+                    <?= ($dtOn && $dtOn['mostpag'] == $est['idval']) ? 'checked' : '' ?>>
+                <label class="form-check-label" for="est<?= $est['idval'] ?>"><?= $est['codval'] ?></label>
             </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="no" value="" required>
-            <label class="form-check-label" for="inactv">No</label>
-            </div>
+            <?php }} ?>
         </div>
-    <!--Selección del icono-->
+
+        <!-- Icono: select generado desde valor (dominio 2) -->
         <div class="col-md-4">
             <i class="fa-solid fa-shapes"></i>
-            <label class="form-label" for="">Icono</label>
+            <label class="form-label" for="icopag">Icono</label>
             <div class="input-group">
-                <select name="icono" id="" class="form-control form-select">
-                    <option value="0">Selecciona un icono...</option>
-                    <option value="1">Logo</option>
+                <select name="icopag" id="icopag" class="form-control form-select" required>
+                    <option value="">Selecciona un icono...</option>
+                    <?php if ($datIco) { foreach ($datIco AS $ico) { ?>
+                    <option value="<?= $ico['codval'] ?>"
+                        <?= ($dtOn && $dtOn['icopag'] == $ico['codval']) ? 'selected' : '' ?>>
+                        <?= $ico['codval'] ?>
+                    </option>
+                    <?php }} ?>
                 </select>
+                <span class="input-group-text">
+                    <i class="<?= $dtOn ? $dtOn['icopag'] : '' ?>"></i>
+                </span>
             </div>
         </div>
-        
-    <!--Ruta de la página-->
+
+        <!-- Ruta de la página -->
         <div class="col-md-4">
             <i class="fa-solid fa-folder"></i>
-            <label class="form-label" for="">Ruta de la página</label>
-            <input class="form-control" type="text" name="" id="" placeholder="views/vcofcof.php">
+            <label class="form-label">Ruta de la página</label>
+            <input class="form-control" type="text" name="rutpag" placeholder="views/vcofcof.php"
+                    value="<?= $dtOn ? $dtOn['rutpag'] : '' ?>">
         </div>
-    <!--Orden de carga-->
+
+        <!-- Orden de carga (se agregó name="ordpag" que faltaba) -->
         <div class="col-md-4">
             <i class="fa-solid fa-sort"></i>
-            <label class="form-label" for="">Orden de carga</label>
-            <input type="number" class="form-control" name="" id="" placeholder="Ej:10">
+            <label class="form-label">Orden de carga</label>
+            <input type="number" class="form-control" name="ordpag" id="ordpag" placeholder="Ej:10"
+                    value="<?= $dtOn ? $dtOn['ordpag'] : '' ?>">
         </div>
-        <div class="col-md-4"></div>
-    <!--Descripción de la página-->
+
+        <!-- Descripción corta -->
         <div class="col-md-4">
             <i class="fa-solid fa-clipboard"></i>
-            <label class="form-label" for="">Descripción corta</label>
-            <input class="form-control" type="text" name="" id="" placeholder="descripción">
+            <label class="form-label">Descripción corta</label>
+            <input class="form-control" type="text" name="descpag" placeholder="descripción"
+                    value="<?= $dtOn ? $dtOn['descpag'] : '' ?>">
         </div>
-        <div class="col-md-2"></div>
-    <!--Botones-->
+
+        <!-- Botones -->
         <div class="col-md-12 mt-4 text-end">
             <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
@@ -75,7 +94,7 @@
     </form>
 </div>
 
-<div class="table-container mt-4">
+<div class="card card-form mt-4">
     <h5 class="mb-3">
         <i class="fa-solid fa-table-list"></i>
         Lista de páginas
@@ -91,34 +110,33 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
                 <tr>
                     <td>
                         <strong>
-                            <i class="fa fa-box"></i>
-                            1 Módulo
+                            <i class="<?= $dt['icopag'] ?>"></i>
+                            <?= $dt["idpag"] ?> <?= $dt["nompag"] ?>
                             <br>
                         </strong>
                         <small>
-                            Titulo: Módulo Ruta: views/vcofmod.php
+                            Titulo: <?= $dt["titpag"] ?> Ruta: <?= $dt["rutpag"] ?>
                             <br>
-                            Orden: 1
+                            Orden: <?= $dt["ordpag"] ?>
                         </small>
                     </td>
+                    <td><small><?= $dt["descpag"] ?></small></td>
+                    <td><?= $dt["nommost"] ?></td>
                     <td>
-                        <small>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt architecto voluptatibus distinctio commodi neque aperiam voluptate labore. Adipisci, eveniet. Esse ad quibusdam voluptates aliquam blanditiis quidem. Quas voluptatibus excepturi iusto.
-                        </small>
-                    </td>
-                    <td>No</td>
-                    <td>
-                        <a href="" title="editar">
+                        <a href="index.php?pg=23&ope=edi&idpag=<?= $dt['idpag'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="" title="borrar">
+                        <a href="index.php?pg=23&ope=eli&idpag=<?= $dt['idpag'] ?>" title="borrar"
+                            onclick="return confirm('¿Eliminar la página?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>
                     </td>
                 </tr>
+                <?php }} ?>
             </tbody>
             <tfoot>
                 <tr>
@@ -128,6 +146,5 @@
                 </tr>
             </tfoot>
         </table>
-
     </div>
 </div>

@@ -46,7 +46,7 @@ require_once("controllers/ccofdom.php");
     </form>
 </div>
 
-<div class="table-container mt-4">
+<div class="card card-form mt-4">
     <h5 class="mb-3">
         <i class="fa-solid fa-table-list"></i>
         Lista de dominios
