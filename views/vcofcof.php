@@ -1,89 +1,134 @@
-<main class="main-content">
-    <section id="configuracion">
-        <h2 class="section-title">
-            <span class="icon-circle"><i class="bi bi-sliders2"></i></span>
-            Ajustes Generales
-        </h2>
+<?php require_once("controllers/ccofcof.php"); ?>
+<div class="card card-form p-4">
+    <h4 class="section-title">
+        <i class="fa-solid fa-gear"></i>
+        Configuración del Sistema
+    </h4>
+    <form action="index.php?pg=25&ope=save" method="POST" class="row g-3">
+        <input type="hidden" id="idconf" name="idconf" value="<?= $dtOn ? $dtOn['idconf'] : '' ?>">
 
-        <div class="form-card">
-            <form action="guardar_config.php" method="post">
-                <div class="form-grid">
-                    
-                    <!-- Nombre Empresa (maps to nomconf) -->
-                    <div class="form-group">
-                        <label for="nombre_empresa">
-                            <i class="bi bi-building"></i> Nombre de la Empresa <span class="required">*</span>
-                        </label>
-                        <input type="text" id="nombre_empresa" name="nomconf" class="form-control-custom" placeholder="Ej: SIREMC" required>
-                    </div>
-
-                    <!-- NIT -->
-                    <div class="form-group">
-                        <label for="nit">
-                            <i class="bi bi-card-checklist"></i> NIT <span class="required">*</span>
-                        </label>
-                        <input type="text" id="nit" name="nit" class="form-control-custom" placeholder="Ej: 123456789" required>
-                    </div>
-
-                    <!-- Email (maps to emlconf) -->
-                    <div class="form-group">
-                        <label for="email">
-                            <i class="bi bi-envelope-fill"></i> Email <span class="required">*</span>
-                        </label>
-                        <input type="email" id="email" name="emlconf" class="form-control-custom" placeholder="correo@ejemplo.com" required>
-                    </div>
-
-                    <!-- Teléfono (maps to tefconf) -->
-                    <div class="form-group">
-                        <label for="telefono">
-                            <i class="bi bi-telephone-fill"></i> Teléfono
-                        </label>
-                        <input type="tel" id="telefono" name="tefconf" class="form-control-custom" placeholder="3000000000">
-                    </div>
-
-                    <!-- Celular -->
-                    <div class="form-group">
-                        <label for="celular">
-                            <i class="bi bi-phone-fill"></i> Celular
-                        </label>
-                        <input type="tel" id="celular" name="celular" class="form-control-custom" placeholder="3100000000">
-                    </div>
-
-                    <!-- Dirección -->
-                    <div class="form-group">
-                        <label for="direccion">
-                            <i class="bi bi-geo-alt-fill"></i> Dirección <span class="required">*</span>
-                        </label>
-                        <input type="text" id="direccion" name="direccion" class="form-control-custom" placeholder="Calle 00 #00-00" required>
-                    </div>
-
-                    <!-- Logo (maps to logoconf) -->
-                    <div class="form-group full-width">
-                        <label for="logo">
-                            <i class="bi bi-image-fill"></i> Logo (ruta o URL)
-                        </label>
-                        <input type="text" id="logo" name="logoconf" class="form-control-custom" placeholder="https://... o uploads/...">
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="form-group full-width">
-                        <label for="descripcion">
-                            <i class="bi bi-textarea-resize"></i> Descripción
-                        </label>
-                        <textarea id="descripcion" name="descripcion" class="form-control-custom" rows="4" placeholder="Breve descripción..."></textarea>
-                    </div>
-                    
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary-custom" onclick="history.back()">
-                        <i class="bi bi-x-lg"></i> Cancelar
-                    </button>
-                    <button type="submit" class="btn-primary-custom">
-                        <i class="bi bi-save"></i> Guardar Configuración
-                    </button>
-                </div>
-            </form>
+        <!-- Nombre de la empresa -->
+        <div class="col-md-4">
+            <i class="fa-solid fa-building"></i>
+            <label class="form-label">Nombre de la Empresa</label>
+            <input type="text" class="form-control" name="nomcon" placeholder="Ej: UrbanPaws" required
+                   value="<?= $dtOn ? $dtOn['nomcon'] : '' ?>">
         </div>
-    </section>
-</main>
+
+        <!-- Email -->
+        <div class="col-md-4">
+            <i class="fa-solid fa-envelope"></i>
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="emailcon" placeholder="correo@ejemplo.com" required
+                   value="<?= $dtOn ? $dtOn['emailcon'] : '' ?>">
+        </div>
+
+        <!-- Teléfono -->
+        <div class="col-md-4">
+            <i class="fa-solid fa-phone"></i>
+            <label class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" name="telecon" placeholder="3000000000"
+                   value="<?= $dtOn ? $dtOn['telecon'] : '' ?>">
+        </div>
+
+        <!-- Logo (ruta o URL) con vista previa -->
+        <div class="col-md-8">
+            <i class="fa-solid fa-image"></i>
+            <label class="form-label">Logo (ruta o URL)</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="logocon" placeholder="https://... o uploads/..."
+                       value="<?= $dtOn ? $dtOn['logocon'] : '' ?>">
+                <?php if ($dtOn && $dtOn['logocon']) { ?>
+                <span class="input-group-text">
+                    <img src="<?= $dtOn['logocon'] ?>" alt="logo" height="24">
+                </span>
+                <?php } ?>
+            </div>
+        </div>
+
+        <!-- Estado: radios generados desde valor (dominio 1) -->
+        <div class="col-md-4">
+            <i class="fa-solid fa-toggle-on"></i>
+            <label class="form-label">Estado</label>
+            <div class="w-100"></div>
+            <?php if ($datEst) { foreach ($datEst AS $est) { ?>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="estacon"
+                       id="est<?= $est['idval'] ?>" value="<?= $est['idval'] ?>" required
+                       <?= ($dtOn && $dtOn['estacon'] == $est['idval']) ? 'checked' : '' ?>>
+                <label class="form-check-label" for="est<?= $est['idval'] ?>"><?= $est['codval'] ?></label>
+            </div>
+            <?php }} ?>
+        </div>
+
+        <!-- Botones -->
+        <div class="col-md-12 mt-4 text-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk fa-xl"></i>
+            </button>
+            <button type="reset" class="btn btn-accent">
+                <i class="fa-solid fa-trash fa-xl"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card card-form mt-4">
+    <h5 class="mb-3">
+        <i class="fa-solid fa-table-list"></i>
+        Lista de configuraciones
+    </h5>
+    <div class="table-responsive">
+        <table id="mitabla" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Configuración</th>
+                    <th>Contacto</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
+                <tr>
+                    <td>
+                        <strong>
+                            <?php if ($dt['logocon']) { ?>
+                                <img src="<?= $dt['logocon'] ?>" height="24" class="me-1">
+                            <?php } ?>
+                            <?= $dt["idconf"] ?> <?= $dt["nomcon"] ?>
+                        </strong>
+                    </td>
+                    <td>
+                        <small>
+                            Email: <?= $dt["emailcon"] ?>
+                            <br>
+                            Teléfono: <?= $dt["telecon"] ?>
+                        </small>
+                    </td>
+                    <!-- Traducido por el LEFT JOIN con valor -->
+                    <td><span class="badge <?= $dt['estacon'] == 1 ? 'bg-success' : 'bg-danger' ?>">
+                            <?= $dt['estacon'] == 1 ? 'Activo' : 'Inactivo' ?>
+                        </span></td>
+                    <td>
+                        <a href="index.php?pg=25&ope=edi&idconf=<?= $dt['idconf'] ?>" title="editar">
+                            <i class="fa-solid fa-pencil fa-2x"></i>
+                        </a>
+                        <a href="index.php?pg=25&ope=eli&idconf=<?= $dt['idconf'] ?>" title="borrar"
+                           onclick="return confirm('¿Eliminar la configuración?')">
+                            <i class="fa-solid fa-trash-can fa-2x"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php }} ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Configuración</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
