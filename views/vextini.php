@@ -1,3 +1,4 @@
+<?php require_once("controllers/cextini.php"); ?>
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
@@ -8,16 +9,16 @@
 
 
                 <div class="login-box w-100">
-                    <form action="models/control.php" method="POST">
+                    <form action="index.php?pg=29&ope=login" method="POST">
 
                         <div class="mb-2">
                             <label class="form-label mb-1" style="font-size:1.05rem;">Usuario o E-mail</label>
-                            <input type="text" name="user" class="form-control" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Usuario o E-mail" required>
+                            <input type="text" name="usuario" class="form-control" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Usuario o E-mail" required>
                         </div>
 
                         <div class="mb-2">
                             <label class="form-label mb-1" style="font-size:1.05rem;">Contraseña</label>
-                            <input type="password" name="pass" class="form-control mb-2" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Contraseña" required>
+                            <input type="password" name="contrasena" class="form-control mb-2" style="font-size:1.05rem; padding:.6rem;" placeholder="Ingresa tu Contraseña" required>
 
                             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-1">
                                 <div class="form-check">

@@ -16,12 +16,12 @@
         $user = $mcextini->login();
 
         if($user && password_verify($contrasena, $user['passusu'])){
-            session_start();
             $_SESSION['iduser'] = $user['iduser'];
-            header("Location: dashboard.php");
+            header("Location: index.php");
             exit;
         } else {
-            $error = "Datos incorrectos";
+            header("Location: index.php?pg=29&error=ok");
+            exit;
         }
     }
 ?>
