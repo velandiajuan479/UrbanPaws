@@ -1,23 +1,27 @@
-<header class="hero-section">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;">
-        <!-- Logo System -->
-        <a href="index.php" class="logo-container">
-            <img src="img/logo.png" alt="UrbanPaws Logo" class="logo-img">
-            <div class="logo-text">
-                <span class="brand">Urban<span>Paws</span></span>
-                <span class="tagline">Mi Espacio Personal</span>
+<header class="bg-primary text-white py-3 barsup">
+    <div class="container d-flex justify-content-between align-items-center">
+        <?php $ins = isset($_SESSION["iduser"]) ? $_SESSION["iduser"] : NULL; ?>
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fa-solid fa-paw"></i>
             </div>
-        </a>
-
-        <!-- Navigation -->
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.php" class="nav-link active"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
-                <li><a href="#" class="nav-link"><i class="bi bi-grid-fill"></i> Servicios</a></li>
-                <li><a href="#" class="nav-link"><i class="bi bi-receipt"></i> Facturas</a></li>
-                <li><a href="#" class="nav-link"><i class="bi bi-person-circle"></i> Cuenta</a></li>
-                <li><a href="vcofmod.php" class="nav-link"><i class="bi bi-gear-fill"></i> Configuración</a></li>
-            </ul>
-        </nav>
+            <div>
+                <h5 class="mb-0 fw-bold">UrbanPaws</h5>
+                <small class="opacity-75 d-none d-md-block">
+                    <?php if($ins){
+                        echo isset($_SESSION["nomusr"]) ? $_SESSION["nomusr"] : "";
+                    }else{ ?>
+                        Tu espacio personal para mascotas
+                    <?php } ?>
+                </small>
+            </div>
+        </div>
+        <div class="d-none d-sm-block text-end">
+            <?php if($ins){ ?>
+                <a href="logout.php" title="Cerrar Sesión">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
+                </a>
+            <?php } ?>
+        </div>
     </div>
 </header>

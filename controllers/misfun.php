@@ -1,20 +1,25 @@
 <?php
-class misFun {
+class misFun{
     public function ManejoError($e){
         $mjs = "";
         $err = $e->getMessage();
-        if(strpos($err,'1062')){
-            $mjs = "Registro duplicado. Intente con otro dato.";
-        } elseif(strpos($err,'1451')){
-            $mjs = "No se puede eliminar. Está relacionado con otro registro.";
-        } else {
-            $mjs = "Error: " . $err;
+        $e = isset($err) ? $err : NULL;
+        if(strpos($e,'1115') || strpos($e,'1451')){
+            $mjs = "No se puede eliminar este registro.<br>Por que se encuentra relacionado en otra opcion.";
+        }elseif(strpos($e,'1116') || strpos($e,'1062')){
+            $mjs = "Registro duplicado. Intente nuevamente con otro numero de identificacion o comuniquese con el administrador del sistema.";
+        }else{
+            $mjs = "Se genero un error comuniquese con el administrador del sistema. <br><br>" . $e;
         }
-        echo '<script>alert("'.$mjs.'");</script>';
+        echo '<script>err("' . $mjs . '");</script>';
     }
 
-    public function titu($nom="Sin Título", $tt="fa-solid fa-circle"){
-        $txt = '<h2 class="display-title mb-4"><i class="'.$tt.'"></i> '.$nom.'</h2>';
+    public function titu($nom="Sin Titulo", $tt="fa-solid fa-user"){
+        $txt = '';
+        $txt .= '<h2 class="display-title">';
+        $txt .= '<i class="' . $tt . '"></i> ';
+        $txt .= $nom;
+        $txt .= '</h2>';
         return $txt;
     }
 }

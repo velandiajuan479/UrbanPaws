@@ -1,133 +1,89 @@
-<div class="card card-form p-4">
-    <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
-    <h4 class="section-title">
-        <i class="fa-solid fa-box-open"></i>
-        Nueva Página
-    </h4> 
-    
-    <form action="" method="POST" class="row g-3">
-    <!--Nombre del módulo-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-hashtag"></i>
-            <label for="" class="form-label">Nombre de la página</label>
-            <input type="text" class="form-control" placeholder="Servicio" required>
-        </div>
-        <div class="col-md-4">
-            <i class="fa-solid fa-hashtag"></i>
-            <label for="" class="form-label">Titulo de la página</label>
-            <input type="text" class="form-control" placeholder="Reporte de PQRS" required>
-        </div>
-    <!--Estado del Módulo-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-toggle-on"></i>
-            <label for="" class="form-label">Mostrar Página</label>
-            <div class="w-100"></div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="si" value="" required>
-            <label class="form-check-label" for="actv">Si</label>
-            </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estado" id="no" value="" required>
-            <label class="form-check-label" for="inactv">No</label>
-            </div>
-        </div>
-    <!--Selección del icono-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-shapes"></i>
-            <label class="form-label" for="">Icono</label>
-            <div class="input-group">
-                <select name="icono" id="" class="form-control form-select">
-                    <option value="0">Selecciona un icono...</option>
-                    <option value="1">Logo</option>
-                </select>
-            </div>
-        </div>
-        
-    <!--Ruta de la página-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-folder"></i>
-            <label class="form-label" for="">Ruta de la página</label>
-            <input class="form-control" type="text" name="" id="" placeholder="views/vcofcof.php">
-        </div>
-    <!--Orden de carga-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-sort"></i>
-            <label class="form-label" for="">Orden de carga</label>
-            <input type="number" class="form-control" name="" id="" placeholder="Ej:10">
-        </div>
-        <div class="col-md-4"></div>
-    <!--Descripción de la página-->
-        <div class="col-md-4">
-            <i class="fa-solid fa-clipboard"></i>
-            <label class="form-label" for="">Descripción corta</label>
-            <input class="form-control" type="text" name="" id="" placeholder="descripción">
-        </div>
-        <div class="col-md-2"></div>
-    <!--Botones-->
-        <div class="col-md-12 mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
-                <i class="fa-solid fa-floppy-disk fa-xl"></i>
-            </button>
-            <button type="reset" class="btn btn-accent">
-                <i class="fa-solid fa-trash fa-xl"></i>
-            </button>
-        </div>
-    </form>
-</div>
+<?php require_once("controllers/ccofpag.php"); ?>
 
-<div class="table-container mt-4">
-    <h5 class="mb-3">
-        <i class="fa-solid fa-table-list"></i>
-        Lista de páginas
-    </h5>
-    <div class="table-responsive">
-        <table id="mitabla" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Página</th>
-                    <th>Descripcion</th>
-                    <th>Mostrar</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <strong>
-                            <i class="fa fa-box"></i>
-                            1 Módulo
-                            <br>
-                        </strong>
-                        <small>
-                            Titulo: Módulo Ruta: views/vcofmod.php
-                            <br>
-                            Orden: 1
-                        </small>
-                    </td>
-                    <td>
-                        <small>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt architecto voluptatibus distinctio commodi neque aperiam voluptate labore. Adipisci, eveniet. Esse ad quibusdam voluptates aliquam blanditiis quidem. Quas voluptatibus excepturi iusto.
-                        </small>
-                    </td>
-                    <td>No</td>
-                    <td>
-                        <a href="" title="editar">
-                            <i class="fa-solid fa-pencil fa-2x"></i>
-                        </a>
-                        <a href="" title="borrar">
-                            <i class="fa-solid fa-trash-can fa-2x"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Página</th>
-                    <th>Mostrar</th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Formulario -->
+        <div class="col-md-5">
+            <div class="card p-3 mb-3">
+                <h5><i class="fa-solid fa-plus"></i> Nueva Página</h5>
+                <form method="POST" action="">
+                    <input type="hidden" name="ope" value="save">
+                    <input type="hidden" name="idpag" value="<?= isset($dtOn[0]['idpag']) ? $dtOn[0]['idpag'] : '' ?>">
+                    
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Nombre de la página</label>
+                        <input type="text" name="nompag" class="form-control form-control-sm" value="<?= isset($dtOn[0]['nompag']) ? $dtOn[0]['nompag'] : '' ?>" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Título de la página</label>
+                        <input type="text" name="titpag" class="form-control form-control-sm" value="<?= isset($dtOn[0]['titpag']) ? $dtOn[0]['titpag'] : '' ?>" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Mostrar Página</label>
+                        <select name="mostpag" class="form-select form-select-sm">
+                            <option value="1" <?= (isset($dtOn[0]['mostpag']) && $dtOn[0]['mostpag']==1) ? 'selected' : '' ?>>Sí</option>
+                            <option value="0" <?= (isset($dtOn[0]['mostpag']) && $dtOn[0]['mostpag']==0) ? 'selected' : '' ?>>No</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Icono</label>
+                        <input type="text" name="icopag" class="form-control form-control-sm" placeholder="fa-solid fa-house" value="<?= isset($dtOn[0]['icopag']) ? $dtOn[0]['icopag'] : '' ?>">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Ruta de la página</label>
+                        <input type="text" name="rutpag" class="form-control form-control-sm" placeholder="views/vinicio.php" value="<?= isset($dtOn[0]['rutpag']) ? $dtOn[0]['rutpag'] : '' ?>" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Orden de carga</label>
+                        <input type="number" name="ordpag" class="form-control form-control-sm" value="<?= isset($dtOn[0]['ordpag']) ? $dtOn[0]['ordpag'] : '1' ?>">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Descripción corta</label>
+                        <textarea name="descpag" class="form-control form-control-sm" rows="2"><?= isset($dtOn[0]['descpag']) ? $dtOn[0]['descpag'] : '' ?></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary w-100">Guardar</button>
+                </form>
+            </div>
+        </div>
 
+        <!-- Listado -->
+        <div class="col-md-7">
+            <div class="card p-3">
+                <h5><i class="fa-solid fa-list"></i> Lista de páginas</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Título</th>
+                                <th>Ruta</th>
+                                <th>Mostrar</th>
+                                <th>Orden</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if($datAll){ foreach($datAll as $dt){ ?>
+                            <tr>
+                                <td><?= $dt['idpag'] ?></td>
+                                <td><?= $dt['nompag'] ?></td>
+                                <td><?= $dt['titpag'] ?></td>
+                                <td><small><?= $dt['rutpag'] ?></small></td>
+                                <td><?= $dt['mostpag'] == 1 ? ' Sí' : ' No' ?></td>
+                                <td><?= $dt['ordpag'] ?></td>
+                                <td>
+                                    <a href="home.php?pg=<?= $_GET['pg'] ?>&ope=edi&idpag=<?= $dt['idpag'] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="home.php?pg=<?= $_GET['pg'] ?>&ope=eli&idpag=<?= $dt['idpag'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar?')"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <?php }} else { ?>
+                            <tr><td colspan="7" class="text-center">No hay páginas registradas.</td></tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
