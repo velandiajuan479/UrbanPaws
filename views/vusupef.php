@@ -8,25 +8,6 @@
 </head>
 <body>
 
-<header class="hero-section">
-    <div class="container">
-        <a href="vusupef.php" class="logo-container">
-            <img src="../img/logo.png" alt="Urban Paws" class="logo-img">
-            <div class="logo-text">
-                <span class="brand">Urban<span>Paws</span></span>
-                <span class="tagline">Mi espacio personal</span>
-            </div>
-        </a>
-
-        <nav>
-            <ul class="nav-links">
-                <li><a href="vusucli.php" class="nav-link">Inicio</a></li>
-                <li><a href="vusupef.php" class="nav-link active">Perfil</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
 <main class="container">
     <section style="padding: 3rem 0;">
         <div class="section-title">
@@ -35,7 +16,9 @@
         </div>
 
         <div class="card">
-            <div class="form-grid">
+            <div class="f
+            
+            orm-grid">
                 <div>
                     <span class="form-label">Nombre completo</span>
                     <p>Nombre del usuario</p>
