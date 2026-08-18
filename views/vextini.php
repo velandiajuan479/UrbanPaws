@@ -1,8 +1,3 @@
-
-<?php
-    require_once("controllers/cextini.php");
-?>
-
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
@@ -13,8 +8,7 @@
 
 
                 <div class="login-box w-100">
-                    <form action="controllers/cextini.php" method="POST">
-                        <input type="hidden" name="ope" value="login">
+                    <form action="models/control.php" method="POST">
 
                         <div class="mb-2">
                             <label class="form-label mb-1" style="font-size:1.05rem;">Usuario o E-mail</label>

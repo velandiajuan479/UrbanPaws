@@ -10,12 +10,13 @@
         <li><a href="index.php?pg=8">Ubicación</a></li>
         <li><a href="index.php?pg=9">Mascotas</a></li>
         <li><a href="index.php?pg=10">Dueños</a></li>
-        <li><a href="index.php?pg=11">Ruta</a></li>
-        <li><a href="index.php?pg=12">Listado de rutas</a></li>
+        <li><a href="index.php?pg=11">Ruta Cliente</a></li>
+        <li><a href="index.php?pg=32">Ruta Paseador</a></li>
+       
         <li><a href="index.php?pg=13">Paseos</a></li>
-        <li><a href="index.php?pg=14">Servicios</a></li>
-        <li><a href="index.php?pg=15">Listado de Servicios</a></li>
-        <li><a href="index.php?pg=16">Reporte de Servicios</a></li>
+        <li><a href="index.php?pg=14">Servicio Cliente</a></li>
+        <li><a href="index.php?pg=15">Servicio Paseador</a></li>
+        
         <li><a href="index.php?pg=17">Facturas</a></li>
         <li><a href="index.php?pg=18">Detalle de Factura</a></li>
         <li><a href="index.php?pg=19">Listado de Facturas</a></li>

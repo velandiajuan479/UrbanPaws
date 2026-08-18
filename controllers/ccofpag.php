@@ -1,37 +1,49 @@
 <?php
 require_once("models/mcofpag.php");
+$idpag = isset($_REQUEST["idpag"]) ?$_REQUEST["idpag"]:NULL;
+$nompag = isset($_POST["nompag"]) ?$_POST["nompag"]:NULL;
+$mostpag = isset($_POST["mostpag"]) ?$_POST["mostpag"]:NULL;
+$ordpag = isset($_POST["ordpag"]) ?$_POST["ordpag"]:NULL;
+$descpag = isset($_POST["descpag"]) ?$_POST["descpag"]:NULL;
+$ope = isset($_REQUEST["ope"]) ?$_REQUEST["ope"]:NULL;
 
-$idpag   = isset($_REQUEST["idpag"])  ? $_REQUEST["idpag"]  : NULL;
-$nompag  = isset($_POST["nompag"])    ? $_POST["nompag"]    : NULL;
-$titpag  = isset($_POST["titpag"])    ? $_POST["titpag"]    : NULL;
-$rutpag  = isset($_POST["rutpag"])    ? $_POST["rutpag"]    : NULL;
-$mostpag = isset($_POST["mostpag"])   ? $_POST["mostpag"]   : NULL;
-$ordpag  = isset($_POST["ordpag"])    ? $_POST["ordpag"]    : NULL;
-$icopag  = isset($_POST["icopag"])    ? $_POST["icopag"]    : NULL;
-$descpag = isset($_POST["descpag"])   ? $_POST["descpag"]   : NULL;
-$ope     = isset($_REQUEST['ope'])    ? $_REQUEST['ope']    : NULL;
+$dtOn = null;
 
-$dtOn = NULL;
-
-$mcofpag = new mCofpag();
+$mcofpag = new mCofpag;
 $mcofpag->setIdpag($idpag);
 
-if($ope == "save"){
+if($ope == "save") {
     $mcofpag->setNompag($nompag);
     $mcofpag->setTitpag($titpag);
     $mcofpag->setRutpag($rutpag);
     $mcofpag->setMostpag($mostpag);
+    $mcofpag->setIcopag($icopag);
+    $mcofpag->setRutpag($rutpag);
     $mcofpag->setOrdpag($ordpag);
     $mcofpag->setIcopag($icopag);
     $mcofpag->setDescpag($descpag);
-    
-    if($idpag) $mcofpag->upd();
-    else $mcofpag->save();
+    $mcofpag->setIdpag($idpag);
+
+    if($idpag){
+        $mcofpag->upd();
+    }else{
+        $mcofpag->del();
+    }
+
+    exit();
 }
 
-if($ope == "eli" AND $idpag) $mcofpag->del();
+if($ope == "eli" AND $idpag) {
+    $mcofpag->setIdpag($idpag);
+    $mcofpag->del();
+    
+    exit();
+}
 
-if($ope == "edi" AND $idpag) $dtOn = $mcofpag->getOne();
+if($ope == "edi" AND $idpag) {
+    $mcofpag->setIdpag($idpag);
+    $datOne = $mcofpag->getOne();
+}
 
 $datAll = $mcofpag->getAll();
 ?>

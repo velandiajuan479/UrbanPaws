@@ -7,29 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
-<header class="hero-section">
-    <div class="container">
-        <a href="vusucli.php" class="logo-container">
-            <div class="logo-text">
-                <span class="brand">Urban<span>Paws</span></span>
-                <span class="tagline">Espacio del cliente</span>
-            </div>
-        </a>
-
-        <nav>
-            <ul class="nav-links">
-                <li><a href="vusucli.php" class="nav-link active">Inicio</a></li>
-                <li><a href="vmascotas.php" class="nav-link">Mascotas </a></li>
-                <li><a href="vruta.html" class="nav-link">Rutas</a></li>
-                <li><a href="vservicios.html" class="nav-link">Servicios</a></li>
-                <li><a href="vcofpag.php" class="nav-link">Facturas</a></li>
-                <li><a href="vusupef.php" class="nav-link">Perfil</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
+    
 <main class="container">
     <section style="padding: 3rem 0 2rem;">
         <div class="section-title">
@@ -38,49 +16,44 @@
         </div>
 
         <div class="card">
-            <h1>Bienvenido a Urban Paws</h1>
+            <h1><i class="fa-solid fa-bone fa-lg"></i> Bienvenido a Urban Paws</h1>
             <p>Gestiona tus mascotas y consulta los servicios relacionados con sus paseos.</p>
         </div>
     </section>
 
     <section class="form-grid">
-        <a href="vmascotas.php" class="card">
-            <h3><i class="fa-solid fa-paw"></i> Mis mascotas</h3>
+        <a href="index.php?pg=9" class="card">
+            <h3><i class="fa-solid fa-paw fa-lg"></i> Mis mascotas</h3>
             <p>Consulta y gestiona las mascotas asociadas a tu cuenta.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
-        <a href="vruta.html" class="card">
-            <div class="icon-circle">R</div>
-            <h3>Mis rutas</h3>
+        <a href="index.php?pg=11" class="card">
+            <h3><i class="fa-solid fa-route fa-lg"></i> Mis rutas</h3>
             <p>Consulta y gestiona las rutas disponibles para los paseos.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
-        <a href="vpaseo.html" class="card">
-            <div class="icon-circle">P</div>
-            <h3>Paseos</h3>
+        <a href="index.php?pg=13" class="card">
+            <h3><i class="fa-solid fa-location-dot fa-lg"></i> Paseos</h3>
             <p>Consulta y realiza la gestión de los paseos de tus mascotas.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
-        <a href="vservicios.html" class="card">
-            <div class="icon-circle">S</div>
-            <h3>Servicios</h3>
+        <a href="index.php?pg=14" class="card">
+            <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
             <p>Consulta los servicios disponibles para contratar.</p>
             <span class="btn btn-accent">Ingresar</span>
         </a>
 
-        <a href="vcofpag.php" class="card">
-            <div class="icon-circle">F</div>
-            <h3>Facturas</h3>
+        <a href="index.php?pg=17" class="card">
+            <h3><i class="fa-solid fa-file-invoice fa-lg"></i> Facturas</h3>
             <p>Consulta tus facturas y la información asociada a tus servicios.</p>
             <span class="btn btn-primary">Ingresar</span>
         </a>
 
-        <a href="vpqrs.html" class="card">
-            <div class="icon-circle">Q</div>
-            <h3>PQRSF</h3>
+        <a href="index.php?pg=21" class="card">
+            <h3><i class="fa-brands fa-teamspeak fa-lg"></i> PQRSF</h3>
             <p>Registra y consulta tus peticiones, quejas, reclamos, sugerencias y felicitaciones.</p>
             <span class="btn btn-accent">Ingresar</span>
         </a>

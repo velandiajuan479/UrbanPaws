@@ -1,3 +1,7 @@
+<?php 
+ob_start();
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,8 +27,10 @@
 </head>
 <body>
   <?php
+  require_once('models/conexion.php');
     $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
     include'views/header.php';
+
   ?>
 
     <section class="menu">
@@ -43,12 +49,13 @@
     elseif ($pg==8) include 'views/vusuubi.php';
     elseif ($pg==9) include 'views/vmasmas.php';
     elseif ($pg==10) include 'views/vmasdue.php';
-    elseif ($pg==11) include 'views/vserrut.php';
-    elseif ($pg==12) include 'views/vserlisrut.php';
-    elseif ($pg==13) include 'views/vserpas.php';
-    elseif ($pg==14) include 'views/vserser.php';
-    elseif ($pg==15) include 'views/vserlisser.php';
-    elseif ($pg==16) include 'views/vserrepser.php';
+    elseif ($pg==11) include 'views/vserrutcl.php'; // vista ruta cliente 
+    elseif ($pg==32) include 'views/vserrutps.php'; // nueva vista / vista ruta paceador
+
+    elseif ($pg==13) include 'views/vserpas.php'; // vista paseo
+    elseif ($pg==14) include 'views/vsersercl.php'; // vista servicio cliente
+    elseif ($pg==15) include 'views/vserserps.php'; // vista servicio paseador
+
     elseif ($pg==17) include 'views/vfacfac.php';
     elseif ($pg==18) include 'views/vfatdatfac.php';
     elseif ($pg==19) include 'views/vfaclisfac.php';

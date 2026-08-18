@@ -104,10 +104,6 @@ CREATE TABLE ruta(
     nomrut VARCHAR(50),
     distrut DECIMAL(7,2),
     iduser BIGINT(10),
-    estarut TINYINT(1),
-    horaini DATETIME,
-    horafin DATETIME,
-    precioini INT(10),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 

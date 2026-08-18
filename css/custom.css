@@ -8,3 +8,11 @@ i{
 .btn-accent i{
     color: var(--bg-soft-orange);
 }
+
+.badge, .bg-success{
+    background-color: var(--brand-primary) !important;
+}
+
+.bg-danger{
+    background-color: var(--brand-accent) !important;
+}

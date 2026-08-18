@@ -1,3 +1,6 @@
+<?php
+    
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,28 +11,6 @@
 </head>
 <body>
 
-<header class="hero-section">
-    <div class="container">
-        <a href="vusupas.php" class="logo-container">
-            <img src="../img/logo.png" alt="Urban Paws" class="logo-img">
-            <div class="logo-text">
-                <span class="brand">Urban<span>Paws</span></span>
-                <span class="tagline">Espacio del paseador</span>
-            </div>
-        </a>
-
-        <nav>
-            <ul class="nav-links">
-                <li><a href="vusupas.php" class="nav-link active">Inicio</a></li>
-                <li><a href="vpaseo.html" class="nav-link">Paseos</a></li>
-                <li><a href="vruta.html" class="nav-link">Rutas</a></li>
-                <li><a href="vservicios.html" class="nav-link">Servicios</a></li>
-                <li><a href="vusupef.php" class="nav-link">Perfil</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
 <main class="container">
     <section style="padding: 3rem 0 2rem;">
         <div class="section-title">
@@ -38,43 +19,38 @@
         </div>
 
         <div class="card">
-            <h1>Panel del paseador</h1>
+            <h1><i class="fa-solid fa-person-walking fa-lg"></i> Panel del paseador</h1>
             <p>Consulta tu información, disponibilidad y las actividades relacionadas con los servicios de paseo.</p>
         </div>
     </section>
 
     <section class="form-grid">
         <article class="card">
-            <div class="icon-circle">V</div>
-            <h3>Estado de validación</h3>
+            <h3><i class="fa-solid fa-toggle-on fa-lg"></i> Estado de validación</h3>
             <p>Consulta el estado de validación de tu perfil como paseador.</p>
             <span class="badge badge-active">Estado pendiente de consulta</span>
         </article>
 
         <a href="vpaseo.html" class="card">
-            <div class="icon-circle">P</div>
-            <h3>Mis paseos</h3>
+            <h3><i class="fa-solid fa-location-dot fa-lg"></i> Mis paseos</h3>
             <p>Consulta los paseos asignados y el seguimiento de los servicios.</p>
             <span class="btn btn-primary">Ver paseos</span>
         </a>
 
         <a href="vruta.html" class="card">
-            <div class="icon-circle">R</div>
-            <h3>Rutas</h3>
+            <h3><i class="fa-solid fa-route fa-lg"></i> Rutas</h3>
             <p>Consulta las rutas disponibles y la información necesaria para realizar los servicios.</p>
             <span class="btn btn-primary">Ver rutas</span>
         </a>
 
         <a href="vservicios.html" class="card">
-            <div class="icon-circle">S</div>
-            <h3>Servicios</h3>
+            <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
             <p>Consulta los servicios relacionados con tu actividad como paseador.</p>
             <span class="btn btn-accent">Ver servicios</span>
         </a>
 
         <a href="vusupef.php" class="card">
-            <div class="icon-circle">P</div>
-            <h3>Mi perfil</h3>
+            <h3><i class="fa-solid fa-image-portrait fa-lg"></i> Mi perfil</h3>
             <p>Consulta y actualiza la información general asociada a tu cuenta.</p>
             <span class="btn btn-outline">Ver perfil</span>
         </a>

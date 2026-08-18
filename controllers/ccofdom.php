@@ -1,40 +1,43 @@
 <?php
+require_once("models/mcofdom.php");
+require_once("models/mcofval.php");
 
-require_once("models/mcofpag.php");
-$iddom = isset($_REQUEST["iddom"]) ?$_REQUEST["iddom"]:NULL;
-$nomdom = isset($_POST["nomdom"]) ?$_POST["nomdom"]:NULL;
-$ope = isset($_REQUEST["ope"]) ?$_REQUEST["ope"]:NULL;
 
-$dtOn = NULL; 
+$iddom = isset($_REQUEST["iddom"]) ? $_REQUEST["iddom"] : NULL;
+$nomdom = isset($_POST["nomdom"]) ? $_POST["nomdom"] : NULL;
+$actdom = isset($_POST["actdom"]) ? $_POST["actdom"] : NULL;
+$ope = isset($_REQUEST["ope"]) ? $_REQUEST["ope"] : NULL;
 
-$mcofdom = new mcofdom();
+$dtOn = NULL;
+$mcofdom = new mCofdom();
+$mcofval   = new mCofVal();
 $mcofdom->setIddom($iddom);
-
 
 if($ope == "save") {
     $mcofdom->setNomdom($nomdom);
-
+    $mcofdom->setActdom($actdom);
     if($iddom){
         $mcofdom->upd();
     }else{
-        $mcofdom->del();
+        $mcofdom->save(); 
     }
-
+    header("Location: index.php?pg=26"); 
     exit();
 }
 
 if($ope == "eli" AND $iddom) {
     $mcofdom->setIddom($iddom);
     $mcofdom->del();
-    
+    header("Location: index.php?pg=26");
     exit();
 }
 
 if($ope == "edi" AND $iddom) {
     $mcofdom->setIddom($iddom);
-    $datOne = $mcofdom->getOne();
+    $dtOn = $mcofdom->getOne();
 }
 
+$datEst = $mcofval->getAll();
 $datAll = $mcofdom->getAll();
 
 ?>

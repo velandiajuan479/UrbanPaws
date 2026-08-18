@@ -8,5 +8,20 @@
 
     $mcextini = new mExtini();
 
-    $datAll = $mcextini->getAll();
+    if($ope == "login"){
+        // El campo "usuario" puede ser documento o email
+        $mcextini->setDocu($usuario);
+        $mcextini->setEmailu($usuario);
+        
+        $user = $mcextini->login();
+
+        if($user && password_verify($contrasena, $user['passusu'])){
+            session_start();
+            $_SESSION['iduser'] = $user['iduser'];
+            header("Location: dashboard.php");
+            exit;
+        } else {
+            $error = "Datos incorrectos";
+        }
+    }
 ?>
