@@ -74,7 +74,7 @@ if($ope == "save") {
         }
     }
 
-    header("Location: index.php?pg=27&iduser=" . $iduser);
+    echo '<script>window.location.href = "index.php?pg=27&iduser=' . $iduser . '";</script>';
     exit();
 }
 
@@ -86,7 +86,7 @@ if($ope == "eli" AND $idmasc) {
     $mmasmas->setIdmasc($idmasc);
     $mmasmas->del();
 
-    header("Location: index.php?pg=27&iduser=" . $iduser);
+    echo '<script>window.location.href = "index.php?pg=27&iduser=' . $iduser . '";</script>';
     exit();
 }
 

@@ -26,15 +26,14 @@ if($ope == "save") {
     } else {
         $mcofcof->save();
     }
-    header("Location: index.php?pg=25"); // <-- cambia por tu página de configuración
+    echo '<script>window.location.href = "home.php?pg=25";</script>';
     exit();
 }
 
 if($ope == "eli" AND $idconf) {
     $mcofcof->setIdconf($idconf);
     $mcofcof->del();
-    header("Location: index.php?pg=25");
-    exit();
+echo '<script>window.location.href = "home.php?pg=25";</script>';    exit();
 }
 
 if($ope == "edi" AND $idconf) {
@@ -42,8 +41,6 @@ if($ope == "edi" AND $idconf) {
     $dtOn = $mcofcof->getOne();
 }
 
-// === DATOS DE VALOR (JOIN con dominio) ===
-// Dominio 1: Estado (Activo / Inactivo) para el radio "Estado"
 $mcofvalEst = new mCofVal;
 $mcofvalEst->setIddom(1);
 $datEst = $mcofvalEst->getByDom();

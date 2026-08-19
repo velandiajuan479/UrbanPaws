@@ -17,16 +17,14 @@ $mcofpag = new mCofpag();
 $mcofval = new mCofVal();
 $mcofpag->setIdpag($idpag);
 
-// ---------- Cargar dominios auxiliares ----------
-// Iconos (ajusta el iddom según tu tabla)
-$mcofval->setIddom(2); // ← Cambia este número por el iddom de los iconos
+
+$mcofval->setIddom(2);
 $datIco = $mcofval->getByDom();
 
-// Mostrar Página (Si/No)
-$mcofval->setIddom(1); // ← Cambia este número por el iddom de Si/No
+
+$mcofval->setIddom(1); 
 $datMost = $mcofval->getByDom();
 
-// ---------- Operaciones CRUD ----------
 if($ope == "save"){
     $mcofpag->setNompag($nompag);
     $mcofpag->setTitpag($titpag);
@@ -41,13 +39,13 @@ if($ope == "save"){
     }else{
         $mcofpag->save();
     }
-    header("Location: home.php?pg=23");
+    echo '<script>window.location.href = "home.php?pg=23";</script>';
     exit();
 }
 
 if($ope == "eli" AND $idpag){
     $mcofpag->del();
-    header("Location: home.php?pg=23");
+    echo '<script>window.location.href = "home.php?pg=23";</script>';
     exit();
 }
 

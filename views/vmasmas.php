@@ -23,11 +23,11 @@
     <?php } else { ?>
     <div class="alert alert-warning">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        No hay dueño seleccionado. Entra con: <code>index.php?pg=??&iduser=X</code>
+        No hay dueño seleccionado. Entra con: <code>home.php?pg=??&iduser=X</code>
     </div>
     <?php } ?>
 
-    <form action="index.php?pg=27&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
+    <form action="home.php?pg=27&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
         <input type="hidden" name="idmasc" value="<?= $dtOn ? $dtOn['idmasc'] : '' ?>">
         <!-- El dueño viaja oculto: no hay select ni sesión -->
         <input type="hidden" name="iduser" value="<?= $iduser ? $iduser : '' ?>">
@@ -173,10 +173,10 @@
                         <?php } else { echo '—'; } ?>
                     </td>
                     <td>
-                        <a href="index.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="editar">
+                        <a href="home.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="index.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="borrar"
+                        <a href="home.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="borrar"
                            onclick="return confirm('¿Eliminar la mascota?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>

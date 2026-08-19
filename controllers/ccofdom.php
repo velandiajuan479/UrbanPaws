@@ -21,14 +21,13 @@ if($ope == "save") {
     }else{
         $mcofdom->save(); 
     }
-    header("Location: index.php?pg=26"); 
-    exit();
+echo '<script>window.location.href = "home.php?pg=26";</script>';    exit();
 }
 
 if($ope == "eli" AND $iddom) {
     $mcofdom->setIddom($iddom);
     $mcofdom->del();
-    header("Location: index.php?pg=26");
+echo '<script>window.location.href = "home.php?pg=26";</script>';
     exit();
 }
 

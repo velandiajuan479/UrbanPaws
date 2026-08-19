@@ -8,7 +8,7 @@ $nommod  = isset($_POST["nommod"])     ? $_POST["nommod"]     : NULL;
 $icomod  = isset($_POST["icomod"])     ? $_POST["icomod"]     : NULL;
 $estamod = isset($_POST["estamod"])    ? $_POST["estamod"]    : NULL;
 $ordmod  = isset($_POST["ordmod"])     ? $_POST["ordmod"]     : NULL;
-$idperf  = !empty($_POST["idperf"])    ? $_POST["idperf"]     : NULL; // "Sin usuarios" = NULL
+$idperf  = !empty($_POST["idperf"])    ? $_POST["idperf"]     : NULL;
 $ope     = isset($_REQUEST["ope"])     ? $_REQUEST["ope"]     : NULL;
 
 $dtOn = null;
@@ -27,15 +27,14 @@ if($ope == "save") {
     } else {
         $mcofmod->save();
     }
-    header("Location: index.php?pg=24"); // <-- cambia por tu página de módulos
+    echo '<script>window.location.href = "home.php?pg=24";</script>';
     exit();
 }
 
 if($ope == "eli" AND $idmod) {
     $mcofmod->setIdmod($idmod);
     $mcofmod->del();
-    header("Location: index.php?pg=24");
-    exit();
+echo '<script>window.location.href = "home.php?pg=24";</script>';    exit();
 }
 
 if($ope == "edi" AND $idmod) {
@@ -43,18 +42,15 @@ if($ope == "edi" AND $idmod) {
     $dtOn = $mcofmod->getOne();
 }
 
-// === DATOS DE VALOR (JOIN con dominio) ===
-// Dominio 1: Estado (Activo / Inactivo) para el radio "Estado"
+
 $mcofvalEst = new mCofVal;
 $mcofvalEst->setIddom(1);
 $datEst = $mcofvalEst->getByDom();
 
-// Dominio 2: Iconos para el select "Icono"
 $mcofvalIco = new mCofVal;
 $mcofvalIco->setIddom(2);
 $datIco = $mcofvalIco->getByDom();
 
-// Perfiles para el select "Usuarios con acceso"
 $datPer = $mcofmod->getPerfiles();
 
 $datAll = $mcofmod->getAll();

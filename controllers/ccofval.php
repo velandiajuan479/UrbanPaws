@@ -26,16 +26,14 @@ if($ope == "save") {
     } else {
         $mcofval->save();
     }
-    header("Location: index.php?pg=27");
-    exit();
+echo '<script>window.location.href = "home.php?pg=27";</script>';    exit();
 }
 
 // Operación de Eliminar
 if($ope == "eli" AND $idval) {
     $mcofval->setIdval($idval);
     $mcofval->del();
-    header("Location: index.php?pg=27");
-    exit();
+echo '<script>window.location.href = "home.php?pg=27";</script>';    exit();
 }
 
 if($ope == "edi" AND $idval) {
