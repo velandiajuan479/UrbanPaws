@@ -31,19 +31,19 @@
             <span class="badge badge-active">Estado pendiente de consulta</span>
         </article>
 
-        <a href="vpaseo.html" class="card">
+        <a href="vserpas.php" class="card">
             <h3><i class="fa-solid fa-location-dot fa-lg"></i> Mis paseos</h3>
             <p>Consulta los paseos asignados y el seguimiento de los servicios.</p>
             <span class="btn btn-primary">Ver paseos</span>
         </a>
 
-        <a href="vruta.html" class="card">
+        <a href="vserrutcl.php" class="card">
             <h3><i class="fa-solid fa-route fa-lg"></i> Rutas</h3>
             <p>Consulta las rutas disponibles y la información necesaria para realizar los servicios.</p>
             <span class="btn btn-primary">Ver rutas</span>
         </a>
 
-        <a href="vservicios.html" class="card">
+        <a href="vserser.php" class="card">
             <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
             <p>Consulta los servicios relacionados con tu actividad como paseador.</p>
             <span class="btn btn-accent">Ver servicios</span>

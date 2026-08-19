@@ -33,51 +33,10 @@ require_once('models/conexion.php');
 <body>
   <?php include'views/header.php'; ?>
 
-  <section class="menu">
-    <?php include 'views/vmen.php'; ?>
-  </section>
-
-  <div class="container mt-4">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="mb-4">Bienvenido al Panel Principal</h2>
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="card text-center p-3">
-              <i class="bi bi-person-circle fa-3x text-primary mb-2"></i>
-              <h5>Clientes</h5>
-              <a href="home.php?pg=1" class="btn btn-sm btn-primary">Ir</a>
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card text-center p-3">
-              <i class="bi bi-shield-lock fa-3x text-success mb-2"></i>
-              <h5>Administrador</h5>
-              <a href="home.php?pg=2" class="btn btn-sm btn-success">Ir</a>
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card text-center p-3">
-              <i class="bi bi-heart fa-3x text-danger mb-2"></i>
-              <h5>Paseadores</h5>
-              <a href="home.php?pg=3" class="btn btn-sm btn-danger">Ir</a>
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card text-center p-3">
-              <i class="bi bi-gear fa-3x text-warning mb-2"></i>
-              <h5>Configuración</h5>
-              <a href="home.php?pg=25" class="btn btn-sm btn-warning">Ir</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <?php
     $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
     
+    //Modulo Usuario
     if($pg==1) include 'views/vusucli.php';
     elseif ($pg==2) include 'views/vusuadmin.php';
     elseif ($pg==3) include 'views/vusupas.php';
@@ -86,25 +45,31 @@ require_once('models/conexion.php');
     elseif ($pg==6) include 'views/vusuval.php';
     elseif ($pg==7) include 'views/vusudatper.php';
     elseif ($pg==8) include 'views/vusuubi.php';
+    //Modulo Mascotas
     elseif ($pg==9) include 'views/vmasmas.php';
     elseif ($pg==10) include 'views/vmasdue.php';
+    //Modulo servicios
     elseif ($pg==11) include 'views/vserrut.php';
     elseif ($pg==12) include 'views/vserlisrut.php';
     elseif ($pg==13) include 'views/vserpas.php';
     elseif ($pg==14) include 'views/vserser.php';
     elseif ($pg==15) include 'views/vserlisser.php';
     elseif ($pg==16) include 'views/vserrepser.php';
+    //Modulo factura
     elseif ($pg==17) include 'views/vfacfac.php';
     elseif ($pg==18) include 'views/vfatdatfac.php';
     elseif ($pg==19) include 'views/vfaclisfac.php';
     elseif ($pg==20) include 'views/vfacrepfac.php';
+    //Modulo PQRS
     elseif ($pg==21) include 'views/vreppqr.php|';
     elseif ($pg==22) include 'views/vreplispqr.php';
+    //Modulo Configuracion
     elseif ($pg==23) include 'views/vcofpag.php';
     elseif ($pg==24) include 'views/vcofmod.php';
     elseif ($pg==25) include 'views/vcofcof.php';
     elseif ($pg==26) include 'views/vcofdom.php';
     elseif ($pg==27) include 'views/vcofval.php';
+    //Modulo externo
     elseif ($pg==28) include 'views/vextregis.php';
     elseif ($pg==29) include 'views/vextini.php';
     elseif ($pg==30) include 'views/vextreccon.php';
