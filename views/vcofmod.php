@@ -4,7 +4,7 @@
         <i class="fa-solid fa-box-open"></i>
         Nuevo Módulo
     </h4>
-    <form action="index.php?pg=24&ope=save" method="POST" class="row g-3">
+    <form action="home.php?pg=24&ope=save" method="POST" class="row g-3">
         <input type="hidden" id="idmod" name="idmod" value="<?= $dtOn ? $dtOn['idmod'] : '' ?>">
 
         <!-- Nombre del módulo -->
@@ -119,10 +119,10 @@
                         </span> 
                     </td>
                     <td>
-                        <a href="index.php?pg=24&ope=edi&idmod=<?= $dt['idmod'] ?>" title="editar">
+                        <a href="home.php?pg=24&ope=edi&idmod=<?= $dt['idmod'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="index.php?pg=24&ope=eli&idmod=<?= $dt['idmod'] ?>" title="borrar"
+                        <a href="home.php?pg=24&ope=eli&idmod=<?= $dt['idmod'] ?>" title="borrar"
                            onclick="return confirm('¿Eliminar el módulo?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>

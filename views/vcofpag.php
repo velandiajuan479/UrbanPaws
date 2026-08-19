@@ -5,7 +5,7 @@
         Nueva Página
     </h4> 
     
-    <form action="" method="POST" class="row g-3">
+    <form action="home.php?pg=23&ope=save" method="POST" class="row g-3">
     <!--Nombre del módulo-->
         <div class="col-md-4">
             <i class="fa-solid fa-hashtag"></i>

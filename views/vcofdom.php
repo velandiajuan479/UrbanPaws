@@ -8,7 +8,7 @@ require_once("controllers/ccofdom.php");
         Nuevo Dominio
     </h4> 
     
-    <form action="index.php?pg=26&ope=save" method="POST" class="row g-3">
+    <form action="home.php?pg=26&ope=save" method="POST" class="row g-3">
         <input type="hidden" id="iddom" name="iddom" value="<?= $dtOn ? $dtOn['iddom'] : '' ?>">
 
 
@@ -78,10 +78,10 @@ require_once("controllers/ccofdom.php");
                         </span> 
                     </td>
                     <td>
-                        <a href="index.php?pg=26&ope=edi&iddom=<?= $dt["iddom"] ?>" title="editar">
+                        <a href="home.php?pg=26&ope=edi&iddom=<?= $dt["iddom"] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="index.php?pg=26&ope=eli&iddom=<?= $dt["iddom"] ?>" title="borrar" onclick="return confirm('¿Estás seguro de borrar?');">
+                        <a href="home.php?pg=26&ope=eli&iddom=<?= $dt["iddom"] ?>" title="borrar" onclick="return confirm('¿Estás seguro de borrar?');">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>
                     </td>

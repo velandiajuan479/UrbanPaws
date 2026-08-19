@@ -4,7 +4,7 @@
         <i class="fa-solid fa-gear"></i>
         Configuración del Sistema
     </h4>
-    <form action="index.php?pg=25&ope=save" method="POST" class="row g-3">
+    <form action="home.php?pg=25&ope=save" method="POST" class="row g-3">
         <input type="hidden" id="idconf" name="idconf" value="<?= $dtOn ? $dtOn['idconf'] : '' ?>">
 
         <!-- Nombre de la empresa -->
@@ -111,10 +111,10 @@
                             <?= $dt['estacon'] == 1 ? 'Activo' : 'Inactivo' ?>
                         </span></td>
                     <td>
-                        <a href="index.php?pg=25&ope=edi&idconf=<?= $dt['idconf'] ?>" title="editar">
+                        <a href="home.php?pg=25&ope=edi&idconf=<?= $dt['idconf'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="index.php?pg=25&ope=eli&idconf=<?= $dt['idconf'] ?>" title="borrar"
+                        <a href="home.php?pg=25&ope=eli&idconf=<?= $dt['idconf'] ?>" title="borrar"
                            onclick="return confirm('¿Eliminar la configuración?')">
                             <i class="fa-solid fa-trash-can fa-2x"></i>
                         </a>
