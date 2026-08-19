@@ -22,43 +22,43 @@
     </section>
 
     <section class="form-grid">
-        <a href="vmen.php" class="card">
+        <a href="home.php?pg=2" class="card">
             <h3><i class="fa-solid fa-circle-user fa-lg"></i> Usuarios</h3>
             <p>Consulta y administra los usuarios registrados en el sistema.</p>
             <span class="btn btn-primary">Gestionar usuarios</span>
         </a>
 
-        <a href="vusupas.php" class="card">
+        <a href="home.php?pg=3" class="card">
             <h3><i class="fa-solid fa-person-walking fa-lg"></i> Paseadores</h3>
             <p>Consulta la información de los paseadores y sus procesos de validación.</p>
             <span class="btn btn-primary">Gestionar paseadores</span>
         </a>
 
-        <a href="vruta.html" class="card">
+        <a href="home.php?pg=13" class="card">
             <h3><i class="fa-solid fa-route fa-lg"></i> Rutas</h3>
             <p>Administra las rutas creadas y sus estados dentro del sistema.</p>
             <span class="btn btn-primary">Gestionar rutas</span>
         </a>
 
-        <a href="vservicios.html" class="card">
+        <a href="home.php?pg=14" class="card">
             <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
             <p>Configura y administra los tipos de servicios ofrecidos.</p>
             <span class="btn btn-accent">Gestionar servicios</span>
         </a>
 
-        <a href="vcofpag.php" class="card">
+        <a href="home.php?pg=17" class="card">
             <h3><i class="fa-solid fa-file-invoice fa-lg"></i> Facturación</h3>
             <p>Consulta la información de facturas y sus detalles.</p>
             <span class="btn btn-primary">Ver facturación</span>
         </a>
 
-        <a href="vpqrs.html" class="card">
+        <a href="home.php?pg=21" class="card">
             <h3><i class="fa-brands fa-teamspeak fa-lg"></i> PQRSF</h3>
             <p>Gestiona las peticiones, quejas, reclamos, sugerencias y felicitaciones.</p>
             <span class="btn btn-accent">Gestionar PQRSF</span>
         </a>
 
-        <a href="vcofmod.php" class="card">
+        <a href="home.php?pg=24" class="card">
             <h3><i class="fa-solid fa-users-gear fa-lg"></i> Configuración</h3>
             <p>Administra la configuración general y los módulos del sistema.</p>
             <span class="btn btn-outline">Configurar</span>
