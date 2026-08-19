@@ -28,7 +28,7 @@
             <span class="btn btn-primary">Gestionar usuarios</span>
         </a>
 
-        <a href="vusupas.php" class="card">
+        <a href="home.php?pg=3" class="card">
             <h3><i class="fa-solid fa-person-walking fa-lg"></i> Paseadores</h3>
             <p>Consulta la información de los paseadores y sus procesos de validación.</p>
             <span class="btn btn-primary">Gestionar paseadores</span>
@@ -46,7 +46,7 @@
             <span class="btn btn-accent">Gestionar servicios</span>
         </a>
 
-        <a href="vcofpag.php" class="card">
+        <a href="home.php?pg=17" class="card">
             <h3><i class="fa-solid fa-file-invoice fa-lg"></i> Facturación</h3>
             <p>Consulta la información de facturas y sus detalles.</p>
             <span class="btn btn-primary">Ver facturación</span>
