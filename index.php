@@ -29,6 +29,60 @@ if (isset($_SESSION['iduser'])) {
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/custom.css">
   
+  <style>
+    /* Estilos específicos para index.php usando variables del design system */
+    body {
+      background-color: var(--bg-light);
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .welcome-title {
+      color: var(--brand-dark);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+    }
+    
+    .welcome-lead {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    
+    /* Pestañas con colores corporativos */
+    .nav-tabs .nav-link {
+      color: var(--brand-dark);
+      font-weight: 600;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-tabs .nav-link:hover {
+      color: var(--brand-primary);
+      background-color: rgba(44, 95, 138, 0.05);
+    }
+    
+    .nav-tabs .nav-link.active {
+      color: var(--brand-primary);
+      background-color: #fff;
+      border-bottom: 3px solid var(--brand-accent);
+    }
+    
+    .nav-tabs .nav-link i {
+      color: var(--brand-accent);
+      margin-right: 8px;
+    }
+    
+    .nav-tabs {
+      border-bottom: 2px solid var(--border-light);
+    }
+    
+    /* Contenedor principal */
+    .container.py-5 {
+      background: linear-gradient(135deg, rgba(26, 58, 92, 0.03) 0%, rgba(44, 95, 138, 0.05) 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+  </style>
 </head>
 <body>
   <?php
@@ -40,8 +94,8 @@ if (isset($_SESSION['iduser'])) {
     <div class="row justify-content-center">
       <div class="col-md-10">
         <div class="text-center mb-4">
-          <h1>Bienvenido a UrbanPaws</h1>
-          <p class="lead">Tu espacio personal para el cuidado de mascotas</p>
+          <h1 class="welcome-title">Bienvenido a UrbanPaws</h1>
+          <p class="lead welcome-lead">Tu espacio personal para el cuidado de mascotas</p>
         </div>
         
         <!-- Pestañas para cambiar entre Login y Registro -->

@@ -34,7 +34,7 @@ require_once('models/conexion.php');
   <?php include'views/header.php'; ?>
 
   <?php
-    $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
+    $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
     
     //Modulo Usuario
     if($pg==1) include 'views/vusucli.php';
@@ -47,12 +47,11 @@ require_once('models/conexion.php');
     elseif ($pg==8) include 'views/vusuubi.php';
     //Modulo Mascotas
     elseif ($pg==9) include 'views/vmasmas.php';
-    elseif ($pg==10) include 'views/vmasdue.php';
     //Modulo servicios
-    elseif ($pg==11) include 'views/vserrut.php';
+    elseif ($pg==11) include 'views/vserrutcl.php';
     elseif ($pg==12) include 'views/vserlisrut.php';
     elseif ($pg==13) include 'views/vserpas.php';
-    elseif ($pg==14) include 'views/vserser.php';
+    elseif ($pg==14) include 'views/vserserps.php';
     elseif ($pg==15) include 'views/vserlisser.php';
     elseif ($pg==16) include 'views/vserrepser.php';
     //Modulo factura
@@ -61,7 +60,7 @@ require_once('models/conexion.php');
     elseif ($pg==19) include 'views/vfaclisfac.php';
     elseif ($pg==20) include 'views/vfacrepfac.php';
     //Modulo PQRS
-    elseif ($pg==21) include 'views/vreppqr.php|';
+    elseif ($pg==21) include 'views/vreppqr.php';
     elseif ($pg==22) include 'views/vreplispqr.php';
     //Modulo Configuracion
     elseif ($pg==23) include 'views/vcofpag.php';
