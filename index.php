@@ -110,16 +110,7 @@ if (isset($_SESSION['iduser'])) {
               <i class="fa-solid fa-user-plus"></i> Registrarse
             </button>
           </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="recuperar-tab" data-bs-toggle="tab" data-bs-target="#recuperar" type="button" role="tab">
-              <i class="fa-solid fa-key"></i> Recuperar Contraseña
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="olvido-tab" data-bs-toggle="tab" data-bs-target="#olvido" type="button" role="tab">
-              <i class="fa-solid fa-envelope"></i> ¿Olvidó su contraseña?
-            </button>
-          </li>
+          
         </ul>
         
         <div class="tab-content" id="authTabsContent">
@@ -134,14 +125,7 @@ if (isset($_SESSION['iduser'])) {
           </div>
           
           <!-- Panel de Recuperar Contraseña -->
-          <div class="tab-pane fade" id="recuperar" role="tabpanel">
-            <?php include 'controllers/cextreccon.php'; ?>
-          </div>
           
-          <!-- Panel de Olvidó Contraseña -->
-          <div class="tab-pane fade" id="olvido" role="tabpanel">
-            <?php include 'controllers/cextolv.php'; ?>
-          </div>
         </div>
       </div>
     </div>
@@ -150,23 +134,23 @@ if (isset($_SESSION['iduser'])) {
   <script>
   // Activar la pestaña correcta según el parámetro pg
   document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var pg = urlParams.get('pg');
-    
-    if (pg == '29') {
-      var loginTab = new bootstrap.Tab(document.querySelector('#login-tab'));
-      loginTab.show();
-    } else if (pg == '28') {
-      var registroTab = new bootstrap.Tab(document.querySelector('#registro-tab'));
-      registroTab.show();
-    } else if (pg == '30') {
-      var recuperarTab = new bootstrap.Tab(document.querySelector('#recuperar-tab'));
-      recuperarTab.show();
-    } else if (pg == '31') {
-      var olvidoTab = new bootstrap.Tab(document.querySelector('#olvido-tab'));
-      olvidoTab.show();
-    }
-  });
+      var urlParams = new URLSearchParams(window.location.search);
+      var pg = urlParams.get('pg');
+      
+      if (pg == '29') {
+        var loginTab = new bootstrap.Tab(document.querySelector('#login-tab'));
+        loginTab.show();
+      } else if (pg == '28') {
+        var registroTab = new bootstrap.Tab(document.querySelector('#registro-tab'));
+        registroTab.show();
+      } else if (pg == '30') {
+        var recuperarTab = new bootstrap.Tab(document.querySelector('#recuperar-tab'));
+        recuperarTab.show();
+      } else if (pg == '31') {
+        var olvidoTab = new bootstrap.Tab(document.querySelector('#olvido-tab'));
+        olvidoTab.show();
+      }
+    });
   </script>
 </body>
 </html>
