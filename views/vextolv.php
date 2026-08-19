@@ -1,45 +1,34 @@
-<?php
-require_once("controllers/cextolv.php");
-?>
-<div class="table-container mt-6 mx-auto" style="max-width: 700px;">
-    <div class="table-responsive">
-        <h5 class="text-center mb-4">¿Olvidó su contraseña?</h5>
+<div class="login-box w-100">
+    <div class="row justify-content-center">
+        <div class="col-md-6">                
+            <div class="card card-form p-4">
+                <h2 class="text-center mb-4">¿Olvidó su contraseña?</h2>
+                
+                <?php if(isset($mensaje) && $mensaje != ""): ?>
+                    <div class="alert alert-<?php echo $tipo_mensaje; ?> alert-dismissible fade show" role="alert">
+                        <?php echo $mensaje; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
 
-        <!-- Formulario corregido: sin action duplicado, con ope=save, name="emailu" -->
-        <form method="post" action="" class="mb-5">
-            <input type="hidden" name="ope" value="save">
-            <div class="mb-3">
-                <label for="emailu" class="form-label d-block fw-semibold">
-                    Ingrese su correo electrónico vinculado
-                </label>
-                <!-- name="emailu" coincide con lo que captura el controlador -->
-                <input type="email" name="emailu" class="form-control" placeholder="ejemplo@ejemplo.com" required>
+                <form method="POST" action="">
+                    <input type="hidden" name="ope" value="save">
+                    
+                    <div class="mb-3">
+                        <label for="emailu" class="form-label fw-semibold">Ingrese su correo electrónico vinculado</label>
+                        <input type="email" name="emailu" class="form-control" placeholder="ejemplo@ejem.com" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-institutional btn-sm d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; padding: .5rem 1rem; font-size: 1.1rem;">
+                        <i class="fa-solid fa-envelope"></i> Enviar Clave Temporal
+                    </button>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <a href="#" onclick="document.getElementById('login-tab').click(); return false;" class="text-decoration-none small">Volver a Iniciar Sesión</a><br>
+                    <a href="#" onclick="document.getElementById('recuperar-tab').click(); return false;" class="text-decoration-none small">Recuperar Contraseña</a>
+                </div>
             </div>
-            <button type="submit" class="btn btn-institutional btn-sm mb-2 d-block mx-auto" style="background-color: #ff7f00; color: #ffffff; border-color: #ff7f00; padding: .5rem 1rem; font-size: 1.1rem;">
-                <i class="fa-solid fa-envelope"></i> Enviar
-            </button>
-        </form>
-
-        <!-- Tabla con columnas reales de la tabla usuario -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Clave Temporal</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <?php if($datAll){ foreach ($datAll as $dt) { ?>
-                <tr>
-                    <td><?= htmlspecialchars($dt['prinom'] . ' ' . $dt['priapel']) ?></td>
-                    <td><?= htmlspecialchars($dt['emailu']) ?></td>
-                    <td>
-                        <?= !empty($dt['claveu']) ? htmlspecialchars($dt['claveu']) : '<span class="text-muted">Sin generar</span>' ?>
-                    </td>
-                </tr>
-                <?php }} ?>
-            </tbody>
-        </table>
+        </div>
     </div>
 </div>
