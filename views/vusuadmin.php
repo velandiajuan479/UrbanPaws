@@ -22,7 +22,7 @@
     </section>
 
     <section class="form-grid">
-        <a href="home.php?pg=1" class="card">
+        <a href="vmen.php" class="card">
             <h3><i class="fa-solid fa-circle-user fa-lg"></i> Usuarios</h3>
             <p>Consulta y administra los usuarios registrados en el sistema.</p>
             <span class="btn btn-primary">Gestionar usuarios</span>
@@ -34,13 +34,13 @@
             <span class="btn btn-primary">Gestionar paseadores</span>
         </a>
 
-        <a href="home.php?pg=5" class="card">
+        <a href="vruta.html" class="card">
             <h3><i class="fa-solid fa-route fa-lg"></i> Rutas</h3>
             <p>Administra las rutas creadas y sus estados dentro del sistema.</p>
             <span class="btn btn-primary">Gestionar rutas</span>
         </a>
 
-        <a href="home.php?pg=6" class="card">
+        <a href="vservicios.html" class="card">
             <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
             <p>Configura y administra los tipos de servicios ofrecidos.</p>
             <span class="btn btn-accent">Gestionar servicios</span>
@@ -52,13 +52,13 @@
             <span class="btn btn-primary">Ver facturación</span>
         </a>
 
-        <a href="#" class="card">
+        <a href="vpqrs.html" class="card">
             <h3><i class="fa-brands fa-teamspeak fa-lg"></i> PQRSF</h3>
             <p>Gestiona las peticiones, quejas, reclamos, sugerencias y felicitaciones.</p>
             <span class="btn btn-accent">Gestionar PQRSF</span>
         </a>
 
-        <a href="home.php?pg=25" class="card">
+        <a href="vcofmod.php" class="card">
             <h3><i class="fa-solid fa-users-gear fa-lg"></i> Configuración</h3>
             <p>Administra la configuración general y los módulos del sistema.</p>
             <span class="btn btn-outline">Configurar</span>
