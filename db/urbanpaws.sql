@@ -37,6 +37,7 @@ CREATE TABLE usuario(
     prinom VARCHAR(100),
     seconom VARCHAR(100),
     priapel VARCHAR(100),
+    segapel VARCHAR(100),
     emailu VARCHAR(255) UNIQUE,
     teleu VARCHAR(20) UNIQUE,
     foto VARCHAR(255),
