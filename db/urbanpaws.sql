@@ -238,3 +238,8 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (1036, 'sdgfjd', 'kjkljk', '2', 1),
 (1037, 'Pastor Aleman', '', '1', 5),
 (1038, 'prueba', 'sdkfhsdjn', '1', 2);
+
+INSERT INTO `perfil` (`idperf`, `nomperf`, `estper`) VALUES
+(1, 'Paseador', NULL),
+(2, 'Cliente', NULL),
+(3, 'Admin', NULL);
