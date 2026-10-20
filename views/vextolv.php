@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-dark w-100 mt-4">
+                    <button type="submit" class="btn btn-dark w-100 mt-4 justify-content-center">
                         <i class="fa-solid fa-envelope"></i> Enviar Clave Temporal
                     </button>
                 </form>

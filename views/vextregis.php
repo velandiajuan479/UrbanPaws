@@ -58,7 +58,7 @@
                             <label for="docu" class="form-label fw-semibold text-uppercase small">Documento<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
-                                <input type="number" class="form-control" name="docu" id="docu" required placeholder="Número de documento">
+                                <input type="tel" inputmode="numeric" pattern="[0-9]+" class="form-control" name="docu" id="docu" required placeholder="Número de documento">
                             </div>
                         </div>
 
@@ -84,7 +84,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" class="form-control" name="passusu" id="passusu" required placeholder="Mínimo 8 caracteres" minlength="8">
-                            <button class="btn btn-outline-secondary btn-toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
                         </div>
                     </div>
 
@@ -93,12 +93,12 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" class="form-control" name="confirm_pass" id="confirm_pass" required placeholder="Repite tu contraseña">
-                            <button class="btn btn-outline-secondary btn-toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
                         </div>
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-dark">
+                        <button type="submit" class="btn btn-dark justify-content-center">
                             <i class="fa-solid fa-circle-user"></i> Registrarse
                         </button>
                     </div>

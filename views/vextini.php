@@ -28,12 +28,12 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                     <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingresa tu contraseña" required>
-                    <button class="btn btn-outline-secondary btn-toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                    <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
                 </div>
             </div>
 
             <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-dark">
+                <button type="submit" class="btn btn-dark justify-content-center">
                     <i class="fa-solid fa-circle-user"></i> Ingresar
                 </button>
             </div>

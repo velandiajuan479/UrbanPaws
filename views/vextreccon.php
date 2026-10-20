@@ -30,7 +30,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" name="nueva_pass" id="nueva_pass" class="form-control" required placeholder="Mínimo 8 caracteres" minlength="8">
-                            <button class="btn btn-outline-secondary btn-toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
                         </div>
                     </div>
 
@@ -39,11 +39,11 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" name="confirm_pass" id="confirm_pass" class="form-control" required placeholder="Repite tu contraseña">
-                            <button class="btn btn-outline-secondary btn-toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
                         </div>
                     </div>
 
-                   <button type="submit" class="btn btn-dark w-100 mt-4">
+                    <button type="submit" class="btn btn-dark w-100 mt-4 justify-content-center">
                         <i class="fa-solid fa-envelope"></i> Actualizar Contraseña
                     </button>
                 </form>
