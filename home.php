@@ -48,12 +48,12 @@ require_once('models/conexion.php');
     //Modulo Mascotas
     elseif ($pg==9) include 'views/vmasmas.php';
     //Modulo servicios
-    elseif ($pg==11) include 'views/vserrutcl.php';
-    elseif ($pg==12) include 'views/vserlisrut.php';
-    elseif ($pg==13) include 'views/vserpas.php';
-    elseif ($pg==14) include 'views/vserserps.php';
-    elseif ($pg==15) include 'views/vserlisser.php';
-    elseif ($pg==16) include 'views/vserrepser.php';
+    elseif ($pg==11) include './views/modvserv/vserrutcl.php'; // V-rut cliente 
+    elseif ($pg==12) include './views/modvserv/vserrutps.php'; // V-rut paseador
+    elseif ($pg==13) include './views/modvserv/vserpas.php'; // V-paseo
+    elseif ($pg==14) include './views/modvserv/vserserps.php'; // serv paseador 
+    elseif ($pg==15) include './views/modvserv/vsersercl.php'; // serv cliente 
+    elseif ($pg==01) include './views/modvserv//vserrepser.php'; // ?
     //Modulo factura
     elseif ($pg==17) include 'views/vfacfac.php';
     elseif ($pg==18) include 'views/vfatdatfac.php';
