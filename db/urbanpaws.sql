@@ -49,13 +49,6 @@ CREATE TABLE usuario(
     FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
 );
 
-CREATE TABLE pqrsf(
-    idpqr BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
-    tippqr VARCHAR(50),
-    descpqr TEXT,
-    fechpqr DATE
-);
-
 CREATE TABLE antecedente(
     idante BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     tipante VARCHAR(50),
