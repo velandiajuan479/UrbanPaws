@@ -221,14 +221,14 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (5, 'Terminado', '', '1', 1),
 
 -- Tamaño Masc
-(10, 'Pequeño', '', '1', 6),
-(11, 'Mediano', '', '1', 6),
-(12, 'Grande', '', '1', 6),
+(10, 'Pequeño', '', '1', 4),
+(11, 'Mediano', '', '1', 4),
+(12, 'Grande', '', '1', 4),
 
 -- tipo servicio
 (20, 'Individual', '', '1', 5),
 (21, 'Grupal', '', '1', 5),
---Razas
+-- Razas
 
 (100, 'Affenpinscher', '', '1', 3),
 (101, 'Airedale Terrier', '', '1', 3),
