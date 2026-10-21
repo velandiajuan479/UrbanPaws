@@ -54,25 +54,50 @@ $pageViews = [
 <body>
     <?php include __DIR__ . '/views/header.php'; ?>
 
-    <?php if (isset($pageViews[$pg]) && is_file(__DIR__ . '/views/' . $pageViews[$pg])): ?>
-        <?php include __DIR__ . '/views/' . $pageViews[$pg]; ?>
-    <?php else: ?>
-        <section class="card" style="max-width: 700px; margin: 2rem auto; text-align: center;">
-            <span class="icon-circle" style="margin: 0 auto 1rem;"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span>
-            <span class="eyebrow">En preparación</span>
-            <h1><?= htmlspecialchars($pageTitles[$pg] ?? 'Página no encontrada', ENT_QUOTES, 'UTF-8') ?></h1>
-            <p>Este espacio todavía no está disponible. Puedes volver al inicio y continuar desde allí.</p>
-            <a class="btn btn-primary" href="home.php?pg=1">Volver al inicio</a>
-        </section>
-    <?php endif; ?>
+  <?php
+    $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
+    
+    //Modulo Usuario
+    if($pg==1) include 'views/vusucli.php';
+    elseif ($pg==2) include 'views/vusuadmin.php';
+    elseif ($pg==3) include 'views/vusupas.php';
+    elseif ($pg==4) include 'views/vusupef.php';
+    elseif ($pg==5) include 'views/vusulisusu.php';
+    elseif ($pg==6) include 'views/vusuval.php';
+    elseif ($pg==7) include 'views/vusudatper.php';
+    elseif ($pg==8) include 'views/vusuubi.php';
+    //Modulo Mascotas
+    elseif ($pg==9) include 'views/vmasmas.php';
+    //Modulo servicios
+    elseif ($pg==11) include './views/modvserv/vserrutcl.php'; // V-rut cliente 
+    elseif ($pg==12) include './views/modvserv/vserrutps.php'; // V-rut paseador
+    elseif ($pg==13) include './views/modvserv/vserpas.php'; // V-paseo
+    elseif ($pg==14) include './views/modvserv/vserserps.php'; // serv paseador 
+    elseif ($pg==15) include './views/modvserv/vsersercl.php'; // serv cliente 
+    elseif ($pg==01) include './views/modvserv//vserrepser.php'; // ?
+    //Modulo factura
+    elseif ($pg==17) include 'views/vfacfac.php';
+    elseif ($pg==18) include 'views/vfatdatfac.php';
+    elseif ($pg==19) include 'views/vfaclisfac.php';
+    elseif ($pg==20) include 'views/vfacrepfac.php';
+    //Modulo PQRS
+    elseif ($pg==21) include 'views/vreppqr.php';
+    elseif ($pg==22) include 'views/vreplispqr.php';
+    //Modulo Configuracion
+    elseif ($pg==23) include 'views/vcofpag.php';
+    elseif ($pg==24) include 'views/vcofmod.php';
+    elseif ($pg==25) include 'views/vcofcof.php';
+    elseif ($pg==26) include 'views/vcofdom.php';
+    elseif ($pg==27) include 'views/vcofval.php';
+    //Modulo externo
+    elseif ($pg==28) include 'views/vextregis.php';
+    elseif ($pg==29) include 'views/vextini.php';
+    elseif ($pg==30) include 'views/vextreccon.php';
+    elseif ($pg==31) include 'views/vextolv.php';
+  ?>
 
-    <?php include __DIR__ . '/views/footer.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
-    <script src="js/mytable.js"></script>
-    <script src="js/card-filters.js"></script>
-    <script src="js/autocomplete.js"></script>
+  <?php include 'views/footer.php'; ?>
+  <script src="js/auth-toggle.js"></script>
+  <script src="js/mytable.js"></script>
 </body>
 </html>

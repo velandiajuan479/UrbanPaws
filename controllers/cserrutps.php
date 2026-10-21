@@ -1,6 +1,6 @@
 <?php
 
-require_once("models/mserrut.php");
+require_once("./models/modserv/mserrut.php");
 require_once("models/musuubi.php");
 
 /* ========================= RECEPCIÓN DE DATOS ========================= */

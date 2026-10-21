@@ -1,6 +1,6 @@
 <?php
 
-require_once("models/mserpas.php");
+require_once("./models/modserv/mserpas.php");
 
 /* ========================= RECEPCIÓN DE DATOS ========================= */
 // El iduser se toma de la sesión (al iniciar sesión con credenciales).
