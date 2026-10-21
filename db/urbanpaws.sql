@@ -113,7 +113,7 @@ CREATE TABLE paseo(
     estapas VARCHAR(20),
     servtipo VARCHAR(100) NOT NULL,
     inicio_programado DATETIME,
-    fin_programado DATETIME NULL
+    fin_programado DATETIME NULL,
     idmasc BIGINT(30),
     idrut INT(6),
     iduser BIGINT(10),
