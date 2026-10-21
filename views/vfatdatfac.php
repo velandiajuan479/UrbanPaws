@@ -1,4 +1,4 @@
-<main class="container" style="padding: 2.5rem 1.5rem;">
+<section class="container billing-page" style="padding: 2.5rem 1.5rem;">
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem;">
 
@@ -13,11 +13,13 @@
         </div>
 
         <button class="btn btn-primary">
-            <i class="bi bi-file-earmark-pdf"></i>
+            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
             Descargar factura
         </button>
 
     </div>
+
+    <div class="alert alert-info demo-notice"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Detalle de demostración. Los datos y los totales no corresponden a una factura real.</div>
 
     <section class="card" style="margin-bottom: 1.5rem;">
 
@@ -51,7 +53,7 @@
 
         <h2 class="section-title">
             <span class="icon-circle">
-                <i class="bi bi-list-ul"></i>
+                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
             </span>
             Conceptos de la factura
         </h2>
@@ -129,7 +131,7 @@
 
         <h2 class="section-title">
             <span class="icon-circle">
-                <i class="bi bi-chat-left-text"></i>
+                <i class="fa-solid fa-message" aria-hidden="true"></i>
             </span>
             Observaciones
         </h2>
@@ -140,4 +142,4 @@
 
     </section>
 
-</main>
+</section>

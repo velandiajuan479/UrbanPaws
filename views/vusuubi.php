@@ -40,15 +40,15 @@ if(isset($_GET['edi']) && $datAll){
         </div>
         <!--Botones-->
         <div class="col-md-12 mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Guardar ubicación">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
             </button>
             <?php if($editando){ ?>
-            <a href="index.php?pg=8" class="btn btn-accent">
+            <a href="home.php?pg=8" class="btn btn-accent" aria-label="Cancelar edición">
                 <i class="fa-solid fa-xmark fa-xl"></i>
             </a>
             <?php } else { ?>
-            <button type="reset" class="btn btn-accent">
+            <button type="reset" class="btn btn-accent" aria-label="Limpiar formulario">
                 <i class="fa-solid fa-trash fa-xl"></i>
             </button>
             <?php } ?>
@@ -76,7 +76,7 @@ if(isset($_GET['edi']) && $datAll){
                     <td><?=$dt['nomubi'];?></td>
                     <td><?=$dt['depaubi'];?></td>
                     <td>
-                        <a href="index.php?pg=8&edi=<?=$dt['idubi'];?>" title="editar">
+                        <a href="home.php?pg=8&edi=<?=$dt['idubi'];?>" title="editar" aria-label="Editar ubicación <?=$dt['nomubi'];?>">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
                         <a href="controllers/cusuubi.php?ope=borrar&idubi=<?=$dt['idubi'];?>" title="borrar" onclick="return confirm('¿Está seguro que desea eliminar esta ubicación?');">

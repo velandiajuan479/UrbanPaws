@@ -1,18 +1,5 @@
-@import url('style.css');
-
-i{
-    color: #f58220;
-    font-size: 10px;
-}
-
-.btn-accent i{
-    color: var(--bg-soft-orange);
-}
-
-.badge, .bg-success{
-    background-color: var(--brand-primary) !important;
-}
-
-.bg-danger{
-    background-color: var(--brand-accent) !important;
-}
+/* Small project-specific refinements layered on top of style.css. */
+.btn-accent i, .btn-accent .fa-solid, .btn-accent .bi { color: inherit; }
+.form-control[type="file"] { padding: .56rem .7rem; }
+.form-control[type="file"]::file-selector-button { margin: -.45rem .7rem -.45rem -.6rem; padding: .72rem .9rem; border: 0; border-right: 1px solid var(--border-light); background: #f4f1e9; color: var(--brand-dark); font: inherit; font-weight: 700; }
+.dropdown-menu .dropdown-item:active { background: #e7eee4; color: var(--brand-dark); }

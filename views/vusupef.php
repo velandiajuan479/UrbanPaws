@@ -1,132 +1,48 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil | Urban Paws</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-<main class="container">
-    <section style="padding: 3rem 0;">
-        <div class="section-title">
-            <div class="icon-circle">P</div>
-            Perfil
-        </div>
-
-        <div class="card">
-            <div class="f
-            
-            orm-grid">
-                <div>
-                    <span class="form-label">Nombre completo</span>
-                    <p>Nombre del usuario</p>
-                </div>
-
-                <div>
-                    <span class="form-label">Correo electrónico</span>
-                    <p>correo@ejemplo.com</p>
-                </div>
-
-                <div>
-                    <span class="form-label">Documento</span>
-                    <p>Documento del usuario</p>
-                </div>
-
-                <div>
-                    <span class="form-label">Teléfono</span>
-                    <p>Teléfono del usuario</p>
-                </div>
-
-                <div>
-                    <span class="form-label">Perfil de usuario</span>
-                    <p>Cliente / Paseador / Administrador</p>
-                </div>
-
-                <div>
-                    <span class="form-label">Estado de cuenta</span>
-                    <span class="badge badge-active">Activo</span>
-                </div>
-            </div>
-
-            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="#datos-personales" class="btn btn-primary">Datos personales</a>
-                <a href="#configuracion" class="btn btn-outline">Configuración</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="datos-personales" style="padding-bottom: 2rem;">
-        <div class="card">
-            <h2>Datos personales</h2>
-            <p>Actualiza la información personal asociada a tu cuenta.</p>
-
-            <form action="#" method="post" style="margin-top: 1.5rem;">
-                <div class="form-grid">
-                    <div>
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="input-control" placeholder="Nombre">
-                    </div>
-
-                    <div>
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" class="input-control" placeholder="Apellido">
-                    </div>
-
-                    <div>
-                        <label for="correo" class="form-label">Correo electrónico</label>
-                        <input type="email" id="correo" name="correo" class="input-control" placeholder="Correo electrónico">
-                    </div>
-
-                    <div>
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="tel" id="telefono" name="telefono" class="input-control" placeholder="Teléfono">
-                    </div>
-
-                    <div>
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" id="direccion" name="direccion" class="input-control" placeholder="Dirección">
-                    </div>
-                </div>
-
-                <div style="margin-top: 1.5rem;">
-                    <button type="submit" class="btn btn-accent">Guardar cambios</button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <section id="configuracion" style="padding-bottom: 3rem;">
-        <div class="card">
-            <h2>Configuración y seguridad</h2>
-            <p>Administra las opciones relacionadas con tu cuenta.</p>
-
-            <div class="form-grid" style="margin-top: 1.5rem;">
-                <div>
-                    <h3>Contraseña</h3>
-                    <p>Actualiza la contraseña de acceso a tu cuenta.</p>
-                    <a href="#" class="btn btn-outline">Cambiar contraseña</a>
-                </div>
-
-                <div>
-                    <h3>Estado de cuenta</h3>
-                    <p>Consulta el estado actual de tu cuenta y sus permisos.</p>
-                    <a href="#" class="btn btn-outline">Consultar estado</a>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <div class="footer-bottom">
-            <span>Urban Paws</span>
-            <span>Mi espacio personal</span>
-        </div>
+<?php
+$profileName = trim((string) ($_SESSION['prinom'] ?? $_SESSION['nomusr'] ?? 'Usuario UrbanPaws'));
+$profileEmail = (string) ($_SESSION['emailu'] ?? '');
+$profileRole = trim((string) ($_SESSION['nomperf'] ?? ''));
+$profileId = (int) ($_SESSION['iduser'] ?? 0);
+$profileInitial = function_exists('mb_substr') ? mb_strtoupper(mb_substr($profileName, 0, 1, 'UTF-8'), 'UTF-8') : strtoupper(substr($profileName, 0, 1));
+?>
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Tu espacio personal</span>
+        <h1>Mi perfil</h1>
+        <p>Consulta la información básica vinculada a tu cuenta UrbanPaws.</p>
     </div>
-</footer>
+</div>
 
-</body>
-</html>
+<section class="profile-layout">
+    <article class="card profile-card">
+        <div class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($profileInitial, ENT_QUOTES, 'UTF-8') ?></div>
+        <span class="badge badge-active"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Sesión activa</span>
+        <h2><?= htmlspecialchars($profileName, ENT_QUOTES, 'UTF-8') ?></h2>
+        <p><?= htmlspecialchars($profileRole !== '' ? $profileRole : 'Cuenta UrbanPaws', ENT_QUOTES, 'UTF-8') ?></p>
+        <div class="profile-divider"></div>
+        <dl class="profile-details">
+            <div><dt><i class="fa-solid fa-envelope" aria-hidden="true"></i>Correo</dt><dd><?= htmlspecialchars($profileEmail !== '' ? $profileEmail : 'Sin correo registrado', ENT_QUOTES, 'UTF-8') ?></dd></div>
+            <div><dt><i class="fa-solid fa-fingerprint" aria-hidden="true"></i>Número de cuenta</dt><dd>#<?= $profileId ?></dd></div>
+        </dl>
+        <a href="home.php?pg=7&amp;iduser=<?= $profileId ?>" class="btn btn-primary w-100">Actualizar mis datos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+
+    <div class="profile-side">
+        <section class="card profile-note">
+            <span class="tile-icon"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span>
+            <span class="eyebrow">Cuidado a tu manera</span>
+            <h2>La información al día hace más fácil cada visita.</h2>
+            <p>Mantén actualizados tus datos de contacto para estar cerca de las novedades de tus servicios.</p>
+        </section>
+        <a href="home.php?pg=9&amp;iduser=<?= $profileId ?>" class="card profile-link-card">
+            <span class="tile-icon"><i class="fa-solid fa-paw" aria-hidden="true"></i></span>
+            <span><strong>Mis mascotas</strong><small>Ve a sus perfiles y detalles de cuidado.</small></span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        <a href="home.php?pg=7&amp;iduser=<?= $profileId ?>" class="card profile-link-card">
+            <span class="tile-icon"><i class="fa-solid fa-address-card" aria-hidden="true"></i></span>
+            <span><strong>Datos personales</strong><small>Revisa tu información de contacto.</small></span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</section>

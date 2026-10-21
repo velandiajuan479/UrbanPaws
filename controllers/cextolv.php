@@ -9,7 +9,7 @@
     $mensaje = "";
     $tipo_mensaje = "";
 
-    if($ope == "save"){
+    if($ope == "request_temporary_password"){
         $mcextolv->setEmailu($emailu);
         $user = $mcextolv->getByEmail();
 

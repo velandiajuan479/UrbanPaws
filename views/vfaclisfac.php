@@ -1,4 +1,4 @@
-<main class="container" style="padding: 2.5rem 1.5rem;">
+<section class="container billing-page" style="padding: 2.5rem 1.5rem;">
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
 
@@ -12,23 +12,26 @@
             </p>
         </div>
 
-        <a href="#" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i>
+        <a href="home.php?pg=17" class="btn btn-primary">
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
             Nueva factura
         </a>
 
     </div>
 
+    <div class="alert alert-info demo-notice"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Los registros y filtros que aparecen aquí son datos de demostración.</div>
+
     <section class="card" style="margin-bottom: 1.5rem;">
 
         <h2 class="section-title">
             <span class="icon-circle">
-                <i class="bi bi-funnel"></i>
+                <i class="fa-solid fa-filter" aria-hidden="true"></i>
             </span>
             Filtros de búsqueda
         </h2>
 
         <form method="GET">
+            <input type="hidden" name="pg" value="19">
 
             <div class="form-grid">
 
@@ -108,12 +111,12 @@
             <div style="display: flex; justify-content: flex-end; gap: .75rem; margin-top: 1.25rem;">
 
                 <button type="reset" class="btn btn-outline">
-                    <i class="bi bi-arrow-counterclockwise"></i>
+                    <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
                     Limpiar
                 </button>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i>
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                     Buscar
                 </button>
 
@@ -129,7 +132,7 @@
 
             <h2 class="section-title" style="margin-bottom: 0;">
                 <span class="icon-circle">
-                    <i class="bi bi-receipt"></i>
+                <i class="fa-solid fa-receipt" aria-hidden="true"></i>
                 </span>
                 Facturas registradas
             </h2>
@@ -170,9 +173,9 @@
                             <span class="badge badge-active">PAGADA</span>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline" style="padding: .4rem .7rem;">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                            <button type="button" class="btn btn-outline btn-sm" disabled aria-label="Detalle de demostración">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -187,9 +190,9 @@
                             <span class="badge badge-female">PENDIENTE</span>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline" style="padding: .4rem .7rem;">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                            <button type="button" class="btn btn-outline btn-sm" disabled aria-label="Detalle de demostración">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -206,9 +209,9 @@
                             </span>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline" style="padding: .4rem .7rem;">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                            <button type="button" class="btn btn-outline btn-sm" disabled aria-label="Detalle de demostración">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -223,9 +226,9 @@
                             <span class="badge badge-active">PAGADA</span>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline" style="padding: .4rem .7rem;">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                            <button type="button" class="btn btn-outline btn-sm" disabled aria-label="Detalle de demostración">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -243,25 +246,25 @@
 
             <div style="display: flex; gap: .4rem;">
 
-                <a href="#" class="btn btn-outline" style="padding: .5rem .8rem;">
+                <button type="button" class="btn btn-outline btn-sm" disabled>
                     Anterior
-                </a>
+                </button>
 
-                <a href="#" class="btn btn-primary" style="padding: .5rem .8rem;">
+                <span class="btn btn-primary btn-sm" aria-current="page">
                     1
-                </a>
+                </span>
 
-                <a href="#" class="btn btn-outline" style="padding: .5rem .8rem;">
+                <button type="button" class="btn btn-outline btn-sm" disabled>
                     2
-                </a>
+                </button>
 
-                <a href="#" class="btn btn-outline" style="padding: .5rem .8rem;">
+                <button type="button" class="btn btn-outline btn-sm" disabled>
                     3
-                </a>
+                </button>
 
-                <a href="#" class="btn btn-outline" style="padding: .5rem .8rem;">
+                <button type="button" class="btn btn-outline btn-sm" disabled>
                     Siguiente
-                </a>
+                </button>
 
             </div>
 
@@ -269,4 +272,4 @@
 
     </section>
 
-</main>
+</section>

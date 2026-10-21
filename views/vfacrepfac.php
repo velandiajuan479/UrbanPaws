@@ -1,4 +1,4 @@
-<main class="container" style="padding: 2.5rem 1.5rem;">
+<section class="container billing-page" style="padding: 2.5rem 1.5rem;">
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
 
@@ -15,12 +15,12 @@
         <div style="display: flex; gap: .7rem;">
 
             <button class="btn btn-outline">
-                <i class="bi bi-file-earmark-pdf"></i>
+                <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
                 PDF
             </button>
 
             <button class="btn btn-primary">
-                <i class="bi bi-file-earmark-excel"></i>
+                <i class="fa-solid fa-file-excel" aria-hidden="true"></i>
                 Excel
             </button>
 
@@ -28,11 +28,13 @@
 
     </div>
 
+    <div class="alert alert-info demo-notice"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> El resumen, los gráficos y los importes son una muestra visual, no un reporte financiero real.</div>
+
     <section class="card" style="margin-bottom: 1.5rem;">
 
         <h2 class="section-title">
             <span class="icon-circle">
-                <i class="bi bi-funnel"></i>
+                <i class="fa-solid fa-filter" aria-hidden="true"></i>
             </span>
             Parámetros del reporte
         </h2>
@@ -93,7 +95,7 @@
             <div style="display: flex; justify-content: flex-end; margin-top: 1.25rem;">
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-bar-chart"></i>
+                    <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
                     Generar reporte
                 </button>
 
@@ -153,7 +155,7 @@
 
             <h2 class="section-title">
                 <span class="icon-circle">
-                    <i class="bi bi-bar-chart"></i>
+                    <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
                 </span>
                 Ingresos por periodo
             </h2>
@@ -189,7 +191,7 @@
 
             <h2 class="section-title">
                 <span class="icon-circle">
-                    <i class="bi bi-pie-chart"></i>
+                    <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
                 </span>
                 Estado de facturación
             </h2>
@@ -239,7 +241,7 @@
 
         <h2 class="section-title">
             <span class="icon-circle">
-                <i class="bi bi-table"></i>
+                <i class="fa-solid fa-table" aria-hidden="true"></i>
             </span>
             Resumen financiero
         </h2>
@@ -296,4 +298,4 @@
 
     </section>
 
-</main>
+</section>
