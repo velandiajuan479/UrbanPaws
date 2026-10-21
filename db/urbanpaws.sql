@@ -210,7 +210,7 @@ INSERT INTO `dominio` (`iddom`, `nomdom`, `actdom`) VALUES
 (2, 'Iconos', '1'),
 (3, 'Razas', '1'),
 (4, 'Tamaño Mascota', '1'),
-(5, 'Tipo de servicio', '1')
+(5, 'Tipo de servicio', '1');
 
 INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 -- ESTADOS
