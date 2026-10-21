@@ -18,7 +18,9 @@
         $user = $mcextini->login();
 
         if($user && password_verify($contrasena, $user['passusu'])){
-            session_start();
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
             $_SESSION['iduser'] = $user['iduser'];
             $_SESSION['emailu'] = $user['emailu'];
             $_SESSION['prinom'] = $user['prinom'];

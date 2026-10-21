@@ -36,10 +36,10 @@ require_once("controllers/ccofdom.php");
         </div>
     <!--Botones-->
         <div class="col-md-12 mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Guardar dominio">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
             </button>
-            <button type="reset" class="btn btn-accent">
+            <button type="reset" class="btn btn-accent" aria-label="Limpiar formulario">
                 <i class="fa-solid fa-trash fa-xl"></i>
             </button>
         </div>

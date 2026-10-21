@@ -1,118 +1,173 @@
-<?php 
+<?php
 ob_start();
 session_start();
 
-// Si el usuario ya está logueado, redirigir a home.php
 if (isset($_SESSION['iduser'])) {
-    header("Location: home.php");
+    header('Location: home.php');
     exit;
 }
+
+require_once __DIR__ . '/models/conexion.php';
+$authPage = isset($_GET['pg']) ? (int) $_GET['pg'] : 29;
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UrbanPaws — Inicio de Sesión y Registro</title>
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/3.0.1/js/dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/3.0.1/js/dataTables.bootstrap5.min.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/custom.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#20372d">
+    <meta name="description" content="UrbanPaws: organiza el cuidado, los paseos y los servicios de tu mascota en un solo lugar.">
+    <title>UrbanPaws — Cuidado en cada paso</title>
+    <link rel="icon" type="image/png" sizes="64x64" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/custom.css">
 </head>
-<body>
-  <?php
-  require_once('models/conexion.php');
-  $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
-  ?>
+<body class="auth-page">
+    <div class="auth-layout">
+        <aside class="auth-brand-panel" aria-label="Acerca de UrbanPaws">
+            <a class="auth-brand" href="index.php" aria-label="UrbanPaws, inicio">
+                <span class="logo-icon"><img class="logo-img" src="img/logo-web.png" alt=""></span>
+                <span><strong>UrbanPaws</strong><small>Cuidado en cada paso</small></span>
+            </a>
+            <div class="auth-story">
+                <span class="eyebrow">Una vida más feliz, juntos</span>
+                <h1>Su mundo merece el mejor cuidado.</h1>
+                <p>Un espacio tranquilo para organizar sus paseos, sus servicios y todos esos pequeños momentos que importan.</p>
+                <span class="auth-story-mark"><i class="fa-solid fa-paw" aria-hidden="true"></i> Bienestar pensado para ellos</span>
+            </div>
+            <div class="auth-footnote">Hecho con cariño en Colombia · <?= date('Y') ?></div>
+        </aside>
 
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <div class="text-center mb-4">
-          <h1 class="welcome-title">Bienvenido a UrbanPaws</h1>
-          <p class="lead welcome-lead">Tu espacio personal para el cuidado de mascotas</p>
-        </div>
-        
-        <!-- Pestañas para cambiar entre Login y Registro -->
-        <ul class="nav nav-tabs mb-4" id="authTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">
-              <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab">
-              <i class="fa-solid fa-user-plus"></i> Registrarse
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="recuperar-tab" data-bs-toggle="tab" data-bs-target="#recuperar" type="button" role="tab">
-              <i class="fa-solid fa-key"></i> Recuperar Contraseña
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="olvido-tab" data-bs-toggle="tab" data-bs-target="#olvido" type="button" role="tab">
-              <i class="fa-solid fa-envelope"></i> ¿Olvidó su contraseña?
-            </button>
-          </li>
-        </ul>
-        
-        <div class="tab-content" id="authTabsContent">
-          <!-- Panel de Inicio de Sesión -->
-          <div class="tab-pane fade show active" id="login" role="tabpanel">
-            <?php include 'controllers/cextini.php'; ?>
-          </div>
-          
-          <!-- Panel de Registro -->
-          <div class="tab-pane fade" id="registro" role="tabpanel">
-            <?php include 'controllers/cextregis.php'; ?>
-          </div>
-          
-          <!-- Panel de Recuperar Contraseña -->
-          <div class="tab-pane fade" id="recuperar" role="tabpanel">
-            <?php include 'controllers/cextreccon.php'; ?>
-          </div>
-          
-          <!-- Panel de Olvidó Contraseña -->
-          <div class="tab-pane fade" id="olvido" role="tabpanel">
-            <?php include 'controllers/cextolv.php'; ?>
-          </div>
-        </div>
-      </div>
+        <main class="auth-content" id="main-content">
+            <div class="auth-content-inner">
+                <a class="auth-mobile-brand" href="index.php" aria-label="UrbanPaws, inicio">
+                    <span class="logo-icon"><img class="logo-img" src="img/logo-web.png" alt=""></span>
+                    <span><strong>UrbanPaws</strong><small>Cuidado en cada paso</small></span>
+                </a>
+                <div class="mb-2">
+                    <span class="eyebrow">Tu espacio de cuidado</span>
+                    <h1 class="welcome-title">Te damos la bienvenida</h1>
+                    <p class="welcome-lead">Gestiona con calma todo lo que hace bien a tu mascota.</p>
+                </div>
+
+                <ul class="nav auth-tabs" id="authTabs" role="tablist" aria-label="Acceso a UrbanPaws">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="login-tab" data-auth-tab="login" type="button" role="tab" aria-controls="login" aria-selected="true">
+                            <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i>Ingresar
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="registro-tab" data-auth-tab="registro" type="button" role="tab" aria-controls="registro" aria-selected="false">
+                            <i class="fa-solid fa-user-plus" aria-hidden="true"></i>Crear cuenta
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="authTabsContent">
+                    <section class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                        <?php include __DIR__ . '/controllers/cextini.php'; ?>
+                    </section>
+                    <section class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab" tabindex="0">
+                        <?php include __DIR__ . '/controllers/cextregis.php'; ?>
+                    </section>
+                    <section class="tab-pane fade" id="recuperar" role="tabpanel" tabindex="0">
+                        <div id="recovery-request">
+                            <?php include __DIR__ . '/controllers/cextolv.php'; ?>
+                        </div>
+                        <div id="recovery-reset" class="d-none">
+                            <?php include __DIR__ . '/controllers/cextreccon.php'; ?>
+                        </div>
+                    </section>
+                </div>
+                <div class="auth-secondary-links d-none" id="authSecondaryLinks">
+                    <a href="#recuperar" data-auth-recovery="request">¿Olvidaste tu contraseña?</a>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth-toggle.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('pg');
+        const loginTab = document.querySelector('#login-tab');
+        const registrationTab = document.querySelector('#registro-tab');
+        const authTabs = document.querySelector('#authTabs');
+        const secondaryLinks = document.querySelector('#authSecondaryLinks');
+        const recoveryPane = document.querySelector('#recuperar');
+        const requestStep = document.querySelector('#recovery-request');
+        const resetStep = document.querySelector('#recovery-reset');
 
-  <script>
-  // Activar la pestaña correcta según el parámetro pg
-  document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var pg = urlParams.get('pg');
-    
-    if (pg == '29') {
-      var loginTab = new bootstrap.Tab(document.querySelector('#login-tab'));
-      loginTab.show();
-    } else if (pg == '28') {
-      var registroTab = new bootstrap.Tab(document.querySelector('#registro-tab'));
-      registroTab.show();
-    } else if (pg == '30') {
-      var recuperarTab = new bootstrap.Tab(document.querySelector('#recuperar-tab'));
-      recuperarTab.show();
-    } else if (pg == '31') {
-      var olvidoTab = new bootstrap.Tab(document.querySelector('#olvido-tab'));
-      olvidoTab.show();
-    }
-  });
-  </script>
-  <script src="js/auth-toggle.js"></script>
+        function openRecovery(step) {
+            authTabs.classList.add('d-none');
+            secondaryLinks.classList.add('d-none');
+            requestStep.classList.toggle('d-none', step === 'reset');
+            resetStep.classList.toggle('d-none', step !== 'reset');
+            authTabs.querySelectorAll('[role="tab"]').forEach(function (tab) {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('#authTabsContent > .tab-pane').forEach(function (pane) {
+                pane.classList.remove('show', 'active');
+            });
+            recoveryPane.classList.add('show', 'active');
+            history.replaceState(null, '', 'index.php?pg=' + (step === 'reset' ? '30' : '31'));
+        }
+
+        function openAuthTab(tab) {
+            authTabs.classList.remove('d-none');
+            secondaryLinks.classList.toggle('d-none', tab !== 'registro');
+            const selectedButton = tab === 'registro' ? registrationTab : loginTab;
+            const selectedPane = document.getElementById(tab === 'registro' ? 'registro' : 'login');
+            authTabs.querySelectorAll('[role="tab"]').forEach(function (button) {
+                const isSelected = button === selectedButton;
+                button.classList.toggle('active', isSelected);
+                button.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            });
+            document.querySelectorAll('#authTabsContent > .tab-pane').forEach(function (pane) {
+                pane.classList.remove('show', 'active');
+            });
+            selectedPane.classList.add('show', 'active');
+            history.replaceState(null, '', 'index.php?pg=' + (tab === 'registro' ? '28' : '29'));
+        }
+
+        document.addEventListener('click', function (event) {
+            const recoveryLink = event.target.closest('[data-auth-recovery]');
+            const authLink = event.target.closest('[data-auth-tab]');
+            if (recoveryLink) {
+                event.preventDefault();
+                openRecovery(recoveryLink.dataset.authRecovery);
+            }
+            if (authLink) {
+                event.preventDefault();
+                openAuthTab(authLink.dataset.authTab);
+            }
+            const backLink = event.target.closest('[data-auth-back]');
+            if (backLink) {
+                event.preventDefault();
+                openAuthTab('login');
+            }
+            const resetLink = event.target.closest('[data-auth-reset]');
+            if (resetLink) {
+                event.preventDefault();
+                openRecovery('reset');
+            }
+        });
+
+        if (page === '28') {
+            openAuthTab('registro');
+        } else if (page === '30') {
+            openRecovery('reset');
+        } else if (page === '31') {
+            openRecovery('request');
+        }
+    });
+    </script>
 </body>
 </html>

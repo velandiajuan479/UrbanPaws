@@ -70,10 +70,10 @@ $ok = isset($_GET['ok']) ? $_GET['ok'] : NULL;
 
         <!--Botones-->
         <div class="col-md-12 mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Guardar datos personales">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
             </button>
-            <button type="reset" class="btn btn-accent">
+            <button type="reset" class="btn btn-accent" aria-label="Restablecer formulario">
                 <i class="fa-solid fa-trash fa-xl"></i>
             </button>
         </div>

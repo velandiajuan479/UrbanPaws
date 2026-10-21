@@ -11,7 +11,7 @@
     $mensaje = "";
     $tipo_mensaje = "";
 
-    if($ope == "save"){
+    if($ope == "reset_password"){
         if($nueva_pass === $confirm_pass){
             $mcextreccon->setEmailu($emailu);
             $user = $mcextreccon->getByEmail();

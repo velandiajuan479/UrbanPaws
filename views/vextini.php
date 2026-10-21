@@ -1,46 +1,45 @@
 <div class="login-box w-100">
-    <div class="card card-form p-4 shadow-sm" style="max-width: 450px; margin: 0 auto;">
-        <div class="text-center mb-4">
-            <h2 class="h3 fw-bold text-dark">Inicio de Sesión</h2>
-            <p class="text-muted">Bienvenido de nuevo a Urban Paws</p>
+    <section class="card card-form p-4" aria-labelledby="login-title">
+        <div class="mb-4">
+            <span class="eyebrow">Nos alegra tenerte aquí</span>
+            <h2 id="login-title">Iniciar sesión</h2>
+            <p class="mb-0">Ingresa a tu espacio de cuidado.</p>
         </div>
-        
-        <?php if(isset($error_login) && $error_login != ""): ?>
+
+        <?php if (isset($error_login) && $error_login !== ''): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php echo $error_login; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <?= htmlspecialchars($error_login, ENT_QUOTES, 'UTF-8') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="">
+        <form method="POST" action="" autocomplete="on">
             <input type="hidden" name="ope" value="login">
-            
+
             <div class="mb-3">
-                <label for="usuario" class="form-label fw-semibold text-uppercase small">Usuario, Correo o Teléfono</label>
+                <label for="usuario" class="form-label">Usuario, correo o teléfono</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Ingresa tu usuario, correo o teléfono" required>
+                    <span class="input-group-text"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
+                    <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Ej. correo@ejemplo.com" autocomplete="username" required>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="contrasena" class="form-label fw-semibold text-uppercase small">Contraseña</label>
+                <label for="contrasena" class="form-label">Contraseña</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                    <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingresa tu contraseña" required>
-                    <button class="btn btn-outline-secondary btn-toggle-password px-2 justify-content-center" type="button"><i class="fa-solid fa-eye fa-sm"></i></button>
+                    <span class="input-group-text"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
+                    <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Tu contraseña" autocomplete="current-password" required>
+                    <button class="btn btn-outline-secondary btn-toggle-password" type="button" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                 </div>
             </div>
 
-            <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-dark justify-content-center">
-                    <i class="fa-solid fa-circle-user"></i> Ingresar
-                </button>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="#recuperar" data-auth-recovery="request" class="btn-link">¿Olvidaste tu contraseña?</a>
             </div>
-
+            <button type="submit" class="btn btn-dark w-100">
+                Ingresar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
         </form>
-        <div class="text-center mt-3">
-            <a href="#" onclick="document.getElementById('olvido-tab').click(); return false;" class="text-decoration-none fw-semibold">¿Olvidaste tu contraseña?</a>
-        </div>
-    </div>
+        <p class="text-center mt-4 mb-0 small">¿Todavía no tienes cuenta? <a href="#registro" data-auth-tab="registro" class="btn-link">Regístrate</a></p>
+    </section>
 </div>

@@ -1,40 +1,33 @@
 <div class="login-box w-100">
-    <div class="row justify-content-center">
-        <div class="col-md-6">                
-            <div class="card card-form p-4 shadow-sm">
-                <div class="text-center mb-4">
-                    <h2 class="h3 fw-bold text-dark">¿Olvidó su contraseña?</h2>
-                    <p class="text-muted">Te enviaremos una clave temporal</p>
-                </div>
-                
-                <?php if(isset($mensaje) && $mensaje != ""): ?>
-                    <div class="alert alert-<?php echo $tipo_mensaje; ?> alert-dismissible fade show" role="alert">
-                        <?php echo $mensaje; ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
+    <section class="card card-form p-4" aria-labelledby="forgot-title">
+        <div class="mb-4">
+            <span class="eyebrow">Recuperación de acceso</span>
+            <h2 id="forgot-title">¿Olvidaste tu contraseña?</h2>
+            <p class="mb-0">Indica el correo asociado a tu cuenta.</p>
+        </div>
 
-                <form method="POST" action="">
-                    <input type="hidden" name="ope" value="save">
-                    
-                    <div class="mb-3">
-                        <label for="emailu" class="form-label fw-semibold text-uppercase small">Ingrese su correo electrónico vinculado</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" name="emailu" id="emailu" class="form-control" placeholder="ejemplo@ejem.com" required>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-dark w-100 mt-4 justify-content-center">
-                        <i class="fa-solid fa-envelope"></i> Enviar Clave Temporal
-                    </button>
-                </form>
-                
-                <div class="text-center mt-3">
-                    <a href="#" onclick="document.getElementById('login-tab').click(); return false;" class="text-decoration-none fw-semibold">Volver a Iniciar Sesión</a><br>
-                    <a href="#" onclick="document.getElementById('recuperar-tab').click(); return false;" class="text-decoration-none fw-semibold">Recuperar Contraseña</a>
+        <?php if (isset($mensaje) && $mensaje !== ''): ?>
+            <div class="alert alert-<?= htmlspecialchars($tipo_mensaje, ENT_QUOTES, 'UTF-8') ?> alert-dismissible fade show" role="alert">
+                <?= htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="" autocomplete="on">
+            <input type="hidden" name="ope" value="request_temporary_password">
+            <div class="mb-3">
+                <label for="recover_emailu" class="form-label">Correo electrónico</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+                    <input type="email" name="emailu" id="recover_emailu" class="form-control" placeholder="correo@ejemplo.com" autocomplete="email" required>
                 </div>
             </div>
+            <button type="submit" class="btn btn-dark w-100"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>Solicitar instrucciones</button>
+        </form>
+        <div class="auth-secondary-links">
+            <a href="#login" data-auth-back>Volver a iniciar sesión</a>
+            <span aria-hidden="true">·</span>
+            <a href="#recuperar" data-auth-reset>Ya tengo mi clave temporal</a>
         </div>
-    </div>
+    </section>
 </div>
