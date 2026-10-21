@@ -221,13 +221,13 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (5, 'Terminado', '', '1', 1),
 
 -- Tamaño Masc
-(10, 'Pequeño', '', '1', 6)
-(11, 'Mediano', '', '1', 6)
-(12, 'Grande', '', '1', 6)
+(10, 'Pequeño', '', '1', 6),
+(11, 'Mediano', '', '1', 6),
+(12, 'Grande', '', '1', 6),
 
 -- tipo servicio
 (20, 'Individual', '', '1', 5),
-(21, 'Grupal', '', '1', 5)
+(21, 'Grupal', '', '1', 5),
 --Razas
 
 (100, 'Affenpinscher', '', '1', 3),
@@ -387,7 +387,7 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (254, 'Whippet', '', '1', 3),
 (255, 'Wolfhound Irlandes', '', '1', 3),
 (256, 'Yorkshire Terrier', '', '1', 3),
-(257, 'Otra raza', '', '1', 3);
+(257, 'Otra raza', '', '1', 3),
 
 -- ICONOS
 (1001, 'fa fa-school', NULL, '1', 2),
