@@ -118,7 +118,6 @@ CREATE TABLE paseo(
     idrut INT(6),
     iduser BIGINT(10),
     descserv TEXT,
-    servtipo VARCHAR(100),
     FOREIGN KEY (idmasc) REFERENCES mascotas(idmasc),
     FOREIGN KEY (idrut) REFERENCES ruta(idrut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
