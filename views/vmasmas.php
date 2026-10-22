@@ -24,7 +24,7 @@
         <div class="col-md-4">
             <i class="fa-solid fa-venus-mars"></i>
             <label class="form-label">Sexo <span class="text-danger">*</span></label>
-            <select name="sexmasc" class="form-control form-select" required>
+            <select name="sexmasc" class="form-control form-select" data-autocomplete required>
                 <option value="">Seleccionar...</option>
                 <option value="Macho"  <?= ($dtOn && $dtOn['sexmasc']=='Macho')  ? 'selected' : '' ?>>Macho</option>
                 <option value="Hembra" <?= ($dtOn && $dtOn['sexmasc']=='Hembra') ? 'selected' : '' ?>>Hembra</option>
