@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__ . "/mmasarchivo.php");
+
 class mCofmas
 {
     private $idmasc;
@@ -210,6 +212,18 @@ class mCofmas
             $idmasc = $this->getIdmasc();
             $conexion->beginTransaction();
 
+            // Rutas de los archivos para borrarlos del disco tras el commit
+            $fotomasc = NULL;
+            $fotovacu = NULL;
+            $archivos = $conexion->prepare("SELECT fotomasc, fotovacu FROM mascotas WHERE idmasc = :idmasc");
+            $archivos->bindValue(":idmasc", (int) $idmasc, PDO::PARAM_INT);
+            $archivos->execute();
+            $rutaArchivos = $archivos->fetch(PDO::FETCH_ASSOC);
+            if ($rutaArchivos) {
+                $fotomasc = $rutaArchivos['fotomasc'];
+                $fotovacu = $rutaArchivos['fotovacu'];
+            }
+
             $relaciones = $conexion->prepare("DELETE FROM duenomasc WHERE idmasc = :idmasc");
             $relaciones->bindParam(":idmasc", $idmasc);
             $relaciones->execute();
@@ -229,6 +243,11 @@ class mCofmas
             }
 
             $conexion->commit();
+
+            // La foto y el carnet dejan de existir en el disco
+            if (!empty($fotomasc)) { mMasArchivo::eliminar($fotomasc); }
+            if (!empty($fotovacu)) { mMasArchivo::eliminar($fotovacu); }
+
             return true;
         }catch(Exception $e){
             if ($conexion && $conexion->inTransaction()) {
