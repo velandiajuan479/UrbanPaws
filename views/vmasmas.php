@@ -120,6 +120,11 @@
 
         <!-- Botones -->
         <div class="col-md-12 mt-4 text-end">
+            <?php if ($dtOn) { ?>
+                <a href="home.php?pg=9" class="btn btn-secondary" aria-label="Cancelar edición">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </a>
+            <?php } ?>
             <button type="submit" class="btn btn-primary" aria-label="Guardar mascota">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
             </button>
