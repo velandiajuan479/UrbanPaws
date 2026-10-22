@@ -1,36 +1,16 @@
 <?php require_once("controllers/cmasmas.php"); ?>
 <div class="card card-form p-4">
+    <?php if (!empty($errorMascota)) { ?>
+        <div class="alert alert-danger" role="alert"><?= htmlspecialchars($errorMascota, ENT_QUOTES, 'UTF-8') ?></div>
+    <?php } ?>
     <h4 class="section-title">
         <i class="fa-solid fa-paw"></i>
         Nuevo Registro de Mascota
     </h4>
 
-    <!-- Dueño actual: se muestra el nombre, sin select y sin sesión -->
-    <?php if ($dtDuen) { ?>
-    <div class="alert alert-info d-flex align-items-center gap-2">
-        <?php if ($dtDuen['foto']) { ?>
-            <img src="<?= $dtDuen['foto'] ?>" alt="foto dueño" height="40" class="rounded-circle">
-        <?php } else { ?>
-            <i class="fa-solid fa-user fa-xl"></i>
-        <?php } ?>
-        <div>
-            <strong>Dueño:</strong>
-            <?= $dtDuen['prinom'] . ' ' . ($dtDuen['seconom'] ? $dtDuen['seconom'] . ' ' : '') . $dtDuen['priapel'] ?>
-            <br>
-            <small>Documento: <?= $dtDuen['docu'] ?></small>
-        </div>
-    </div>
-    <?php } else { ?>
-    <div class="alert alert-warning">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        No hay dueño seleccionado. Entra con: <code>home.php?pg=??&iduser=X</code>
-    </div>
-    <?php } ?>
-
-    <form action="home.php?pg=27&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
+    <form action="home.php?pg=9&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
         <input type="hidden" name="idmasc" value="<?= $dtOn ? $dtOn['idmasc'] : '' ?>">
-        <!-- El dueño viaja oculto: no hay select ni sesión -->
-        <input type="hidden" name="iduser" value="<?= $iduser ? $iduser : '' ?>">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
         <!-- Nombre -->
         <div class="col-md-4">
@@ -44,7 +24,7 @@
         <div class="col-md-4">
             <i class="fa-solid fa-venus-mars"></i>
             <label class="form-label">Sexo <span class="text-danger">*</span></label>
-            <select name="sexmasc" class="form-control form-select" required>
+            <select name="sexmasc" class="form-control form-select" data-autocomplete required>
                 <option value="">Seleccionar...</option>
                 <option value="Macho"  <?= ($dtOn && $dtOn['sexmasc']=='Macho')  ? 'selected' : '' ?>>Macho</option>
                 <option value="Hembra" <?= ($dtOn && $dtOn['sexmasc']=='Hembra') ? 'selected' : '' ?>>Hembra</option>
@@ -55,7 +35,7 @@
         <div class="col-md-4">
             <i class="fa-solid fa-paw"></i>
             <label class="form-label">Raza <span class="text-danger">*</span></label>
-            <select name="razamasc" class="form-control form-select" required>
+            <select name="razamasc" class="form-control form-select" data-autocomplete required>
                 <option value="">Seleccionar raza...</option>
                 <?php if ($datRaz) { foreach ($datRaz AS $rz) { ?>
                 <option value="<?= $rz['codval'] ?>"
@@ -69,24 +49,41 @@
         <!-- Foto de la mascota -->
         <div class="col-md-6">
             <i class="fa-solid fa-camera"></i>
-            <label class="form-label">Foto de la mascota</label>
-            <input type="file" class="form-control" name="fotomasc" accept=".jpg,.jpeg,.png">
-            <input type="hidden" name="fotomasc_old" value="<?= $dtOn ? $dtOn['fotomasc'] : '' ?>">
-            <?php if ($dtOn && $dtOn['fotomasc']) { ?>
-                <img src="<?= $dtOn['fotomasc'] ?>" alt="foto mascota" height="50" class="mt-2 rounded">
+            <label class="form-label">Foto de la mascota <small>(JPG o PNG, máx. 5 MB)</small></label>
+            <input type="file" class="form-control" name="fotomasc" accept=".jpg,.jpeg,.png" data-preview="infoFotomasc">
+            <small id="infoFotomasc" class="form-text"></small>
+            <?php if ($dtOn && !empty($dtOn['fotomasc'])) { ?>
+                <button type="button" class="btn btn-link p-0 mt-2" data-preview-src="<?= htmlspecialchars($dtOn['fotomasc'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="image" data-preview-title="Foto de <?= htmlspecialchars($dtOn['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
+                    <img src="<?= htmlspecialchars($dtOn['fotomasc'], ENT_QUOTES, 'UTF-8') ?>"
+                         alt="Ver foto actual de la mascota" height="50" class="rounded">
+                </button>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" name="quitarfotomasc" value="1" id="quitarFotoMasc">
+                    <label class="form-check-label" for="quitarFotoMasc">Quitar la foto actual</label>
+                </div>
             <?php } ?>
         </div>
 
         <!-- Carnet de vacunas -->
         <div class="col-md-6">
             <i class="fa-solid fa-syringe"></i>
-            <label class="form-label">Carnet de Vacunas <small>(JPG, PNG o PDF máx. 5MB)</small></label>
-            <input type="file" class="form-control" name="fotovacu" accept=".pdf,.jpg,.jpeg,.png">
-            <input type="hidden" name="fotovacu_old" value="<?= $dtOn ? $dtOn['fotovacu'] : '' ?>">
-            <?php if ($dtOn && $dtOn['fotovacu']) { ?>
-                <a href="<?= $dtOn['fotovacu'] ?>" target="_blank" class="d-block mt-2">
-                    <i class="fa-solid fa-file-medical"></i> Ver carnet actual
-                </a>
+            <label class="form-label">Carnet de Vacunas <small>(JPG, PNG o PDF, máx. 5 MB)</small></label>
+            <input type="file" class="form-control" name="fotovacu" accept=".pdf,.jpg,.jpeg,.png" data-preview="infoFotovacu">
+            <small id="infoFotovacu" class="form-text"></small>
+            <?php if ($dtOn && !empty($dtOn['fotovacu'])) {
+                $extVac = strtolower((string) pathinfo($dtOn['fotovacu'], PATHINFO_EXTENSION)); ?>
+                <button type="button" class="btn btn-link p-0 mt-2" data-preview-src="<?= htmlspecialchars($dtOn['fotovacu'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="frame" data-preview-title="Carnet de vacunas de <?= htmlspecialchars($dtOn['nommasc'], ENT_QUOTES, 'UTF-8') ?>" title="Ver carnet actual">
+                    <?php if (in_array($extVac, ['jpg', 'jpeg', 'png'], true)) { ?>
+                        <img src="<?= htmlspecialchars($dtOn['fotovacu'], ENT_QUOTES, 'UTF-8') ?>"
+                             alt="Carnet de vacunas actual" height="60" class="mt-2 rounded">
+                    <?php } else { ?>
+                        <i class="fa-solid fa-file-medical"></i> Ver carnet actual
+                    <?php } ?>
+                </button>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" name="quitarfotovacu" value="1" id="quitarFotoVacu">
+                    <label class="form-check-label" for="quitarFotoVacu">Quitar el carnet actual</label>
+                </div>
             <?php } ?>
         </div>
 
@@ -108,10 +105,10 @@
 
         <!-- Botones -->
         <div class="col-md-12 mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Guardar mascota">
                 <i class="fa-solid fa-floppy-disk fa-xl"></i>
             </button>
-            <button type="reset" class="btn btn-accent">
+            <button type="reset" class="btn btn-accent" aria-label="Limpiar formulario">
                 <i class="fa-solid fa-trash fa-xl"></i>
             </button>
         </div>
@@ -141,12 +138,14 @@
                 <tr>
                     <td>
                         <strong>
-                            <?php if ($dt['fotomasc']) { ?>
-                                <img src="<?= $dt['fotomasc'] ?>" height="35" class="rounded me-1">
+                            <?php if (!empty($dt['fotomasc'])) { ?>
+                                <button type="button" class="btn btn-link p-0" data-preview-src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="image" data-preview-title="Foto de <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
+                                    <img src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>" alt="Ver foto de la mascota" height="35" class="rounded me-1">
+                                </button>
                             <?php } else { ?>
                                 <i class="fa-solid fa-paw"></i>
                             <?php } ?>
-                            <?= $dt["idmasc"] ?> <?= $dt["nommasc"] ?>
+                            <?= (int) $dt["idmasc"] ?> <?= htmlspecialchars($dt["nommasc"], ENT_QUOTES, 'UTF-8') ?>
                         </strong>
                     </td>
                     <td>
@@ -166,20 +165,29 @@
                         </small>
                     </td>
                     <td>
-                        <?php if ($dt["fotovacu"]) { ?>
-                            <a href="<?= $dt['fotovacu'] ?>" target="_blank" title="Ver carnet">
-                                <i class="fa-solid fa-file-medical fa-2x"></i>
-                            </a>
+                        <?php if (!empty($dt["fotovacu"])) {
+                            $extTabla = strtolower((string) pathinfo($dt['fotovacu'], PATHINFO_EXTENSION)); ?>
+                            <button type="button" class="btn btn-link p-0" data-preview-src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="frame" data-preview-title="Carnet de vacunas de <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>" title="Ver carnet">
+                                <?php if (in_array($extTabla, ['jpg', 'jpeg', 'png'], true)) { ?>
+                                    <img src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>" alt="Carnet de vacunas" height="35" class="rounded">
+                                <?php } else { ?>
+                                    <i class="fa-solid fa-file-medical fa-2x"></i>
+                                <?php } ?>
+                            </button>
                         <?php } else { echo '—'; } ?>
                     </td>
                     <td>
-                        <a href="home.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="editar">
+                        <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="home.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="borrar"
-                           onclick="return confirm('¿Eliminar la mascota?')">
-                            <i class="fa-solid fa-trash-can fa-2x"></i>
-                        </a>
+                        <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
+                              onsubmit="return confirm('¿Eliminar la mascota?')">
+                            <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                            <button type="submit" class="btn btn-link p-0" title="borrar" aria-label="Eliminar <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
+                                <i class="fa-solid fa-trash-can fa-2x"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <?php }} ?>
@@ -187,3 +195,74 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="modalVistaArchivoMascota" tabindex="-1" aria-labelledby="tituloVistaArchivoMascota" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloVistaArchivoMascota">Previsualización</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="imagenVistaArchivoMascota" class="img-fluid d-none" alt="Previsualización de mascota">
+                <iframe id="marcoVistaArchivoMascota" class="w-100 d-none" height="600" title="Previsualización del carnet"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var modal = document.getElementById('modalVistaArchivoMascota');
+    var imagen = document.getElementById('imagenVistaArchivoMascota');
+    var marco = document.getElementById('marcoVistaArchivoMascota');
+    var titulo = document.getElementById('tituloVistaArchivoMascota');
+
+    document.addEventListener('click', function (event) {
+        var boton = event.target.closest('[data-preview-src]');
+        if (!boton || !modal) { return; }
+
+        titulo.textContent = boton.getAttribute('data-preview-title') || 'Previsualización';
+        if (boton.getAttribute('data-preview-mode') === 'image') {
+            imagen.src = boton.getAttribute('data-preview-src');
+            imagen.classList.remove('d-none');
+            marco.classList.add('d-none');
+            marco.removeAttribute('src');
+        } else {
+            marco.src = boton.getAttribute('data-preview-src');
+            marco.classList.remove('d-none');
+            imagen.classList.add('d-none');
+            imagen.removeAttribute('src');
+        }
+        bootstrap.Modal.getOrCreateInstance(modal).show();
+    });
+
+    modal.addEventListener('hidden.bs.modal', function () {
+        imagen.removeAttribute('src');
+        marco.removeAttribute('src');
+    });
+
+    var LIMITE = 5 * 1024 * 1024; // 5 MB
+    var inputs = document.querySelectorAll('input[type="file"][data-preview]');
+    Array.prototype.forEach.call(inputs, function (input) {
+        input.addEventListener('change', function () {
+            var salida = document.getElementById(input.getAttribute('data-preview'));
+            if (!salida) { return; }
+            var archivo = input.files && input.files[0];
+            if (!archivo) {
+                salida.textContent = '';
+                salida.classList.remove('text-danger');
+                return;
+            }
+            var mb = (archivo.size / (1024 * 1024)).toFixed(2);
+            if (archivo.size > LIMITE) {
+                salida.textContent = archivo.name + ' (' + mb + ' MB): supera el límite de 5 MB.';
+                salida.classList.add('text-danger');
+            } else {
+                salida.textContent = archivo.name + ' (' + mb + ' MB)';
+                salida.classList.remove('text-danger');
+            }
+        });
+    });
+})();
+</script>

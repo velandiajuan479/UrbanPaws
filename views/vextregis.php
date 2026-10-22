@@ -15,7 +15,7 @@
                 <?php endif; ?>
 
                 <form id="formRegistro" method="POST" action="">
-                    <input type="hidden" name="ope" value="save">
+                    <input type="hidden" name="ope" value="register">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -104,6 +104,7 @@
                     </div>
 
                 </form>
+                <p class="text-center mt-4 mb-0 small">¿Ya tienes cuenta? <a href="#login" data-auth-tab="login" class="btn-link">Inicia sesión</a></p>
             </div>
         </div>
     </div>

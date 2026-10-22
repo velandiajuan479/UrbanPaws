@@ -15,7 +15,7 @@
     $mensaje = "";
     $tipo_mensaje = "";
 
-    if($ope == "save"){
+    if($ope == "register"){
         // Validar que las contraseñas coincidan
         $confirm_pass = isset($_POST["confirm_pass"]) ? $_POST["confirm_pass"] : "";
         

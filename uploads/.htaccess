@@ -1,0 +1,37 @@
+# ==========================================================
+#  UrbanPaws - proteccion de la carpeta de archivos subidos
+# ==========================================================
+#  Este archivo lo genera models/mmasarchivo.php si no existe.
+#  Objetivo: que nada de lo que se suba pueda ejecutarse como codigo.
+
+# 1) Apagar el motor PHP para este directorio (si el modulo esta cargado)
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule php_module>
+    php_flag engine off
+</IfModule>
+
+# 2) Desvincular cualquier interprete de la zona de este directorio
+RemoveHandler .pen mascotas cual es la mejor manera de subir fotos de la mascota y el carnet de vacunas en jpg, png o pdf? nesecitaria un paquete de composer?hp .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .py .shtml .asp .aspx
+RemoveType   .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .py .shtml .asp .aspx
+SetHandler none
+
+# 3) Negar el acceso a cualquier archivo con extension de script
+<FilesMatch "(?i)\.(php|phtml|php[0-9]|phps|cgi|pl|py|shtml|asp|aspx|jsp|htaccess)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 4) No listar el contenido de los directorios ni permitir CGI
+Options -Indexes -ExecCGI
+
+# 5) Cabeceras de seguridad para los archivos servidos
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>

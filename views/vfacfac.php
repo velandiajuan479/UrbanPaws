@@ -1,4 +1,4 @@
-<main class="container" style="padding: 2.5rem 1.5rem;">
+<section class="container billing-page" style="padding: 2.5rem 1.5rem;">
 
     <div style="margin-bottom: 2rem;">
         <h1 style="color: var(--brand-dark); font-size: 2rem; margin-bottom: .3rem;">
@@ -9,13 +9,15 @@
         </p>
     </div>
 
+    <div class="alert alert-info demo-notice"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Vista de demostración: los valores y el resumen no se envían a facturación.</div>
+
     <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; align-items: start;">
 
         <section class="card">
 
             <h2 class="section-title">
                 <span class="icon-circle">
-                    <i class="bi bi-receipt"></i>
+                    <i class="fa-solid fa-receipt" aria-hidden="true"></i>
                 </span>
                 Registro de Factura
             </h2>
@@ -26,7 +28,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-person"></i>
+                            <i class="fa-solid fa-user" aria-hidden="true"></i>
                             Cliente
                         </label>
                         <input
@@ -38,7 +40,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-card-text"></i>
+                            <i class="fa-solid fa-address-card" aria-hidden="true"></i>
                             Identificación
                         </label>
                         <input
@@ -50,7 +52,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-calendar"></i>
+                            <i class="fa-solid fa-calendar" aria-hidden="true"></i>
                             Fecha de factura
                         </label>
                         <input
@@ -61,7 +63,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-credit-card"></i>
+                            <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
                             Estado
                         </label>
                         <select name="estado" class="input-control">
@@ -74,7 +76,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-cash"></i>
+                            <i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i>
                             Precio final
                         </label>
                         <input
@@ -86,7 +88,7 @@
 
                     <div>
                         <label class="form-label">
-                            <i class="bi bi-percent"></i>
+                            <i class="fa-solid fa-percent" aria-hidden="true"></i>
                             Descuento
                         </label>
                         <input
@@ -100,7 +102,7 @@
 
                 <div style="margin-top: 1.25rem;">
                     <label class="form-label">
-                        <i class="bi bi-chat-left-text"></i>
+                        <i class="fa-solid fa-message" aria-hidden="true"></i>
                         Comentarios
                     </label>
 
@@ -114,12 +116,12 @@
                 <div style="display: flex; justify-content: flex-end; gap: .75rem; margin-top: 1.5rem;">
 
                     <button type="reset" class="btn btn-outline">
-                        <i class="bi bi-x-circle"></i>
+                        <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
                         Limpiar
                     </button>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-check-circle"></i>
+                        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
                         Generar factura
                     </button>
 
@@ -133,7 +135,7 @@
 
             <h2 class="section-title">
                 <span class="icon-circle">
-                    <i class="bi bi-calculator"></i>
+                    <i class="fa-solid fa-calculator" aria-hidden="true"></i>
                 </span>
                 Resumen de Factura
             </h2>
@@ -166,4 +168,4 @@
 
     </div>
 
-</main>
+</section>

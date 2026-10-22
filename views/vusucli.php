@@ -1,73 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente | Urban Paws</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    
-<main class="container">
-    <section style="padding: 3rem 0 2rem;">
-        <div class="section-title">
-            <div class="icon-circle">C</div>
-            Cliente
-        </div>
-
-        <div class="card">
-            <h1><i class="fa-solid fa-bone fa-lg"></i> Bienvenido a Urban Paws</h1>
-            <p>Gestiona tus mascotas y consulta los servicios relacionados con sus paseos.</p>
-        </div>
-    </section>
-
-    <section class="form-grid">
-        <a href="home.php?pg=9" class="card">
-            <h3><i class="fa-solid fa-paw fa-lg"></i> Mis mascotas</h3>
-            <p>Consulta y gestiona las mascotas asociadas a tu cuenta.</p>
-            <span class="btn btn-primary">Ingresar</span>
-        </a>
-
-        <a href="home.php?pg=11" class="card">
-            <h3><i class="fa-solid fa-route fa-lg"></i> Mis rutas</h3>
-            <p>Consulta y gestiona las rutas disponibles para los paseos.</p>
-            <span class="btn btn-primary">Ingresar</span>
-        </a>
-
-        <a href="home.php?pg=13" class="card">
-            <h3><i class="fa-solid fa-location-dot fa-lg"></i> Paseos</h3>
-            <p>Consulta y realiza la gestión de los paseos de tus mascotas.</p>
-            <span class="btn btn-primary">Ingresar</span>
-        </a>
-
-        <a href="home.php?pg=14" class="card">
-            <h3><i class="fa-solid fa-concierge-bell fa-lg"></i> Servicios</h3>
-            <p>Consulta los servicios disponibles para contratar.</p>
-            <span class="btn btn-accent">Ingresar</span>
-        </a>
-
-        <a href="home.php?pg=17" class="card">
-            <h3><i class="fa-solid fa-file-invoice fa-lg"></i> Facturas</h3>
-            <p>Consulta tus facturas y la información asociada a tus servicios.</p>
-            <span class="btn btn-primary">Ingresar</span>
-        </a>
-
-        <a href="home.php?pg=21" class="card">
-            <h3><i class="fa-brands fa-teamspeak fa-lg"></i> PQRSF</h3>
-            <p>Registra y consulta tus peticiones, quejas, reclamos, sugerencias y felicitaciones.</p>
-            <span class="btn btn-accent">Ingresar</span>
-        </a>
-    </section>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <div class="footer-bottom">
-            <span>Urban Paws</span>
-            <span>Espacio del cliente</span>
-        </div>
+<section class="welcome-panel" aria-labelledby="client-welcome">
+    <div>
+        <span class="eyebrow">Tu espacio UrbanPaws</span>
+        <h1 id="client-welcome">Todo su cuidado, en un solo lugar.</h1>
+        <p>Organiza sus paseos, mantén su información al día y encuentra los servicios que mejor acompañan su rutina.</p>
     </div>
-</footer>
+    <div class="welcome-art" aria-hidden="true"><i class="fa-solid fa-paw"></i></div>
+</section>
 
-</body>
-</html>
+<section class="dashboard-grid" aria-label="Accesos principales">
+    <a href="home.php?pg=9&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-paw" aria-hidden="true"></i></span>
+        <h2>Mis mascotas</h2>
+        <p>Consulta y actualiza sus datos, notas y documentos de cuidado.</p>
+        <span class="tile-action">Ver mascotas <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=11" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-route" aria-hidden="true"></i></span>
+        <h2>Rutas</h2>
+        <p>Explora las rutas y horarios disponibles para compartir un paseo.</p>
+        <span class="tile-action">Explorar rutas <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=14" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-person-walking" aria-hidden="true"></i></span>
+        <h2>Mis paseos</h2>
+        <p>Revisa las solicitudes y el estado de los paseos agendados.</p>
+        <span class="tile-action">Ver paseos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=19" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i></span>
+        <h2>Facturación</h2>
+        <p>Encuentra el historial de facturas relacionadas con tus servicios.</p>
+        <span class="tile-action">Consultar facturas <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-id-card" aria-hidden="true"></i></span>
+        <h2>Mis datos</h2>
+        <p>Mantén tus datos de contacto y ubicación al día.</p>
+        <span class="tile-action">Editar información <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=4" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
+        <h2>Mi perfil</h2>
+        <p>Consulta la información básica de tu cuenta UrbanPaws.</p>
+        <span class="tile-action">Abrir perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+</section>
