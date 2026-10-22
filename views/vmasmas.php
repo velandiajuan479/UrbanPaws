@@ -1,11 +1,14 @@
 <?php require_once("controllers/cmasmas.php"); ?>
 <div class="card card-form p-4">
+    <?php if (!empty($errorMascota)) { ?>
+        <div class="alert alert-danger" role="alert"><?= htmlspecialchars($errorMascota, ENT_QUOTES, 'UTF-8') ?></div>
+    <?php } ?>
     <h4 class="section-title">
         <i class="fa-solid fa-paw"></i>
         Nuevo Registro de Mascota
     </h4>
 
-    <!-- Dueño actual: se muestra el nombre, sin select y sin sesión -->
+    <!-- Se muestra el dueño de la sesión o, al editar como Admin, el dueño registrado. -->
     <?php if ($dtDuen) { ?>
     <div class="alert alert-info d-flex align-items-center gap-2">
         <?php if ($dtDuen['foto']) { ?>
@@ -23,14 +26,13 @@
     <?php } else { ?>
     <div class="alert alert-warning">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        No hay dueño seleccionado. Entra con: <code>home.php?pg=??&iduser=X</code>
+        No se encontró la información del usuario autenticado.
     </div>
     <?php } ?>
 
-    <form action="home.php?pg=27&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
+    <form action="home.php?pg=9&ope=save" method="POST" enctype="multipart/form-data" class="row g-3">
         <input type="hidden" name="idmasc" value="<?= $dtOn ? $dtOn['idmasc'] : '' ?>">
-        <!-- El dueño viaja oculto: no hay select ni sesión -->
-        <input type="hidden" name="iduser" value="<?= $iduser ? $iduser : '' ?>">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
         <!-- Nombre -->
         <div class="col-md-4">
@@ -173,13 +175,17 @@
                         <?php } else { echo '—'; } ?>
                     </td>
                     <td>
-                        <a href="home.php?pg=27&ope=edi&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="editar">
+                        <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>" title="editar">
                             <i class="fa-solid fa-pencil fa-2x"></i>
                         </a>
-                        <a href="home.php?pg=27&ope=eli&idmasc=<?= $dt['idmasc'] ?>&iduser=<?= $iduser ?>" title="borrar"
-                           onclick="return confirm('¿Eliminar la mascota?')">
-                            <i class="fa-solid fa-trash-can fa-2x"></i>
-                        </a>
+                        <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
+                              onsubmit="return confirm('¿Eliminar la mascota?')">
+                            <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                            <button type="submit" class="btn btn-link p-0" title="borrar" aria-label="Eliminar <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
+                                <i class="fa-solid fa-trash-can fa-2x"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <?php }} ?>

@@ -52,6 +52,48 @@ class mCofmas
         }
     }
 
+    // Método getAllByUser: solo las mascotas asociadas al usuario autenticado
+    public function getAllByUser($iduser){
+        try{
+            $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
+                           m.razamasc, m.descmasc, m.enfermasc, m.iduser,
+                           CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
+                    FROM mascotas m
+                    LEFT JOIN usuario u ON m.iduser = u.iduser
+                    WHERE m.iduser = :iduser
+                    ORDER BY m.idmasc ASC";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            error_log("Error al consultar mascotas del usuario: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Admin se determina desde la relación de perfiles persistida en la BD.
+    public function esAdmin($iduser){
+        try{
+            $sql = "SELECT 1
+                    FROM userxper ux
+                    INNER JOIN perfil p ON ux.idperf = p.idperf
+                    WHERE ux.iduser = :iduser AND p.nomperf = 'Admin'
+                    LIMIT 1";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);
+            $result->execute();
+            return (bool) $result->fetchColumn();
+        }catch(Exception $e){
+            error_log("Error al verificar perfil administrador: " . $e->getMessage());
+            return false;
+        }
+    }
+
     // Método getOne
     public function getOne(){
         try{
@@ -108,7 +150,7 @@ class mCofmas
     }
 
     // Método upd
-    public function upd(){
+    public function upd($iduser, $esAdmin = false){
         try{
             $sql = "UPDATE mascotas SET
                         nommasc  = :nommasc,
@@ -117,9 +159,9 @@ class mCofmas
                         fotomasc = :fotomasc,
                         razamasc = :razamasc,
                         descmasc = :descmasc,
-                        enfermasc= :enfermasc,
-                        iduser   = :iduser
-                    WHERE idmasc = :idmasc";
+                        enfermasc= :enfermasc
+                    WHERE idmasc = :idmasc
+                      AND (:esAdmin = 1 OR iduser = :iduser)";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -132,7 +174,6 @@ class mCofmas
             $razamasc = $this->getRazamasc();
             $descmasc = $this->getDescmasc();
             $enfermasc= $this->getEnfermasc();
-            $iduser   = $this->getIduser();
 
             $result->bindParam(":idmasc",   $idmasc);
             $result->bindParam(":nommasc",  $nommasc);
@@ -142,25 +183,59 @@ class mCofmas
             $result->bindParam(":razamasc", $razamasc);
             $result->bindParam(":descmasc", $descmasc);
             $result->bindParam(":enfermasc",$enfermasc);
-            $result->bindParam(":iduser",   $iduser);
+            $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);
+            $result->bindValue(":esAdmin", $esAdmin ? 1 : 0, PDO::PARAM_INT);
             $result->execute();
+            return true;
         }catch(Exception $e){
-            echo "Error 4: " . $e->getMessage();
+            error_log("Error al actualizar mascota: " . $e->getMessage());
+            return false;
         }
     }
 
     // Método del
-    public function del(){
+    public function del($iduser = null, $esAdmin = false){
+        if ($iduser === null) {
+            return false;
+        }
+        return $this->delOwned($iduser, $esAdmin);
+    }
+
+    // El borrado valida propiedad también en la consulta, no solo en el controller.
+    public function delOwned($iduser, $esAdmin = false){
+        $conexion = null;
         try{
-            $sql = "DELETE FROM mascotas WHERE idmasc = :idmasc";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
             $idmasc = $this->getIdmasc();
+            $conexion->beginTransaction();
+
+            $relaciones = $conexion->prepare("DELETE FROM duenomasc WHERE idmasc = :idmasc");
+            $relaciones->bindParam(":idmasc", $idmasc);
+            $relaciones->execute();
+
+            $sql = "DELETE FROM mascotas
+                    WHERE idmasc = :idmasc
+                      AND (:esAdmin = 1 OR iduser = :iduser)";
+            $result = $conexion->prepare($sql);
             $result->bindParam(":idmasc", $idmasc);
+            $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);
+            $result->bindValue(":esAdmin", $esAdmin ? 1 : 0, PDO::PARAM_INT);
             $result->execute();
+
+            if ($result->rowCount() < 1) {
+                $conexion->rollBack();
+                return false;
+            }
+
+            $conexion->commit();
+            return true;
         }catch(Exception $e){
-            echo "Error 5: " . $e->getMessage();
+            if ($conexion && $conexion->inTransaction()) {
+                $conexion->rollBack();
+            }
+            error_log("Error al eliminar mascota: " . $e->getMessage());
+            return false;
         }
     }
 }
