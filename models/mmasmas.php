@@ -9,6 +9,7 @@ class mCofmas
     private $fotovacu;
     private $fotomasc;
     private $razamasc;
+    private $sizemasc;
     private $descmasc;
     private $enfermasc;
     private $iduser;
@@ -20,6 +21,7 @@ class mCofmas
     function getFotovacu(){ return $this->fotovacu; }
     function getFotomasc(){ return $this->fotomasc; }
     function getRazamasc(){ return $this->razamasc; }
+    function getSizemasc(){ return $this->sizemasc; }
     function getDescmasc(){ return $this->descmasc; }
     function getEnfermasc(){ return $this->enfermasc; }
     function getIduser(){ return $this->iduser; }
@@ -31,6 +33,7 @@ class mCofmas
     function setFotovacu($fotovacu){ return $this->fotovacu = $fotovacu; }
     function setFotomasc($fotomasc){ return $this->fotomasc = $fotomasc; }
     function setRazamasc($razamasc){ return $this->razamasc = $razamasc; }
+    function setSizemasc($sizemasc){ return $this->sizemasc = $sizemasc; }
     function setDescmasc($descmasc){ return $this->descmasc = $descmasc; }
     function setEnfermasc($enfermasc){ return $this->enfermasc = $enfermasc; }
     function setIduser($iduser){ return $this->iduser = $iduser; }
@@ -39,7 +42,7 @@ class mCofmas
     public function getAll(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                           m.razamasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -58,7 +61,7 @@ class mCofmas
     public function getAllByUser($iduser){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                           m.razamasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -100,7 +103,7 @@ class mCofmas
     public function getOne(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                           m.razamasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -120,8 +123,8 @@ class mCofmas
     // Método save — DEVUELVE el id de la mascota recién creada (lastInsertId)
     public function save(){
         try{
-            $sql = "INSERT INTO mascotas(nommasc, sexmasc, fotovacu, fotomasc, razamasc, descmasc, enfermasc, iduser)
-                    VALUES(:nommasc, :sexmasc, :fotovacu, :fotomasc, :razamasc, :descmasc, :enfermasc, :iduser)";
+            $sql = "INSERT INTO mascotas(nommasc, sexmasc, fotovacu, fotomasc, razamasc, sizemasc, descmasc, enfermasc, iduser)
+                    VALUES(:nommasc, :sexmasc, :fotovacu, :fotomasc, :razamasc, :sizemasc, :descmasc, :enfermasc, :iduser)";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -131,6 +134,7 @@ class mCofmas
             $fotovacu = $this->getFotovacu();
             $fotomasc = $this->getFotomasc();
             $razamasc = $this->getRazamasc();
+            $sizemasc = $this->getSizemasc();
             $descmasc = $this->getDescmasc();
             $enfermasc= $this->getEnfermasc();
             $iduser   = $this->getIduser();
@@ -140,6 +144,7 @@ class mCofmas
             $result->bindParam(":fotovacu", $fotovacu);
             $result->bindParam(":fotomasc", $fotomasc);
             $result->bindParam(":razamasc", $razamasc);
+            $result->bindParam(":sizemasc", $sizemasc);
             $result->bindParam(":descmasc", $descmasc);
             $result->bindParam(":enfermasc",$enfermasc);
             $result->bindParam(":iduser",   $iduser);
@@ -160,6 +165,7 @@ class mCofmas
                         fotovacu = :fotovacu,
                         fotomasc = :fotomasc,
                         razamasc = :razamasc,
+                        sizemasc = :sizemasc,
                         descmasc = :descmasc,
                         enfermasc= :enfermasc
                     WHERE idmasc = :idmasc
@@ -174,6 +180,7 @@ class mCofmas
             $fotovacu = $this->getFotovacu();
             $fotomasc = $this->getFotomasc();
             $razamasc = $this->getRazamasc();
+            $sizemasc = $this->getSizemasc();
             $descmasc = $this->getDescmasc();
             $enfermasc= $this->getEnfermasc();
 
@@ -183,6 +190,7 @@ class mCofmas
             $result->bindParam(":fotovacu", $fotovacu);
             $result->bindParam(":fotomasc", $fotomasc);
             $result->bindParam(":razamasc", $razamasc);
+            $result->bindParam(":sizemasc", $sizemasc);
             $result->bindParam(":descmasc", $descmasc);
             $result->bindParam(":enfermasc",$enfermasc);
             $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);

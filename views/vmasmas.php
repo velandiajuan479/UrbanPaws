@@ -46,6 +46,21 @@
             </select>
         </div>
 
+        <!-- Tamaño: alimentado desde la tabla valor (dominio tamaño mascota) -->
+        <div class="col-md-4">
+            <i class="fa-solid fa-ruler"></i>
+            <label class="form-label">Tamaño</label>
+            <select name="sizemasc" class="form-control form-select" data-autocomplete>
+                <option value="">Seleccionar tamaño...</option>
+                <?php if ($datTam) { foreach ($datTam AS $tam) { ?>
+                <option value="<?= htmlspecialchars($tam['codval'], ENT_QUOTES, 'UTF-8') ?>"
+                    <?= ($dtOn && $dtOn['sizemasc'] == $tam['codval']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($tam['codval'], ENT_QUOTES, 'UTF-8') ?>
+                </option>
+                <?php }} ?>
+            </select>
+        </div>
+
         <!-- Foto de la mascota -->
         <div class="col-md-6">
             <i class="fa-solid fa-camera"></i>
@@ -127,6 +142,7 @@
                     <th>Mascota</th>
                     <th>Sexo</th>
                     <th>Raza</th>
+                    <th>Tamaño</th>
                     <th>Dueño</th>
                     <th>Detalles</th>
                     <th>Carnet</th>
@@ -156,6 +172,7 @@
                         <?php } ?>
                     </td>
                     <td><?= $dt["razamasc"] ?></td>
+                    <td><?= htmlspecialchars($dt["sizemasc"] ?? '—', ENT_QUOTES, 'UTF-8') ?></td>
                     <td><?= $dt["nomdueno"] ? $dt["nomdueno"] : 'Sin dueño' ?></td>
                     <td>
                         <small>

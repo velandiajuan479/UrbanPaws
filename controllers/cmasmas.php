@@ -59,6 +59,7 @@ if($ope == "save") {
             $nommasc   = isset($_POST["nommasc"]) ? $_POST["nommasc"] : NULL;
             $sexmasc   = isset($_POST["sexmasc"]) ? $_POST["sexmasc"] : NULL;
             $razamasc  = isset($_POST["razamasc"]) ? $_POST["razamasc"] : NULL;
+            $sizemasc  = isset($_POST["sizemasc"]) ? $_POST["sizemasc"] : NULL;
             $descmasc  = isset($_POST["descmasc"]) ? $_POST["descmasc"] : NULL;
             $enfermasc = isset($_POST["enfermasc"]) ? $_POST["enfermasc"] : NULL;
 
@@ -90,6 +91,7 @@ if($ope == "save") {
                 $mmasmas->setFotovacu($fotovacu);
                 $mmasmas->setFotomasc($fotomasc);
                 $mmasmas->setRazamasc($razamasc);
+                $mmasmas->setSizemasc($sizemasc);
                 $mmasmas->setDescmasc($descmasc);
                 $mmasmas->setEnfermasc($enfermasc);
                 $mmasmas->setIduser($iduser);
@@ -158,6 +160,9 @@ if($ope == "edi" AND $idmasc) {
 $mcofvalRaz = new mCofVal;
 $mcofvalRaz->setIddom(3); // Dominio 3: Razas
 $datRaz = $mcofvalRaz->getByDom();
+$mcofvalTam = new mCofVal;
+$mcofvalTam->setIddom(4); // Dominio 4: Tamaño Mascota
+$datTam = $mcofvalTam->getByDom();
 
 $datAll = $esAdmin ? $mmasmas->getAll() : $mmasmas->getAllByUser($iduser);
 ?>
