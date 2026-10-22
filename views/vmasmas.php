@@ -35,7 +35,7 @@
         <div class="col-md-4">
             <i class="fa-solid fa-paw"></i>
             <label class="form-label">Raza <span class="text-danger">*</span></label>
-            <select name="razamasc" class="form-control form-select" required>
+            <select name="razamasc" class="form-control form-select" data-autocomplete required>
                 <option value="">Seleccionar raza...</option>
                 <?php if ($datRaz) { foreach ($datRaz AS $rz) { ?>
                 <option value="<?= $rz['codval'] ?>"
