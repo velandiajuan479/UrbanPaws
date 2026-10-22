@@ -32,7 +32,7 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPg === 9 ? 'is-active' : '' ?>" href="home.php?pg=9&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>" <?= $currentPg === 9 ? 'aria-current="page"' : '' ?>>
+                    <a class="nav-link <?= $currentPg === 9 ? 'is-active' : '' ?>" href="home.php?pg=9" <?= $currentPg === 9 ? 'aria-current="page"' : '' ?>>
                         <i class="fa-solid fa-paw" aria-hidden="true"></i>Mascotas
                     </a>
                 </li>
@@ -110,7 +110,7 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
         <nav class="container py-3" aria-label="Navegación móvil">
             <ul class="nav flex-column">
                 <li><a class="nav-link <?= $currentPg === 1 ? 'is-active' : '' ?>" href="home.php?pg=1"><i class="fa-solid fa-house" aria-hidden="true"></i>Inicio</a></li>
-                <li><a class="nav-link <?= $currentPg === 9 ? 'is-active' : '' ?>" href="home.php?pg=9&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-paw" aria-hidden="true"></i>Mascotas</a></li>
+                <li><a class="nav-link <?= $currentPg === 9 ? 'is-active' : '' ?>" href="home.php?pg=9"><i class="fa-solid fa-paw" aria-hidden="true"></i>Mascotas</a></li>
                 <li class="mobile-caption">Servicios y facturación</li>
                 <li><a class="nav-link <?= $serviceActive ? 'is-active' : '' ?>" href="home.php?pg=11"><i class="fa-solid fa-route" aria-hidden="true"></i>Rutas disponibles</a></li>
                 <li><a class="nav-link <?= $currentPg === 13 ? 'is-active' : '' ?>" href="home.php?pg=13"><i class="fa-solid fa-person-walking" aria-hidden="true"></i>Agendar paseo</a></li>

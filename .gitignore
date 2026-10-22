@@ -1,3 +1,44 @@
-Nothing needs to be added to .gitignore since only a README.md file was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
-# Ignorar AGENTS.md
+# ==========================================================
+#  UrbanPaws — .gitignore
+# ==========================================================
+
+# --- Archivos subidos por los usuarios -------------------------
+#  Las fotos de mascotas y los carnets de vacunas NO se versionan.
+#  Solo se versionan la estructura de carpetas y el .htaccess que
+#  bloquea la ejecucion de scripts dentro de uploads/.
+/uploads/*
+!/uploads/.htaccess
+!/uploads/mascotas/
+/uploads/mascotas/*
+!/uploads/mascotas/.gitkeep
+
+# --- Dependencias de Composer ----------------------------------
+#  vendor/ SI se versiona en este proyecto (ver composer.json / composer.lock).
+
+# --- Configuracion local y secretos ----------------------------
+.env
+.env.local
+.env.*.local
+
+# --- Logs y archivos temporales --------------------------------
+*.log
+logs/
+error_log
+*.tmp
+*.bak
+*~
+.cache/
+
+# --- Editores e IDE -------------------------------------------
+.idea/
+.vscode/
+.phpstorm.meta.php
+*.swp
+
+# --- Sistema operativo -----------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Guia de agentes (no es codigo del proyecto) ---------------
 AGENTS.md

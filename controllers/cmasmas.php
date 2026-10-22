@@ -1,103 +1,163 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (!isset($_SESSION['iduser'])) {
+    header('Location: index.php');
+    exit;
+}
+
 require_once("models/mmasmas.php");
 require_once("models/mmasdue.php");
 require_once("models/musupef.php");
 require_once("models/mcofval.php");
+require_once("models/mmasarchivo.php");
 
-// Función auxiliar para subir foto/carnet a uploads/
-function subirArchivo($campo, $prefijo){
-    if(isset($_FILES[$campo]) && $_FILES[$campo]["error"] === UPLOAD_ERR_OK){
-        $ext = strtolower(pathinfo($_FILES[$campo]["name"], PATHINFO_EXTENSION));
-        if(in_array($ext, ["jpg","jpeg","png","pdf"])){
-            if(!is_dir("uploads")){ mkdir("uploads", 0777, true); }
-            $nom  = $prefijo . "_" . time() . "_" . uniqid() . "." . $ext;
-            $ruta = "uploads/" . $nom;
-            move_uploaded_file($_FILES[$campo]["tmp_name"], $ruta);
-            return $ruta;
-        }
-    }
-    return NULL;
-}
+// La subida de archivos la resuelve mMasArchivo (validación por contenido,
+// peso máximo de 5 MB y guardado en uploads/mascotas/).
 
-$idmasc   = isset($_REQUEST["idmasc"]) ? $_REQUEST["idmasc"] : NULL;
-// SIN SESIÓN: el dueño llega por URL (ej: index.php?pg=27&iduser=1).
-// Cuando tengas sesión, cambia esta línea por: $iduser = $_SESSION["iduser"];
-$iduser   = isset($_REQUEST["iduser"]) ? $_REQUEST["iduser"] : NULL;
+$iduser = (int) $_SESSION['iduser'];
+$idmasc = isset($_REQUEST["idmasc"]) ? (int) $_REQUEST["idmasc"] : 0;
+$ope    = isset($_REQUEST["ope"]) ? $_REQUEST["ope"] : NULL;
 
-$nommasc  = isset($_POST["nommasc"])   ? $_POST["nommasc"]   : NULL;
-$sexmasc  = isset($_POST["sexmasc"])   ? $_POST["sexmasc"]   : NULL;
-$razamasc = isset($_POST["razamasc"])  ? $_POST["razamasc"]  : NULL;
-$descmasc = isset($_POST["descmasc"])  ? $_POST["descmasc"]  : NULL;
-$enfermasc= isset($_POST["enfermasc"]) ? $_POST["enfermasc"] : NULL;
-$ope      = isset($_REQUEST["ope"])    ? $_REQUEST["ope"]    : NULL;
-
-$dtOn = null;
 $mmasmas = new mCofmas;
+$esAdmin = $mmasmas->esAdmin($iduser);
+$errorMascota = NULL;
+$dtOn = NULL;
+$mascotaActual = NULL;
 
-$dtDuen = null;
-if($iduser){
-    $musupef = new mUsuPef;
-    $musupef->setIduser($iduser);
-    $dtDuen = $musupef->getOne();
+if (empty($_SESSION['token_masc'])) {
+    $_SESSION['token_masc'] = bin2hex(random_bytes(32));
 }
+$csrfToken = $_SESSION['token_masc'];
+$tokenValido = isset($_SESSION['token_masc'], $_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($_SESSION['token_masc'], $_POST['csrf_token']);
+
+$musupef = new mUsuPef;
+$musupef->setIduser($iduser);
+$dtDuen = $musupef->getOne();
 
 if($ope == "save") {
-    $fotovacu = subirArchivo("fotovacu", "carnet");
-    if($fotovacu === NULL){ $fotovacu = isset($_POST["fotovacu_old"]) ? $_POST["fotovacu_old"] : NULL; }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$tokenValido) {
+        $errorMascota = "No se pudo validar el formulario. Recarga la página e inténtalo de nuevo.";
+    } else {
+        $idmasc = isset($_POST["idmasc"]) ? (int) $_POST["idmasc"] : 0;
+        $puedeGuardar = true;
 
-    $fotomasc = subirArchivo("fotomasc", "mascota");
-    if($fotomasc === NULL){ $fotomasc = isset($_POST["fotomasc_old"]) ? $_POST["fotomasc_old"] : NULL; }
+        if ($idmasc) {
+            $mmasmas->setIdmasc($idmasc);
+            $mascotaActual = $mmasmas->getOne();
+            if (!$mascotaActual || (!$esAdmin && (int) $mascotaActual['iduser'] !== $iduser)) {
+                $errorMascota = "No tienes permiso para editar esta mascota.";
+                $puedeGuardar = false;
+            }
+        }
 
-    $mmasmas->setIdmasc($idmasc);
-    $mmasmas->setNommasc($nommasc);
-    $mmasmas->setSexmasc($sexmasc);
-    $mmasmas->setFotovacu($fotovacu);
-    $mmasmas->setFotomasc($fotomasc);
-    $mmasmas->setRazamasc($razamasc);
-    $mmasmas->setDescmasc($descmasc);
-    $mmasmas->setEnfermasc($enfermasc);
-    $mmasmas->setIduser($iduser);
+        if ($puedeGuardar) {
+            $nommasc   = isset($_POST["nommasc"]) ? $_POST["nommasc"] : NULL;
+            $sexmasc   = isset($_POST["sexmasc"]) ? $_POST["sexmasc"] : NULL;
+            $razamasc  = isset($_POST["razamasc"]) ? $_POST["razamasc"] : NULL;
+            $descmasc  = isset($_POST["descmasc"]) ? $_POST["descmasc"] : NULL;
+            $enfermasc = isset($_POST["enfermasc"]) ? $_POST["enfermasc"] : NULL;
 
-    if($idmasc){
-        $mmasmas->upd();
-        $idmascNew = $idmasc;
-    }else{
-        $idmascNew = $mmasmas->save();
-    }
+            // --- Archivos: la foto de la mascota y el carnet de vacunas ---
+            // Las rutas anteriores se leen de la BD, nunca del POST (evita
+            // que se manipule la ruta guardada).
+            $oldFotovacu = ($mascotaActual && !empty($mascotaActual['fotovacu'])) ? $mascotaActual['fotovacu'] : NULL;
+            $oldFotomasc = ($mascotaActual && !empty($mascotaActual['fotomasc'])) ? $mascotaActual['fotomasc'] : NULL;
 
-    if($iduser && $idmascNew){
-        $mmasdue = new mCofdue;
-        $mmasdue->setIduser($iduser);
-        $mmasdue->setIdmasc($idmascNew);
-        if(!$mmasdue->existe()){
-            $mmasdue->save();
+            $upVac = mMasArchivo::guardar("fotovacu", "carnet",  ["jpg", "png", "pdf"]);
+            $upMas = mMasArchivo::guardar("fotomasc", "mascota", ["jpg", "png"]);
+
+            if ($upVac['error'] || $upMas['error']) {
+                // Si un archivo falla, se descarta el otro para no dejar huérfano
+                if (!empty($upVac['ruta'])) { mMasArchivo::eliminar($upVac['ruta']); }
+                if (!empty($upMas['ruta'])) { mMasArchivo::eliminar($upMas['ruta']); }
+                $errorMascota = !empty($upVac['error']) ? $upVac['error'] : $upMas['error'];
+            } else {
+                $fotovacu = !empty($upVac['ruta']) ? $upVac['ruta'] : $oldFotovacu;
+                $fotomasc = !empty($upMas['ruta']) ? $upMas['ruta'] : $oldFotomasc;
+
+                // Quitar explícitamente el archivo actual
+                if (isset($_POST["quitarfotovacu"]) && $_POST["quitarfotovacu"] === "1") { $fotovacu = NULL; }
+                if (isset($_POST["quitarfotomasc"]) && $_POST["quitarfotomasc"] === "1") { $fotomasc = NULL; }
+
+                $mmasmas->setIdmasc($idmasc ?: NULL);
+                $mmasmas->setNommasc($nommasc);
+                $mmasmas->setSexmasc($sexmasc);
+                $mmasmas->setFotovacu($fotovacu);
+                $mmasmas->setFotomasc($fotomasc);
+                $mmasmas->setRazamasc($razamasc);
+                $mmasmas->setDescmasc($descmasc);
+                $mmasmas->setEnfermasc($enfermasc);
+                $mmasmas->setIduser($iduser);
+
+                $guardado = true;
+                if($idmasc){
+                    $guardado = $mmasmas->upd($iduser, $esAdmin);
+                }else{
+                    $idmascNew = $mmasmas->save();
+                    $guardado = (bool) $idmascNew;
+                    if($idmascNew){
+                        $mmasdue = new mCofdue;
+                        $mmasdue->setIduser($iduser);
+                        $mmasdue->setIdmasc($idmascNew);
+                        if(!$mmasdue->existe()){
+                            $mmasdue->save();
+                        }
+                    }
+                }
+
+                if ($guardado) {
+                    // El archivo reemplazado se elimina del disco
+                    if (!empty($oldFotomasc) && $oldFotomasc !== $fotomasc) { mMasArchivo::eliminar($oldFotomasc); }
+                    if (!empty($oldFotovacu) && $oldFotovacu !== $fotovacu) { mMasArchivo::eliminar($oldFotovacu); }
+                    echo '<script>window.location.href = "home.php?pg=9";</script>';
+                    exit();
+                }
+                $errorMascota = "No se pudo guardar la mascota.";
+            }
         }
     }
-
-    echo '<script>window.location.href = "index.php?pg=27&iduser=' . $iduser . '";</script>';
-    exit();
 }
 
 if($ope == "eli" AND $idmasc) {
-    $mmasdue = new mCofdue;
-    $mmasdue->setIdmasc($idmasc);
-    $mmasdue->delByMasc();
-
-    $mmasmas->setIdmasc($idmasc);
-    $mmasmas->del();
-
-    echo '<script>window.location.href = "index.php?pg=27&iduser=' . $iduser . '";</script>';
-    exit();
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$tokenValido) {
+        $errorMascota = "No se pudo validar la eliminación. Recarga la página e inténtalo de nuevo.";
+    } else {
+        $mmasmas->setIdmasc($idmasc);
+        $mascotaActual = $mmasmas->getOne();
+        if (!$mascotaActual || (!$esAdmin && (int) $mascotaActual['iduser'] !== $iduser)) {
+            $errorMascota = "No tienes permiso para eliminar esta mascota.";
+        } else {
+            if ($mmasmas->delOwned($iduser, $esAdmin)) {
+                echo '<script>window.location.href = "home.php?pg=9";</script>';
+                exit();
+            }
+            $errorMascota = "No se pudo eliminar la mascota.";
+        }
+    }
 }
 
 if($ope == "edi" AND $idmasc) {
     $mmasmas->setIdmasc($idmasc);
-    $dtOn = $mmasmas->getOne();
+    $mascotaActual = $mmasmas->getOne();
+    if (!$mascotaActual || (!$esAdmin && (int) $mascotaActual['iduser'] !== $iduser)) {
+        $errorMascota = "No tienes permiso para editar esta mascota.";
+    } else {
+        $dtOn = $mascotaActual;
+        if ($esAdmin && (int) $dtOn['iduser'] !== $iduser) {
+            $musupef->setIduser((int) $dtOn['iduser']);
+            $dtDuen = $musupef->getOne();
+        }
+    }
 }
 
 $mcofvalRaz = new mCofVal;
-$mcofvalRaz->setIddom(5);
+$mcofvalRaz->setIddom(3); // Dominio 3: Razas
 $datRaz = $mcofvalRaz->getByDom();
 
-$datAll = $mmasmas->getAll();
+$datAll = $esAdmin ? $mmasmas->getAll() : $mmasmas->getAllByUser($iduser);
 ?>
