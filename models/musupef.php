@@ -23,6 +23,7 @@ class mUsuPef
     private $depaubi;
     private $nomperf;
     private $idperf;   // ✅ Agregado para getAll()
+    private $passusu;
 
     /* ========================= GETTERS ========================= */
     public function getIduser()  { return $this->iduser; }
@@ -40,6 +41,7 @@ class mUsuPef
     public function getDepaubi() { return $this->depaubi; }
     public function getNomperf() { return $this->nomperf; }
     public function getIdperf()  { return $this->idperf; }
+    public function getPassusu() { return $this->passusu; }
 
     /* ========================= SETTERS ========================= */
     public function setIduser($iduser)   { $this->iduser = $iduser; }
@@ -57,6 +59,7 @@ class mUsuPef
     public function setDepaubi($depaubi) { $this->depaubi = $depaubi; }
     public function setNomperf($nomperf) { $this->nomperf = $nomperf; }
     public function setIdperf($idperf)   { $this->idperf = $idperf; }
+    public function setPassusu($passusu) { $this->passusu = $passusu; }
 
     /* ========================= CONSULTAR UN USUARIO ========================= */
     public function getOne()
@@ -89,6 +92,51 @@ class mUsuPef
         } catch (Exception $e) {
             ManejoError($e);
             return false;
+        }
+    }
+
+    /* ========================= CONSULTAR HASH DE CONTRASEÑA ========================= */
+    public function getPassHash()
+    {
+        try {
+            $sql = "SELECT passusu FROM usuario WHERE iduser = :iduser";
+
+            $modelo   = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result   = $conexion->prepare($sql);
+
+            $iduser = $this->getIduser();
+            $result->bindParam(":iduser", $iduser);
+            $result->execute();
+
+            $hash = $result->fetchColumn();
+            return ($hash === FALSE || $hash === NULL || $hash === '') ? FALSE : $hash;
+        } catch (Exception $e) {
+            ManejoError($e);
+            return FALSE;
+        }
+    }
+
+    /* ========================= ACTUALIZAR CONTRASEÑA ========================= */
+    public function updPass()
+    {
+        try {
+            $sql = "UPDATE usuario SET passusu = :passusu WHERE iduser = :iduser";
+
+            $modelo   = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result   = $conexion->prepare($sql);
+
+            $iduser  = $this->getIduser();
+            $passusu = $this->getPassusu();
+
+            $result->bindParam(":iduser",  $iduser);
+            $result->bindParam(":passusu", $passusu);
+
+            return $result->execute();
+        } catch (Exception $e) {
+            ManejoError($e);
+            return FALSE;
         }
     }
 
