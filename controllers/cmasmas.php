@@ -38,6 +38,8 @@ $tokenValido = isset($_SESSION['token_masc'], $_POST['csrf_token'])
 $musupef = new mUsuPef;
 $musupef->setIduser($iduser);
 $dtDuen = $musupef->getOne();
+$esPaseador = is_array($dtDuen)
+    && in_array('Paseador', array_map('trim', explode(',', (string) ($dtDuen['nomperf'] ?? ''))), true);
 
 if($ope == "save") {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$tokenValido) {
