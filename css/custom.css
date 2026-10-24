@@ -11,3 +11,5 @@
 .up-autocomplete__option { padding: .55rem .7rem; border-radius: 7px; color: var(--text-main); cursor: pointer; }
 .up-autocomplete__option:hover, .up-autocomplete__option.is-active { background: var(--bg-soft-blue); color: var(--brand-dark); }
 .up-autocomplete__empty { padding: .55rem .7rem; color: var(--text-muted); }
+.mascota-action-btn { width: 3rem; height: 3rem; min-height: 3rem; padding: 0; }
+.mascota-action-btn .mascota-action-icon { font-size: 1.5rem; }

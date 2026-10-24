@@ -207,16 +207,16 @@
                         </div>
                         <div class="card-footer py-2 text-end">
                             <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>"
-                               title="Editar" aria-label="Editar <?= $nombreMascota ?>">
-                                <i class="fa-solid fa-pencil fa-lg" aria-hidden="true"></i>
+                               class="btn btn-link p-0 mascota-action-btn" title="Editar" aria-label="Editar <?= $nombreMascota ?>">
+                                <i class="fa-solid fa-pencil mascota-action-icon" aria-hidden="true"></i>
                             </a>
                             <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
                                   onsubmit="return confirm('¿Eliminar la mascota?')">
                                 <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                                <button type="submit" class="btn btn-link p-0" title="Borrar"
+                                <button type="submit" class="btn btn-link p-0 mascota-action-btn" title="Borrar"
                                         aria-label="Eliminar <?= $nombreMascota ?>">
-                                    <i class="fa-solid fa-trash-can fa-lg" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-trash-can mascota-action-icon" aria-hidden="true"></i>
                                 </button>
                             </form>
                         </div>
