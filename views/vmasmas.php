@@ -137,84 +137,95 @@
 
 <div class="card card-form mt-4">
     <h5 class="mb-3">
-        <i class="fa-solid fa-table-list"></i>
+        <i class="fa-solid fa-paw"></i>
         Historial de Mascotas
     </h5>
-    <div class="table-responsive">
-        <table id="mitabla" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Mascota</th>
-                    <th>Sexo</th>
-                    <th>Raza</th>
-                    <th>Tamaño</th>
-                    <th>Dueño</th>
-                    <th>Detalles</th>
-                    <th>Carnet</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
-                <tr>
-                    <td>
-                        <strong>
-                            <?php if (!empty($dt['fotomasc'])) { ?>
-                                <button type="button" class="btn btn-link p-0" data-preview-src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="image" data-preview-title="Foto de <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
-                                    <img src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>" alt="Ver foto de la mascota" height="35" class="rounded me-1">
+    <div data-card-table data-card-sort-label="Mascota">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-3" data-card-list>
+            <?php if ($datAll) { foreach ($datAll as $dt) {
+                $nombreMascota = htmlspecialchars((string) ($dt['nommasc'] ?? ''), ENT_QUOTES, 'UTF-8');
+                $descripcionMascota = trim((string) ($dt['descmasc'] ?? ''));
+                $enfermedadesMascota = trim((string) ($dt['enfermasc'] ?? ''));
+            ?>
+                <div class="col" data-card-item data-card-sort="<?= $nombreMascota ?>">
+                    <article class="card h-100">
+                        <?php if (!empty($dt['fotomasc'])) { ?>
+                            <div class="ratio ratio-16x9">
+                                <button type="button" class="btn p-0 border-0 w-100"
+                                        data-preview-src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>"
+                                        data-preview-mode="image"
+                                        data-preview-title="Foto de <?= $nombreMascota ?>"
+                                        aria-label="Ver foto de <?= $nombreMascota ?>">
+                                    <img src="<?= htmlspecialchars($dt['fotomasc'], ENT_QUOTES, 'UTF-8') ?>"
+                                         alt="Foto de <?= $nombreMascota ?>" class="w-100 h-100 object-fit-cover rounded-top">
                                 </button>
-                            <?php } else { ?>
-                                <i class="fa-solid fa-paw"></i>
-                            <?php } ?>
-                            <?= (int) $dt["idmasc"] ?> <?= htmlspecialchars($dt["nommasc"], ENT_QUOTES, 'UTF-8') ?>
-                        </strong>
-                    </td>
-                    <td>
-                        <?php if ($dt["sexmasc"] == 'Hembra') { ?>
-                            <span class="badge bg-danger"><i class="fa-solid fa-venus"></i> Hembra</span>
-                        <?php } else { ?>
-                            <span class="badge bg-primary"><i class="fa-solid fa-mars"></i> Macho</span>
+                            </div>
                         <?php } ?>
-                    </td>
-                    <td><?= $dt["razamasc"] ?></td>
-                    <td><?= htmlspecialchars($dt["sizemasc"] ?? '—', ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= $dt["nomdueno"] ? $dt["nomdueno"] : 'Sin dueño' ?></td>
-                    <td>
-                        <small>
-                            <?= $dt["descmasc"] ?>
-                            <br>
-                            <em>Enfermedades:</em> <?= $dt["enfermasc"] ?>
-                        </small>
-                    </td>
-                    <td>
-                        <?php if (!empty($dt["fotovacu"])) {
-                            $extTabla = strtolower((string) pathinfo($dt['fotovacu'], PATHINFO_EXTENSION)); ?>
-                            <button type="button" class="btn btn-link p-0" data-preview-src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>" data-preview-mode="frame" data-preview-title="Carnet de vacunas de <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>" title="Ver carnet">
-                                <?php if (in_array($extTabla, ['jpg', 'jpeg', 'png'], true)) { ?>
-                                    <img src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>" alt="Carnet de vacunas" height="35" class="rounded">
-                                <?php } else { ?>
-                                    <i class="fa-solid fa-file-medical fa-2x"></i>
+                        <div class="card-body p-2 p-sm-3">
+                            <h6 class="card-title">#<?= (int) $dt['idmasc'] ?> <?= $nombreMascota ?></h6>
+                            <dl class="row mb-0 small">
+                                <dt class="col-4">Sexo</dt>
+                                <dd class="col-8">
+                                    <?php if (($dt['sexmasc'] ?? '') === 'Hembra') { ?>
+                                        <span class="badge bg-danger"><i class="fa-solid fa-venus" aria-hidden="true"></i> Hembra</span>
+                                    <?php } elseif (($dt['sexmasc'] ?? '') === 'Macho') { ?>
+                                        <span class="badge bg-primary"><i class="fa-solid fa-mars" aria-hidden="true"></i> Macho</span>
+                                    <?php } else { ?>
+                                        <?= htmlspecialchars((string) ($dt['sexmasc'] ?? '—'), ENT_QUOTES, 'UTF-8') ?>
+                                    <?php } ?>
+                                </dd>
+                                <dt class="col-4">Raza</dt>
+                                <dd class="col-8"><?= htmlspecialchars((string) ($dt['razamasc'] ?? '—'), ENT_QUOTES, 'UTF-8') ?></dd>
+                                <dt class="col-4">Tamaño</dt>
+                                <dd class="col-8"><?= htmlspecialchars((string) ($dt['sizemasc'] ?? '—'), ENT_QUOTES, 'UTF-8') ?></dd>
+                                <?php if ($esAdmin || $esPaseador) { ?>
+                                    <dt class="col-4">Dueño</dt>
+                                    <dd class="col-8"><?= !empty($dt['nomdueno']) ? htmlspecialchars((string) $dt['nomdueno'], ENT_QUOTES, 'UTF-8') : 'Sin dueño' ?></dd>
                                 <?php } ?>
-                            </button>
-                        <?php } else { echo '—'; } ?>
-                    </td>
-                    <td>
-                        <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>" title="editar">
-                            <i class="fa-solid fa-pencil fa-2x"></i>
-                        </a>
-                        <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar la mascota?')">
-                            <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                            <button type="submit" class="btn btn-link p-0" title="borrar" aria-label="Eliminar <?= htmlspecialchars($dt['nommasc'], ENT_QUOTES, 'UTF-8') ?>">
-                                <i class="fa-solid fa-trash-can fa-2x"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                <?php }} ?>
-            </tbody>
-        </table>
+                                <dt class="col-12 mb-0">Descripción</dt>
+                                <dd class="col-12 text-break"><?= $descripcionMascota !== '' ? nl2br(htmlspecialchars($descripcionMascota, ENT_QUOTES, 'UTF-8')) : '—' ?></dd>
+                                <dt class="col-12 mb-0">Enfermedades</dt>
+                                <dd class="col-12 text-break"><?= $enfermedadesMascota !== '' ? nl2br(htmlspecialchars($enfermedadesMascota, ENT_QUOTES, 'UTF-8')) : '—' ?></dd>
+                            </dl>
+                            <?php if (!empty($dt['fotovacu'])) {
+                                $extTabla = strtolower((string) pathinfo($dt['fotovacu'], PATHINFO_EXTENSION)); ?>
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-link p-0"
+                                            data-preview-src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>"
+                                            data-preview-mode="frame"
+                                            data-preview-title="Carnet de vacunas de <?= $nombreMascota ?>"
+                                            title="Ver carnet">
+                                        <?php if (in_array($extTabla, ['jpg', 'jpeg', 'png'], true)) { ?>
+                                            <img src="<?= htmlspecialchars($dt['fotovacu'], ENT_QUOTES, 'UTF-8') ?>"
+                                                 alt="Carnet de vacunas de <?= $nombreMascota ?>" height="35" class="rounded">
+                                        <?php } else { ?>
+                                            <i class="fa-solid fa-file-medical" aria-hidden="true"></i> Ver carnet
+                                        <?php } ?>
+                                    </button>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class="card-footer py-2 text-end">
+                            <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>"
+                               title="Editar" aria-label="Editar <?= $nombreMascota ?>">
+                                <i class="fa-solid fa-pencil fa-lg" aria-hidden="true"></i>
+                            </a>
+                            <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
+                                  onsubmit="return confirm('¿Eliminar la mascota?')">
+                                <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                <button type="submit" class="btn btn-link p-0" title="Borrar"
+                                        aria-label="Eliminar <?= $nombreMascota ?>">
+                                    <i class="fa-solid fa-trash-can fa-lg" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            <?php }} else { ?>
+                <div class="col-12 text-muted">No hay mascotas registradas.</div>
+            <?php } ?>
+        </div>
     </div>
 </div>
 
