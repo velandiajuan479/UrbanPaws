@@ -111,26 +111,37 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
             <ul class="nav flex-column">
                 <li><a class="nav-link <?= $currentPg === 1 ? 'is-active' : '' ?>" href="home.php?pg=1"><i class="fa-solid fa-house" aria-hidden="true"></i>Inicio</a></li>
                 <li><a class="nav-link <?= $currentPg === 9 ? 'is-active' : '' ?>" href="home.php?pg=9"><i class="fa-solid fa-paw" aria-hidden="true"></i>Mascotas</a></li>
-                <li class="mobile-caption">Servicios y facturación</li>
-                <li><a class="nav-link <?= $serviceActive ? 'is-active' : '' ?>" href="home.php?pg=11"><i class="fa-solid fa-route" aria-hidden="true"></i>Rutas disponibles</a></li>
-                <li><a class="nav-link <?= $currentPg === 13 ? 'is-active' : '' ?>" href="home.php?pg=13"><i class="fa-solid fa-person-walking" aria-hidden="true"></i>Agendar paseo</a></li>
-                <li><a class="nav-link <?= $currentPg === 14 ? 'is-active' : '' ?>" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a></li>
-                <li><a class="nav-link <?= $billingActive ? 'is-active' : '' ?>" href="home.php?pg=19"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i>Facturación</a></li>
-                <li class="mobile-caption">Gestión · personas y cuentas</li>
-                <li><a class="nav-link <?= $currentPg === 2 ? 'is-active' : '' ?>" href="home.php?pg=2"><i class="fa-solid fa-user-shield" aria-hidden="true"></i>Administradores</a></li>
-                <li><a class="nav-link <?= $currentPg === 5 ? 'is-active' : '' ?>" href="home.php?pg=5"><i class="fa-solid fa-users" aria-hidden="true"></i>Usuarios</a></li>
-                <li><a class="nav-link <?= $currentPg === 6 ? 'is-active' : '' ?>" href="home.php?pg=6"><i class="fa-solid fa-user-check" aria-hidden="true"></i>Validar paseadores</a></li>
-                <li><a class="nav-link <?= $currentPg === 7 ? 'is-active' : '' ?>" href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-address-card" aria-hidden="true"></i>Datos personales</a></li>
-                <li><a class="nav-link <?= $currentPg === 8 ? 'is-active' : '' ?>" href="home.php?pg=8"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Ubicaciones</a></li>
-                <li class="mobile-caption">Gestión · sistema</li>
-                <li><a class="nav-link <?= $currentPg === 23 ? 'is-active' : '' ?>" href="home.php?pg=23"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Páginas</a></li>
-                <li><a class="nav-link <?= $currentPg === 24 ? 'is-active' : '' ?>" href="home.php?pg=24"><i class="fa-solid fa-cubes" aria-hidden="true"></i>Módulos</a></li>
-                <li><a class="nav-link <?= $currentPg === 25 ? 'is-active' : '' ?>" href="home.php?pg=25"><i class="fa-solid fa-gear" aria-hidden="true"></i>Configuración</a></li>
-                <li><a class="nav-link <?= $currentPg === 26 ? 'is-active' : '' ?>" href="home.php?pg=26"><i class="fa-solid fa-tags" aria-hidden="true"></i>Dominios</a></li>
-                <li><a class="nav-link <?= $currentPg === 27 ? 'is-active' : '' ?>" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a></li>
-                <li class="mobile-caption">Tu cuenta</li>
-                <li><a class="nav-link <?= $currentPg === 4 ? 'is-active' : '' ?>" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a></li>
-                <li><a class="nav-link text-danger" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>Cerrar sesión</a></li>
+                <li>
+                    <details <?= ($serviceActive || $billingActive) ? 'open' : '' ?>>
+                        <summary class="mobile-caption">Servicios y facturación</summary>
+                        <a class="nav-link <?= $serviceActive ? 'is-active' : '' ?>" href="home.php?pg=11"><i class="fa-solid fa-route" aria-hidden="true"></i>Rutas disponibles</a>
+                        <a class="nav-link <?= $currentPg === 13 ? 'is-active' : '' ?>" href="home.php?pg=13"><i class="fa-solid fa-person-walking" aria-hidden="true"></i>Agendar paseo</a>
+                        <a class="nav-link <?= $currentPg === 14 ? 'is-active' : '' ?>" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a>
+                        <a class="nav-link <?= $billingActive ? 'is-active' : '' ?>" href="home.php?pg=19"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i>Facturación</a>
+                    </details>
+                </li>
+                <li>
+                    <details <?= $managementActive ? 'open' : '' ?>>
+                        <summary class="mobile-caption">Gestión</summary>
+                        <a class="nav-link <?= $currentPg === 2 ? 'is-active' : '' ?>" href="home.php?pg=2"><i class="fa-solid fa-user-shield" aria-hidden="true"></i>Administradores</a>
+                        <a class="nav-link <?= $currentPg === 5 ? 'is-active' : '' ?>" href="home.php?pg=5"><i class="fa-solid fa-users" aria-hidden="true"></i>Usuarios</a>
+                        <a class="nav-link <?= $currentPg === 6 ? 'is-active' : '' ?>" href="home.php?pg=6"><i class="fa-solid fa-user-check" aria-hidden="true"></i>Validar paseadores</a>
+                        <a class="nav-link <?= $currentPg === 7 ? 'is-active' : '' ?>" href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-address-card" aria-hidden="true"></i>Datos personales</a>
+                        <a class="nav-link <?= $currentPg === 8 ? 'is-active' : '' ?>" href="home.php?pg=8"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Ubicaciones</a>
+                        <a class="nav-link <?= $currentPg === 23 ? 'is-active' : '' ?>" href="home.php?pg=23"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Páginas</a>
+                        <a class="nav-link <?= $currentPg === 24 ? 'is-active' : '' ?>" href="home.php?pg=24"><i class="fa-solid fa-cubes" aria-hidden="true"></i>Módulos</a>
+                        <a class="nav-link <?= $currentPg === 25 ? 'is-active' : '' ?>" href="home.php?pg=25"><i class="fa-solid fa-gear" aria-hidden="true"></i>Configuración</a>
+                        <a class="nav-link <?= $currentPg === 26 ? 'is-active' : '' ?>" href="home.php?pg=26"><i class="fa-solid fa-tags" aria-hidden="true"></i>Dominios</a>
+                        <a class="nav-link <?= $currentPg === 27 ? 'is-active' : '' ?>" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a>
+                    </details>
+                </li>
+                <li>
+                    <details <?= $currentPg === 4 ? 'open' : '' ?>>
+                        <summary class="mobile-caption">Tu cuenta</summary>
+                        <a class="nav-link <?= $currentPg === 4 ? 'is-active' : '' ?>" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a>
+                        <a class="nav-link text-danger" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>Cerrar sesión</a>
+                    </details>
+                </li>
             </ul>
         </nav>
     </div>
