@@ -35,6 +35,13 @@ $tokenValido = isset($_SESSION['token_masc'], $_POST['csrf_token'])
     && is_string($_POST['csrf_token'])
     && hash_equals($_SESSION['token_masc'], $_POST['csrf_token']);
 
+if ($ope === "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido && $idmasc > 0) {
+    $mmasmas->setIdmasc($idmasc);
+    $mmasmas->toggleActiva($iduser, $esAdmin);
+    echo '<script>window.location.href = "home.php?pg=9";</script>';
+    exit();
+}
+
 $musupef = new mUsuPef;
 $musupef->setIduser($iduser);
 $dtDuen = $musupef->getOne();

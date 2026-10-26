@@ -82,6 +82,7 @@ CREATE TABLE mascotas(
     enfermasc TEXT,
     iduser BIGINT(10),
     sizemasc varchar(20) DEFAULT NULL,
+    actmasc TINYINT(1) NOT NULL DEFAULT 1,
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 

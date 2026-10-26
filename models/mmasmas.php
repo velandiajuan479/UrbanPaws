@@ -42,7 +42,7 @@ class mCofmas
     public function getAll(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -61,7 +61,7 @@ class mCofmas
     public function getAllByUser($iduser){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -103,7 +103,7 @@ class mCofmas
     public function getOne(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser,
+                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
                     LEFT JOIN usuario u ON m.iduser = u.iduser
@@ -199,6 +199,27 @@ class mCofmas
             return true;
         }catch(Exception $e){
             error_log("Error al actualizar mascota: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function toggleActiva($iduser, $esAdmin = false){
+        try{
+            $sql = "UPDATE mascotas
+                    SET actmasc = CASE WHEN actmasc = 1 THEN 0 ELSE 1 END
+                    WHERE idmasc = :idmasc
+                      AND (:esAdmin = 1 OR iduser = :iduser)";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $idmasc = $this->getIdmasc();
+            $result->bindValue(":idmasc", (int) $idmasc, PDO::PARAM_INT);
+            $result->bindValue(":iduser", (int) $iduser, PDO::PARAM_INT);
+            $result->bindValue(":esAdmin", $esAdmin ? 1 : 0, PDO::PARAM_INT);
+            $result->execute();
+            return $result->rowCount() > 0;
+        }catch(Exception $e){
+            error_log("Error al cambiar el estado de la mascota: " . $e->getMessage());
             return false;
         }
     }
