@@ -140,14 +140,16 @@
         <i class="fa-solid fa-paw"></i>
         Historial de Mascotas
     </h5>
-    <div data-card-table data-card-sort-label="Mascota">
+    <div data-card-table data-card-sort-label="Mascota" data-card-filters
+         data-card-filter-active-label="Activas" data-card-filter-inactive-label="Inactivas">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-3" data-card-list>
             <?php if ($datAll) { foreach ($datAll as $dt) {
                 $nombreMascota = htmlspecialchars((string) ($dt['nommasc'] ?? ''), ENT_QUOTES, 'UTF-8');
                 $descripcionMascota = trim((string) ($dt['descmasc'] ?? ''));
                 $enfermedadesMascota = trim((string) ($dt['enfermasc'] ?? ''));
+                $mascotaActiva = (int) ($dt['actmasc'] ?? 1) === 1;
             ?>
-                <div class="col" data-card-item data-card-sort="<?= $nombreMascota ?>">
+                <div class="col" data-card-item data-card-status="<?= $mascotaActiva ? 'active' : 'inactive' ?>" data-card-sort="<?= $nombreMascota ?>">
                     <article class="card h-100">
                         <?php if (!empty($dt['fotomasc'])) { ?>
                             <div class="ratio ratio-16x9">
@@ -162,7 +164,12 @@
                             </div>
                         <?php } ?>
                         <div class="card-body p-2 p-sm-3">
-                            <h6 class="card-title">#<?= (int) $dt['idmasc'] ?> <?= $nombreMascota ?></h6>
+                            <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                <h6 class="card-title mb-0">#<?= (int) $dt['idmasc'] ?> <?= $nombreMascota ?></h6>
+                                <span class="badge <?= $mascotaActiva ? 'bg-success' : 'bg-danger' ?> text-nowrap">
+                                    <?= $mascotaActiva ? 'Activa' : 'Inactiva' ?>
+                                </span>
+                            </div>
                             <dl class="row mb-0 small">
                                 <dt class="col-4">Sexo</dt>
                                 <dd class="col-8">
@@ -205,20 +212,32 @@
                                 </div>
                             <?php } ?>
                         </div>
-                        <div class="card-footer py-2 text-end">
-                            <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>"
-                               class="btn btn-link p-0 mascota-action-btn" title="Editar" aria-label="Editar <?= $nombreMascota ?>">
-                                <i class="fa-solid fa-pencil mascota-action-icon" aria-hidden="true"></i>
-                            </a>
-                            <form action="home.php?pg=9&ope=eli" method="POST" class="d-inline"
-                                  onsubmit="return confirm('¿Eliminar la mascota?')">
-                                <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
-                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                                <button type="submit" class="btn btn-link p-0 mascota-action-btn" title="Borrar"
-                                        aria-label="Eliminar <?= $nombreMascota ?>">
-                                    <i class="fa-solid fa-trash-can mascota-action-icon" aria-hidden="true"></i>
-                                </button>
-                            </form>
+                        <div class="card-footer border-0 pt-0 pb-3 px-3">
+                            <hr class="mt-0 mb-3 text-muted opacity-25">
+                            <div class="vid-actions-bar" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;">
+                                <a href="home.php?pg=9&ope=edi&idmasc=<?= (int) $dt['idmasc'] ?>"
+                                   class="btn btn-accent shadow-sm w-100" title="Editar mascota" aria-label="Editar <?= $nombreMascota ?>">
+                                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                                </a>
+                                <form action="home.php?pg=9&ope=toggle" method="POST" class="m-0 d-grid">
+                                    <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
+                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                    <button type="submit" class="btn btn-outline-secondary w-100 shadow-sm"
+                                            title="<?= $mascotaActiva ? 'Desactivar' : 'Activar' ?> mascota"
+                                            aria-label="<?= $mascotaActiva ? 'Desactivar' : 'Activar' ?> <?= $nombreMascota ?>">
+                                        <i class="fa-solid <?= $mascotaActiva ? 'fa-toggle-on' : 'fa-toggle-off' ?>" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                <form action="home.php?pg=9&ope=eli" method="POST" class="m-0 d-grid"
+                                      onsubmit="return confirm('¿Eliminar la mascota?')">
+                                    <input type="hidden" name="idmasc" value="<?= (int) $dt['idmasc'] ?>">
+                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                    <button type="submit" class="btn btn-outline-secondary shadow-sm w-100" title="Eliminar mascota"
+                                            aria-label="Eliminar <?= $nombreMascota ?>">
+                                        <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </article>
                 </div>
