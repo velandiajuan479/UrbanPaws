@@ -13,6 +13,24 @@ $mcofdom = new mCofdom();
 $mcofval   = new mCofVal();
 $mcofdom->setIddom($iddom);
 
+if (empty($_SESSION['token_cofdom'])) {
+    $_SESSION['token_cofdom'] = bin2hex(random_bytes(32));
+}
+$csrfTokenCofdom = $_SESSION['token_cofdom'];
+$tokenValido = isset($_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($csrfTokenCofdom, $_POST['csrf_token']);
+
+if ($ope == "toggle") {
+    $iddomValido = filter_var($_POST['iddom'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido && $iddomValido) {
+        $mcofdom->setIddom($iddomValido);
+        $mcofdom->toggleActdom();
+    }
+    echo '<script>window.location.href = "home.php?pg=26";</script>';
+    exit();
+}
+
 if($ope == "save") {
     $mcofdom->setNomdom($nomdom);
     $mcofdom->setActdom($actdom);

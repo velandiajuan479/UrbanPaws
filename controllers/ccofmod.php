@@ -15,6 +15,24 @@ $dtOn = null;
 $mcofmod = new mCofmod;
 $mcofmod->setIdmod($idmod);
 
+if (empty($_SESSION['token_cofmod'])) {
+    $_SESSION['token_cofmod'] = bin2hex(random_bytes(32));
+}
+$csrfTokenCofmod = $_SESSION['token_cofmod'];
+$tokenValido = isset($_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($csrfTokenCofmod, $_POST['csrf_token']);
+
+if ($ope == "toggle") {
+    $idmodValido = filter_var($_POST['idmod'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido && $idmodValido) {
+        $mcofmod->setIdmod($idmodValido);
+        $mcofmod->toggleEstamod();
+    }
+    echo '<script>window.location.href = "home.php?pg=24";</script>';
+    exit();
+}
+
 if($ope == "save") {
     $mcofmod->setNommod($nommod);
     $mcofmod->setIcomod($icomod);

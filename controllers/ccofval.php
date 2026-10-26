@@ -15,6 +15,24 @@ $mcofval = new mCofval();
 $mcofdom = new mCofdom();
 $mcofval->setIdval($idval);
 
+if (empty($_SESSION['token_cofval'])) {
+    $_SESSION['token_cofval'] = bin2hex(random_bytes(32));
+}
+$csrfTokenCofval = $_SESSION['token_cofval'];
+$tokenValido = isset($_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($csrfTokenCofval, $_POST['csrf_token']);
+
+if ($ope == "toggle") {
+    $idvalValido = filter_var($_POST['idval'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido && $idvalValido) {
+        $mcofval->setIdval($idvalValido);
+        $mcofval->toggleEstaval();
+    }
+    echo '<script>window.location.href = "home.php?pg=27";</script>';
+    exit();
+}
+
 if($ope == "save") {
     $mcofval->setCodval($codval);
     $mcofval->setPARAVAL($PARAVAL);

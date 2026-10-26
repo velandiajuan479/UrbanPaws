@@ -138,6 +138,20 @@ class mCofmod
         }
     }
 
+    public function toggleEstamod(){
+        try{
+            $sql = "UPDATE modulo SET estamod=CASE WHEN estamod='1' THEN '2' ELSE '1' END WHERE idmod=:idmod";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $idmod = $this->getIdmod();
+            $result->bindParam(":idmod", $idmod);
+            $result->execute();
+        }catch(Exception $e){
+            echo "Error 7: " . $e->getMessage();
+        }
+    }
+
     // Método getPerfiles: llena el select "Usuarios con acceso"
     public function getPerfiles(){
         try{

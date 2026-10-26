@@ -94,9 +94,11 @@ $(function () {
         table.insertBefore(pagination, list.nextSibling);
 
         var page = 1;
+        var cardFilter = table.getAttribute('data-card-filter-value') || 'all';
         function render() {
             var query = search.value.trim().toLocaleLowerCase();
             var filtered = items.filter(function (item) {
+                if (cardFilter !== 'all' && item.getAttribute('data-card-status') !== cardFilter) return false;
                 var text = item.getAttribute('data-card-search') || item.textContent;
                 return text.toLocaleLowerCase().indexOf(query) !== -1;
             });
@@ -126,6 +128,11 @@ $(function () {
         pageSize.addEventListener('change', function () { page = 1; render(); });
         previous.addEventListener('click', function () { page -= 1; render(); });
         next.addEventListener('click', function () { page += 1; render(); });
+        table.addEventListener('card-filter-change', function (event) {
+            cardFilter = event.detail.value || 'all';
+            page = 1;
+            render();
+        });
         render();
     });
 });
