@@ -14,6 +14,24 @@ $dtOn = null;
 $mcofcof = new mCofcof;
 $mcofcof->setIdconf($idconf);
 
+if (empty($_SESSION['token_cofcof'])) {
+    $_SESSION['token_cofcof'] = bin2hex(random_bytes(32));
+}
+$csrfTokenCofcof = $_SESSION['token_cofcof'];
+$tokenValido = isset($_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($csrfTokenCofcof, $_POST['csrf_token']);
+
+if ($ope == "toggle") {
+    $idconfValido = filter_var($_POST['idconf'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido && $idconfValido) {
+        $mcofcof->setIdconf($idconfValido);
+        $mcofcof->toggleEstacon();
+    }
+    echo '<script>window.location.href = "home.php?pg=25";</script>';
+    exit();
+}
+
 if($ope == "save") {
     $mcofcof->setNomcon($nomcon);
     $mcofcof->setLogocon($logocon);

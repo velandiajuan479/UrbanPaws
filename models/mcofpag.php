@@ -95,6 +95,18 @@ class mCofpag
         }catch(Exception $e){ echo "Error 4: " . $e; }
     }
 
+    public function toggleMostpag(){
+        try{
+            $sql = "UPDATE pagina SET mostpag=CASE WHEN mostpag='1' THEN '2' ELSE '1' END WHERE idpag=:idpag";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $idpag = $this->getIdpag();
+            $result->bindParam(":idpag", $idpag);
+            $result->execute();
+        }catch(Exception $e){ echo "Error 6: " . $e; }
+    }
+
     public function del(){
         try{
             $sql = "DELETE FROM pagina WHERE idpag=:idpag";

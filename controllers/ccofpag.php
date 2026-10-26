@@ -15,6 +15,15 @@ $ope     = isset($_REQUEST["ope"])     ? $_REQUEST["ope"]     : NULL;
 $dtOn = null;
 $mcofpag = new mCofpag();
 $mcofval = new mCofVal();
+
+if (empty($_SESSION['token_pag'])) {
+    $_SESSION['token_pag'] = bin2hex(random_bytes(32));
+}
+$csrfTokenPag = $_SESSION['token_pag'];
+$tokenValido = isset($_POST['csrf_token'])
+    && is_string($_POST['csrf_token'])
+    && hash_equals($csrfTokenPag, $_POST['csrf_token']);
+
 $mcofpag->setIdpag($idpag);
 
 
@@ -24,6 +33,16 @@ $datIco = $mcofval->getByDom();
 
 $mcofval->setIddom(1); 
 $datMost = $mcofval->getByDom();
+
+if ($ope == "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido) {
+    $idpagValido = filter_var($idpag, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($idpagValido) {
+        $mcofpag->setIdpag($idpagValido);
+        $mcofpag->toggleMostpag();
+    }
+    echo '<script>window.location.href = "home.php?pg=23";</script>';
+    exit();
+}
 
 if($ope == "save"){
     $mcofpag->setNompag($nompag);

@@ -140,5 +140,19 @@ class mCofVal{
             echo "Error 5: " . $e->getMessage();
         }
     }
+
+    public function toggleEstaval(){
+        try{
+            $sql = "UPDATE valor SET estaval=CASE WHEN estaval='1' THEN '2' ELSE '1' END WHERE idval=:idval";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $idval = $this->getIdval();
+            $result->bindParam(":idval", $idval);
+            $result->execute();
+        }catch(Exception $e){
+            echo "Error 6: " . $e->getMessage();
+        }
+    }
 }
 ?>

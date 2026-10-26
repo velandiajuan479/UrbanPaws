@@ -72,6 +72,7 @@ $pageViews = [
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
     <script src="js/mytable.js"></script>
+    <script src="js/card-filters.js"></script>
     <script src="js/autocomplete.js"></script>
 </body>
 </html>

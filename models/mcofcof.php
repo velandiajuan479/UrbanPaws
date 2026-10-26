@@ -135,5 +135,19 @@ class mCofcof
             echo "Error 5: " . $e->getMessage();
         }
     }
+
+    public function toggleEstacon(){
+        try{
+            $sql = "UPDATE config SET estacon=CASE WHEN estacon='1' THEN '2' ELSE '1' END WHERE idconf=:idconf";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $idconf = $this->getIdconf();
+            $result->bindParam(":idconf", $idconf);
+            $result->execute();
+        }catch(Exception $e){
+            echo "Error 6: " . $e->getMessage();
+        }
+    }
 }
 ?>

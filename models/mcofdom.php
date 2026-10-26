@@ -133,5 +133,18 @@ class mCofdom{
             return false;
         }
     }
+
+    public function toggleActdom(){
+        try{
+            $sql = "UPDATE dominio SET actdom=CASE WHEN actdom='1' THEN '2' ELSE '1' END WHERE iddom=:iddom";
+            $result = $this->getConexion()->prepare($sql);
+            $iddom = $this->getIddom();
+            $result->bindParam(":iddom", $iddom);
+            return $result->execute();
+        }catch(Exception $e){
+            error_log("mCofdom::toggleActdom - Error 6: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>
