@@ -101,57 +101,47 @@
         <i class="fa-solid fa-table-list"></i>
         Lista de páginas
     </h5>
-    <div class="table-responsive">
-        <table id="mitabla" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Página</th>
-                    <th>Descripción</th>
-                    <th>Mostrar</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
-                    <tr>
-                        <td>
-                            <strong>
+    <div data-card-table data-card-sort-label="Página">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-3" data-card-list>
+            <?php if ($datAll) { foreach ($datAll AS $dt) { ?>
+                <div class="col" data-card-item data-card-sort="<?= htmlspecialchars((string) $dt['nompag'], ENT_QUOTES, 'UTF-8') ?>">
+                    <article class="card h-100">
+                        <div class="card-body p-2 p-sm-3">
+                            <h6 class="card-title">
                                 <i class="<?= $dt['icopag'] ?>"></i>
-                                <?= $dt["idpag"] ?> <?= $dt["nompag"] ?>
-                                <br>
-                            </strong>
-                            <small>
-                                Título: <?= $dt["titpag"] ?> &nbsp;|&nbsp;
-                                Ruta: <?= $dt["rutpag"] ?> &nbsp;|&nbsp;
-                                Orden: <?= $dt["ordpag"] ?>
-                            </small>
-                        </td>
-                        <td><?= $dt["descpag"] ?></td>
-                        <td>
-                            <span class="badge <?= $dt['mostpag'] == '1' ? 'bg-success' : 'bg-danger' ?>">
-                                <?= $dt['mostpag'] == '1' ? 'Sí' : 'No' ?>
-                            </span>
-                        </td>
-                        <td>
-                            <a href="home.php?pg=23&ope=edi&idpag=<?= $dt['idpag'] ?>" title="editar">
-                                <i class="fa-solid fa-pencil fa-2x"></i>
+                                #<?= $dt['idpag'] ?> <?= $dt['nompag'] ?>
+                            </h6>
+                            <dl class="row mb-0 small">
+                                <dt class="col-4">Título</dt>
+                                <dd class="col-8 text-break"><?= $dt['titpag'] ?></dd>
+                                <dt class="col-4">Ruta</dt>
+                                <dd class="col-8 text-break"><?= $dt['rutpag'] ?></dd>
+                                <dt class="col-4">Orden</dt>
+                                <dd class="col-8"><?= $dt['ordpag'] ?></dd>
+                                <dt class="col-4">Mostrar</dt>
+                                <dd class="col-8">
+                                    <span class="badge <?= $dt['mostpag'] == '1' ? 'bg-success' : 'bg-danger' ?>">
+                                        <?= $dt['mostpag'] == '1' ? 'Sí' : 'No' ?>
+                                    </span>
+                                </dd>
+                                <dt class="col-12 mb-0">Descripción</dt>
+                                <dd class="col-12 text-break"><?= $dt['descpag'] ?></dd>
+                            </dl>
+                        </div>
+                        <div class="card-footer py-2 text-end">
+                            <a href="home.php?pg=23&ope=edi&idpag=<?= $dt['idpag'] ?>" class="btn btn-link p-0" title="Editar" aria-label="Editar <?= htmlspecialchars((string) $dt['nompag'], ENT_QUOTES, 'UTF-8') ?>">
+                                <i class="fa-solid fa-pencil" aria-hidden="true"></i>
                             </a>
-                            <a href="home.php?pg=23&ope=eli&idpag=<?= $dt['idpag'] ?>" title="borrar"
+                            <a href="home.php?pg=23&ope=eli&idpag=<?= $dt['idpag'] ?>" class="btn btn-link p-0 ms-2" title="Borrar" aria-label="Eliminar <?= htmlspecialchars((string) $dt['nompag'], ENT_QUOTES, 'UTF-8') ?>"
                                onclick="return confirm('¿Eliminar la página?')">
-                                <i class="fa-solid fa-trash-can fa-2x"></i>
+                                <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
                             </a>
-                        </td>
-                    </tr>
-                <?php }} ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Página</th>
-                    <th>Descripción</th>
-                    <th>Mostrar</th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
+                        </div>
+                    </article>
+                </div>
+            <?php }} else { ?>
+                <div class="col-12 text-muted">No hay páginas registradas.</div>
+            <?php } ?>
+        </div>
     </div>
 </div>
