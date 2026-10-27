@@ -22,9 +22,11 @@ class mCofVal{
 
     public function getAll(){
         try{
-            $sql = "SELECT v.idval, v.codval, v.PARAVAL, v.estaval, v.iddom, d.nomdom 
+            $sql = "SELECT v.idval, v.codval, v.PARAVAL, v.estaval, v.iddom, d.nomdom,
+                           e.codval AS estado
                     FROM valor v 
-                    INNER JOIN dominio d ON v.iddom = d.iddom";
+                    INNER JOIN dominio d ON v.iddom = d.iddom
+                    LEFT JOIN valor e ON v.estaval = e.idval AND e.iddom = 1";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -37,9 +39,11 @@ class mCofVal{
 
     public function getOne(){
         try{
-            $sql = "SELECT v.idval, v.codval, v.PARAVAL, v.estaval, v.iddom, d.nomdom 
+            $sql = "SELECT v.idval, v.codval, v.PARAVAL, v.estaval, v.iddom, d.nomdom,
+                           e.codval AS estado
                     FROM valor v 
                     INNER JOIN dominio d ON v.iddom = d.iddom 
+                    LEFT JOIN valor e ON v.estaval = e.idval AND e.iddom = 1
                     WHERE v.idval = :idval";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
