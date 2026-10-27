@@ -59,7 +59,10 @@ if($ope == "edi" AND $iddom) {
     $dtOn = $mcofdom->getOne();
 }
 
-$datEst = $mcofval->getAll();
+$valoresEstado = $mcofval->getAll() ?: [];
+$datEst = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 $datAll = $mcofdom->getAll();
 
 ?>

@@ -31,8 +31,10 @@ $mcofval->setIddom(2);
 $datIco = $mcofval->getByDom();
 
 
-$mcofval->setIddom(1); 
-$datMost = $mcofval->getByDom();
+$valoresEstado = $mcofval->getAll() ?: [];
+$datMost = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 
 if ($ope == "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido) {
     $idpagValido = filter_var($idpag, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);

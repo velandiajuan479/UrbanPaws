@@ -67,8 +67,10 @@ if($ope == "edi" AND $idmod) {
 
 
 $mcofvalEst = new mCofVal;
-$mcofvalEst->setIddom(1);
-$datEst = $mcofvalEst->getByDom();
+$valoresEstado = $mcofvalEst->getAll() ?: [];
+$datEst = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 
 $mcofvalIco = new mCofVal;
 $mcofvalIco->setIddom(2);

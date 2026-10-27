@@ -65,5 +65,8 @@ if($ope == "edi" AND $idval) {
 }
 
 $dtdom = $mcofdom->getAll();
-$datAll = $mcofval->getAll();
+$datAll = $mcofval->getAll() ?: [];
+$datEst = array_values(array_filter($datAll, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 ?>
