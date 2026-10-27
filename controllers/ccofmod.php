@@ -34,9 +34,14 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($estamod, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=24";</script>';
+        exit();
+    }
     $mcofmod->setNommod($nommod);
     $mcofmod->setIcomod($icomod);
-    $mcofmod->setEstamod($estamod);
+    $mcofmod->setEstamod($estadoValido);
     $mcofmod->setOrdmod($ordmod);
     $mcofmod->setIdperf($idperf);
 
@@ -62,8 +67,10 @@ if($ope == "edi" AND $idmod) {
 
 
 $mcofvalEst = new mCofVal;
-$mcofvalEst->setIddom(1);
-$datEst = $mcofvalEst->getByDom();
+$valoresEstado = $mcofvalEst->getAll() ?: [];
+$datEst = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 
 $mcofvalIco = new mCofVal;
 $mcofvalIco->setIddom(2);

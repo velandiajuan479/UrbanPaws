@@ -33,11 +33,16 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($estacon, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=25";</script>';
+        exit();
+    }
     $mcofcof->setNomcon($nomcon);
     $mcofcof->setLogocon($logocon);
     $mcofcof->setEmailcon($emailcon);
     $mcofcof->setTelecon($telecon);
-    $mcofcof->setEstacon($estacon);
+    $mcofcof->setEstacon($estadoValido);
 
     if($idconf){
         $mcofcof->upd();
@@ -60,8 +65,10 @@ if($ope == "edi" AND $idconf) {
 }
 
 $mcofvalEst = new mCofVal;
-$mcofvalEst->setIddom(1);
-$datEst = $mcofvalEst->getByDom();
+$valoresEstado = $mcofvalEst->getAll() ?: [];
+$datEst = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 
 $datAll = $mcofcof->getAll();
 ?>

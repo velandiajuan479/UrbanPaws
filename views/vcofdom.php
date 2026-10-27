@@ -25,14 +25,12 @@ require_once("controllers/ccofdom.php");
             <i class="fa-solid fa-toggle-on"></i>
             <label for="" class="form-label">Estado</label>
             <div class="w-100"></div>
+            <?php foreach ($datEst as $estado) { ?>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="actdom" id="actv" value="1" <?= ($dtOn && $dtOn['actdom'] == 1) ? 'checked' : '' ?> required>
-            <label class="form-check-label" for="actv">Activo</label>
+                <input class="form-check-input" type="radio" name="actdom" id="actdom<?= (int) $estado['idval'] ?>" value="<?= (int) $estado['idval'] ?>" <?= ($dtOn && $dtOn['actdom'] == $estado['idval']) ? 'checked' : '' ?> required>
+                <label class="form-check-label" for="actdom<?= (int) $estado['idval'] ?>"><?= htmlspecialchars((string) $estado['codval'], ENT_QUOTES, 'UTF-8') ?></label>
             </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="actdom" id="inactv" value="2" <?= ($dtOn && $dtOn['actdom'] == 2) ? 'checked' : '' ?> required>
-            <label class="form-check-label" for="inactv">Inactivo</label>
-            </div>
+            <?php } ?>
         </div>
     <!--Botones-->
         <div class="col-md-12 mt-4 text-end">
@@ -74,7 +72,7 @@ require_once("controllers/ccofdom.php");
                                     <span class="text-primary">#<?= (int) $dt['iddom'] ?></span> - <?= $nombreDominio ?>
                                 </h6>
                                 <span class="badge <?= $dominioActivo ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                    <?= $dominioActivo ? 'Activo' : 'Inactivo' ?>
+                                    <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                 </span>
                             </div>
                         </div>

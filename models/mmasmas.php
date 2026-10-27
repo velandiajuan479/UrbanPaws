@@ -43,8 +43,10 @@ class mCofmas
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
                             m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
-                           CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
+                            v.codval AS estado,
+                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     ORDER BY m.idmasc ASC";
             $modelo = new Conexion();
@@ -62,8 +64,10 @@ class mCofmas
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
                             m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
-                           CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
+                            v.codval AS estado,
+                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     WHERE m.iduser = :iduser
                     ORDER BY m.idmasc ASC";
@@ -104,8 +108,10 @@ class mCofmas
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
                             m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
-                           CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
+                            v.codval AS estado,
+                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     WHERE m.idmasc = :idmasc";
             $modelo = new Conexion();
@@ -206,7 +212,7 @@ class mCofmas
     public function toggleActiva($iduser, $esAdmin = false){
         try{
             $sql = "UPDATE mascotas
-                    SET actmasc = CASE WHEN actmasc = 1 THEN 0 ELSE 1 END
+                    SET actmasc = CASE WHEN actmasc = 1 THEN 2 ELSE 1 END
                     WHERE idmasc = :idmasc
                       AND (:esAdmin = 1 OR iduser = :iduser)";
             $modelo = new Conexion();

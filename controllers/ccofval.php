@@ -34,9 +34,14 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($estaval, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=27";</script>';
+        exit();
+    }
     $mcofval->setCodval($codval);
     $mcofval->setPARAVAL($PARAVAL);
-    $mcofval->setEstaval($estaval);
+    $mcofval->setEstaval($estadoValido);
     $mcofval->setIddom($iddom);
     
     if($idval){
@@ -60,5 +65,8 @@ if($ope == "edi" AND $idval) {
 }
 
 $dtdom = $mcofdom->getAll();
-$datAll = $mcofval->getAll();
+$datAll = $mcofval->getAll() ?: [];
+$datEst = array_values(array_filter($datAll, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 ?>

@@ -31,8 +31,10 @@ $mcofval->setIddom(2);
 $datIco = $mcofval->getByDom();
 
 
-$mcofval->setIddom(1); 
-$datMost = $mcofval->getByDom();
+$valoresEstado = $mcofval->getAll() ?: [];
+$datMost = array_values(array_filter($valoresEstado, static function ($valor) {
+    return (int) $valor['iddom'] === 1 && in_array((int) $valor['idval'], [1, 2], true);
+}));
 
 if ($ope == "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido) {
     $idpagValido = filter_var($idpag, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
@@ -45,9 +47,14 @@ if ($ope == "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido) {
 }
 
 if($ope == "save"){
+    $estadoValido = filter_var($mostpag, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=23";</script>';
+        exit();
+    }
     $mcofpag->setNompag($nompag);
     $mcofpag->setTitpag($titpag);
-    $mcofpag->setMostpag($mostpag);
+    $mcofpag->setMostpag($estadoValido);
     $mcofpag->setIcopag($icopag);
     $mcofpag->setRutpag($rutpag);
     $mcofpag->setOrdpag($ordpag);

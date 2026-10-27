@@ -32,8 +32,11 @@ class mCofpag
 
     public function getAll(){
         try{
-            $sql = "SELECT idpag, nompag, titpag, mostpag, icopag, rutpag, ordpag, descpag
-                    FROM pagina ORDER BY ordpag ASC";
+            $sql = "SELECT p.idpag, p.nompag, p.titpag, p.mostpag, p.icopag, p.rutpag, p.ordpag, p.descpag,
+                           v.codval AS estado
+                    FROM pagina p
+                    LEFT JOIN valor v ON p.mostpag = v.idval AND v.iddom = 1
+                    ORDER BY p.ordpag ASC";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -44,8 +47,11 @@ class mCofpag
 
     public function getOne(){
         try{
-            $sql = "SELECT idpag, nompag, titpag, mostpag, icopag, rutpag, ordpag, descpag
-                    FROM pagina WHERE idpag=:idpag";
+            $sql = "SELECT p.idpag, p.nompag, p.titpag, p.mostpag, p.icopag, p.rutpag, p.ordpag, p.descpag,
+                           v.codval AS estado
+                    FROM pagina p
+                    LEFT JOIN valor v ON p.mostpag = v.idval AND v.iddom = 1
+                    WHERE p.idpag = :idpag";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

@@ -34,7 +34,7 @@
                     <input class="form-check-input" type="radio" name="mostpag"
                            id="most<?= $m['idval'] ?>" value="<?= $m['idval'] ?>" required
                            <?= ($dtOn && $dtOn['mostpag'] == $m['idval']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="most<?= $m['idval'] ?>"><?= $m['codval'] ?></label>
+                    <label class="form-check-label" for="most<?= $m['idval'] ?>"><?= htmlspecialchars((string) $m['codval'], ENT_QUOTES, 'UTF-8') ?></label>
                 </div>
             <?php }} ?>
         </div>
@@ -128,7 +128,7 @@
                                         <span style="color:var(--brand-primary);">#<?= (int) $dt['idpag'] ?></span> - <?= $nombrePagina ?>
                                     </h6>
                                     <span class="badge <?= $paginaVisible ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                        <?= $paginaVisible ? 'Sí' : 'No' ?>
+                                        <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
 
