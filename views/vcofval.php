@@ -40,14 +40,12 @@
             <i class="fa-solid fa-toggle-on"></i>
             <label for="" class="form-label">Estado</label>
             <div class="w-100"></div>
+            <?php foreach ($datEst as $estado) { ?>
             <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estaval" id="actv" value="1" <?= ($dtOn && $dtOn['estaval'] == 1) ? 'checked' : '' ?> required>
-            <label class="form-check-label" for="actv">Activo</label>
+                <input class="form-check-input" type="radio" name="estaval" id="estaval<?= (int) $estado['idval'] ?>" value="<?= (int) $estado['idval'] ?>" <?= ($dtOn && $dtOn['estaval'] == $estado['idval']) ? 'checked' : '' ?> required>
+                <label class="form-check-label" for="estaval<?= (int) $estado['idval'] ?>"><?= htmlspecialchars((string) $estado['codval'], ENT_QUOTES, 'UTF-8') ?></label>
             </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="estaval" id="inactv" value="2" <?= ($dtOn && $dtOn['estaval'] == 2) ? 'checked' : '' ?> required>
-            <label class="form-check-label" for="inactv">Inactivo</label>
-            </div>
+            <?php } ?>
         </div>
     <!--Botones-->
         <div class="col-md-12 mt-4 text-end">

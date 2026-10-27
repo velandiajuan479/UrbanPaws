@@ -34,7 +34,7 @@
                     <input class="form-check-input" type="radio" name="mostpag"
                            id="most<?= $m['idval'] ?>" value="<?= $m['idval'] ?>" required
                            <?= ($dtOn && $dtOn['mostpag'] == $m['idval']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="most<?= $m['idval'] ?>"><?= $m['codval'] ?></label>
+                    <label class="form-check-label" for="most<?= $m['idval'] ?>"><?= htmlspecialchars((string) $m['codval'], ENT_QUOTES, 'UTF-8') ?></label>
                 </div>
             <?php }} ?>
         </div>

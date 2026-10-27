@@ -25,7 +25,7 @@
                 <input class="form-check-input" type="radio" name="estamod"
                        id="est<?= $est['idval'] ?>" value="<?= $est['idval'] ?>" required
                        <?= ($dtOn && $dtOn['estamod'] == $est['idval']) ? 'checked' : '' ?>>
-                <label class="form-check-label" for="est<?= $est['idval'] ?>"><?= $est['codval'] ?></label>
+                <label class="form-check-label" for="est<?= $est['idval'] ?>"><?= htmlspecialchars((string) $est['codval'], ENT_QUOTES, 'UTF-8') ?></label>
             </div>
             <?php }} ?>
         </div>
