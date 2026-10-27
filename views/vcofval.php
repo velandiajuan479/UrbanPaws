@@ -88,7 +88,7 @@
                                         <span class="text-primary">#<?= (int) $dt['idval'] ?></span> - <?= $codigoValor ?>
                                     </h6>
                                     <span class="badge <?= $valorActivo ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                        <?= $valorActivo ? 'Activo' : 'Inactivo' ?>
+                                        <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
                                 <div class="p-2 mb-2 rounded-3 border small">

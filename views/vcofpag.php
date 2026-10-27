@@ -128,7 +128,7 @@
                                         <span style="color:var(--brand-primary);">#<?= (int) $dt['idpag'] ?></span> - <?= $nombrePagina ?>
                                     </h6>
                                     <span class="badge <?= $paginaVisible ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                        <?= $paginaVisible ? 'Sí' : 'No' ?>
+                                        <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
 

@@ -114,7 +114,7 @@
                                         <span class="text-primary">#<?= (int) $dt['idmod'] ?></span> - <?= $nombreModulo ?>
                                     </h6>
                                     <span class="badge <?= $moduloActivo ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                        <?= $moduloActivo ? 'Activo' : 'Inactivo' ?>
+                                        <?= htmlspecialchars((string) ($dt['nomesta'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
                                 <div class="p-2 mb-2 rounded-3 border small">

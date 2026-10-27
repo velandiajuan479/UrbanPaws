@@ -167,7 +167,7 @@
                             <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
                                 <h6 class="card-title mb-0">#<?= (int) $dt['idmasc'] ?> <?= $nombreMascota ?></h6>
                                 <span class="badge <?= $mascotaActiva ? 'bg-success' : 'bg-danger' ?> text-nowrap">
-                                    <?= $mascotaActiva ? 'Activa' : 'Inactiva' ?>
+                                    <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                 </span>
                             </div>
                             <dl class="row mb-0 small">

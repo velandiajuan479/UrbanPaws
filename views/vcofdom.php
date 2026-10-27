@@ -72,7 +72,7 @@ require_once("controllers/ccofdom.php");
                                     <span class="text-primary">#<?= (int) $dt['iddom'] ?></span> - <?= $nombreDominio ?>
                                 </h6>
                                 <span class="badge <?= $dominioActivo ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                    <?= $dominioActivo ? 'Activo' : 'Inactivo' ?>
+                                    <?= htmlspecialchars((string) ($dt['estado'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                 </span>
                             </div>
                         </div>

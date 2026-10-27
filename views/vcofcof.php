@@ -106,7 +106,7 @@
                                         #<?= (int) $dt['idconf'] ?> - <?= $nombreConfiguracion ?>
                                     </h6>
                                     <span class="badge <?= $estadoConfiguracion ? 'bg-success' : 'bg-danger' ?> text-nowrap flex-shrink-0">
-                                        <?= $estadoConfiguracion ? 'Activo' : 'Inactivo' ?>
+                                        <?= htmlspecialchars((string) ($dt['nomesta'] ?? 'Sin estado'), ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
                                 <div class="p-2 mb-2 rounded-3 border small">
