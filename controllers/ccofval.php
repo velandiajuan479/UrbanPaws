@@ -34,9 +34,14 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($estaval, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=27";</script>';
+        exit();
+    }
     $mcofval->setCodval($codval);
     $mcofval->setPARAVAL($PARAVAL);
-    $mcofval->setEstaval($estaval);
+    $mcofval->setEstaval($estadoValido);
     $mcofval->setIddom($iddom);
     
     if($idval){

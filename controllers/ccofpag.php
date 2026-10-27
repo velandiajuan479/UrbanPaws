@@ -45,9 +45,14 @@ if ($ope == "toggle" && $_SERVER['REQUEST_METHOD'] === 'POST' && $tokenValido) {
 }
 
 if($ope == "save"){
+    $estadoValido = filter_var($mostpag, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=23";</script>';
+        exit();
+    }
     $mcofpag->setNompag($nompag);
     $mcofpag->setTitpag($titpag);
-    $mcofpag->setMostpag($mostpag);
+    $mcofpag->setMostpag($estadoValido);
     $mcofpag->setIcopag($icopag);
     $mcofpag->setRutpag($rutpag);
     $mcofpag->setOrdpag($ordpag);

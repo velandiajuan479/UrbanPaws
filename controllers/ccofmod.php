@@ -34,9 +34,14 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($estamod, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=24";</script>';
+        exit();
+    }
     $mcofmod->setNommod($nommod);
     $mcofmod->setIcomod($icomod);
-    $mcofmod->setEstamod($estamod);
+    $mcofmod->setEstamod($estadoValido);
     $mcofmod->setOrdmod($ordmod);
     $mcofmod->setIdperf($idperf);
 

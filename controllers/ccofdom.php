@@ -32,8 +32,13 @@ if ($ope == "toggle") {
 }
 
 if($ope == "save") {
+    $estadoValido = filter_var($actdom, FILTER_VALIDATE_INT);
+    if (!in_array($estadoValido, [1, 2], true)) {
+        echo '<script>alert("Estado inválido.");window.location.href = "home.php?pg=26";</script>';
+        exit();
+    }
     $mcofdom->setNomdom($nomdom);
-    $mcofdom->setActdom($actdom);
+    $mcofdom->setActdom($estadoValido);
     if($iddom){
         $mcofdom->upd();
     }else{
