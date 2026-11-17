@@ -1,4 +1,4 @@
-<?php require_once("controllers/cserrutcl.php"); ?>
+<?php require_once("./controllers/modcserv/cserrutcl.php"); ?>
 
 <section class="container mb-5">
     <section style="padding: 3rem 0 2rem;">
