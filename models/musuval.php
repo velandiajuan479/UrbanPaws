@@ -3,16 +3,7 @@ require_once 'conexion.php';
 
 class mUsuVal
 {
-    private $iduser;
-    private $estusr;
-
-    function getIduser(){return $this->iduser;}
-    function getEstusr(){return $this->estusr;}
-
-    function setIduser($iduser){return $this->iduser = $iduser;}
-    function setEstusr($estusr){return $this->estusr = $estusr;}
-
-    // Trae los usuarios con perfil "Paseador" que están pendientes de validar (estusr = 0)
+    // Paseadores pendientes de validar (estusr = 0)
     public function getPendientes(){
         try{
             $conexion = (new Conexion())->get_conexion();
@@ -30,22 +21,28 @@ class mUsuVal
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e){
-            echo "Error al consultar paseadores pendientes: " . $e->getMessage();
-            return false;
+            error_log("mUsuVal::getPendientes " . $e->getMessage());
+            return [];
         }
     }
 
-    // estusr: 1 = aprobado, 2 = rechazado
+    // estusr: 1 = aprobado, 2 = rechazado. Solo cambia paseadores que sigan pendientes.
+    // Devuelve true únicamente si se modificó una fila.
     public function validar($iduser, $estusr){
         try{
             $conexion = (new Conexion())->get_conexion();
-            $sql = "UPDATE usuario SET estusr = :estusr WHERE iduser = :iduser";
+            $sql = "UPDATE usuario SET estusr = :estusr
+                    WHERE iduser = :iduser AND estusr = 0
+                      AND iduser IN (SELECT up.iduser FROM userxper up
+                                     INNER JOIN perfil p ON up.idperf = p.idperf
+                                     WHERE p.nomperf = 'Paseador')";
             $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':estusr', $estusr);
-            $stmt->bindParam(':iduser', $iduser);
-            return $stmt->execute();
+            $stmt->bindValue(':estusr', (int) $estusr, PDO::PARAM_INT);
+            $stmt->bindValue(':iduser', (int) $iduser, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
         }catch(PDOException $e){
-            echo "Error al validar paseador: " . $e->getMessage();
+            error_log("mUsuVal::validar " . $e->getMessage());
             return false;
         }
     }
