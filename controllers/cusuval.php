@@ -1,19 +1,19 @@
 <?php
+require_once '../models/helpers.php';
 require_once '../models/musuval.php';
 
-$ope = isset($_POST['ope']) ? $_POST['ope'] : (isset($_GET['ope']) ? $_GET['ope'] : NULL);
+$dest = '../home.php?pg=6';
+up_controller_guard($dest);
 
-$val = new mUsuVal();
+$ope    = $_POST['ope'] ?? '';
+$iduser = (int) ($_POST['iduser'] ?? 0);
+$val    = new mUsuVal();
 
-if($ope == "aprobar"){
-    $val->validar($_GET['iduser'], 1);
-    header('Location: ../index.php?pg=6');
+if ($iduser > 0 && ($ope === 'aprobar' || $ope === 'rechazar')) {
+    $res = $val->validar($iduser, $ope === 'aprobar' ? 1 : 2);
+    header('Location: ' . $dest . ($res ? '&ok=' . ($ope === 'aprobar' ? 'aprobado' : 'rechazado') : '&err=nopendiente'));
     exit();
 }
 
-if($ope == "rechazar"){
-    $val->validar($_GET['iduser'], 2);
-    header('Location: ../index.php?pg=6');
-    exit();
-}
-?>
+header('Location: ' . $dest);
+exit();
