@@ -1,5 +1,5 @@
 <?php
-    require_once("models/mextregis.php");
+    require_once(__DIR__ . "/../models/mextregis.php");
 
     $prinom   = isset($_POST["prinom"]) ? $_POST["prinom"] : "NULL";
     $seconom  = isset($_POST["seconom"]) ? $_POST["seconom"] : "";
@@ -56,7 +56,7 @@
                         $mensaje = "Registro exitoso. Ahora puedes iniciar sesión.";
                         $tipo_mensaje = "success";
                     } else {
-                        $mensaje = "Error al registrar. Intente nuevamente.";
+                        $mensaje = $mcextregis->getError() ? $mcextregis->getError() : "Error al registrar. Intente nuevamente.";
                         $tipo_mensaje = "danger";
                     }
                 }

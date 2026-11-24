@@ -195,11 +195,15 @@
                                aria-label="Editar usuario <?= htmlspecialchars($dt['prinom'], ENT_QUOTES, 'UTF-8') ?>">
                                 <i class="fa-solid fa-pencil fa-2x"></i>
                             </a>
-                            <a href="home.php?pg=2&ope=eli&iduser=<?= (int) $dt['iduser'] ?>" title="borrar"
-                               onclick="return confirm('¿Está seguro que desea eliminar este usuario?');"
-                               aria-label="Eliminar usuario <?= htmlspecialchars($dt['prinom'], ENT_QUOTES, 'UTF-8') ?>">
-                                <i class="fa-solid fa-trash-can fa-2x"></i>
-                            </a>
+                            <form method="POST" action="home.php?pg=2&amp;ope=eli" class="d-inline"
+                                  onsubmit="return confirm('¿Está seguro que desea eliminar este usuario?');">
+                                <input type="hidden" name="iduser" value="<?= (int) $dt['iduser'] ?>">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                <button type="submit" class="btn btn-link p-0 text-danger" title="borrar"
+                                        aria-label="Eliminar usuario <?= htmlspecialchars($dt['prinom'], ENT_QUOTES, 'UTF-8') ?>">
+                                    <i class="fa-solid fa-trash-can fa-2x"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 <?php }} else { ?>

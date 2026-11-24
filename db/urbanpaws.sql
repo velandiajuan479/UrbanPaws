@@ -99,7 +99,13 @@ CREATE TABLE ruta(
     nomrut VARCHAR(50),
     distrut DECIMAL(7,2),
     iduser BIGINT(10),
-    FOREIGN KEY (iduser) REFERENCES usuario(iduser)
+    idubi BIGINT(10) NULL,
+    estarut TINYINT(1) NOT NULL DEFAULT 1,
+    horaini DATETIME NULL,
+    horafin DATETIME NULL,
+    precioini DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    FOREIGN KEY (iduser) REFERENCES usuario(iduser),
+    FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
 );
 
 CREATE TABLE paseo(
@@ -122,6 +128,7 @@ CREATE TABLE servicio(
     idpas BIGINT(10),
     idrut INT(6),
     iduser BIGINT(10),
+    tipserv VARCHAR(100) NULL DEFAULT 'Paseo',
     FOREIGN KEY (idpas) REFERENCES paseo(idpas),
     FOREIGN KEY (idrut) REFERENCES ruta(idrut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)

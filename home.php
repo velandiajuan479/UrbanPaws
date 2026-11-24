@@ -11,6 +11,7 @@ if (!isset($_SESSION['iduser'])) {
 $pg = isset($_GET['pg']) ? (int) $_GET['pg'] : 1;
 $currentPg = $pg;
 require_once __DIR__ . '/models/conexion.php';
+require_once __DIR__ . '/models/musuperm.php';
 $pageTitles = [
     1 => 'Inicio', 2 => 'Administradores', 3 => 'Paseador', 4 => 'Mi perfil',
     5 => 'Usuarios', 6 => 'Validación de paseadores', 7 => 'Datos personales',
@@ -32,6 +33,14 @@ $pageViews = [
     23 => 'vcofpag.php', 24 => 'vcofmod.php', 25 => 'vcofcof.php',
     26 => 'vcofdom.php', 27 => 'vcofval.php',
 ];
+
+// El enrutado respeta la matriz pagxper administrada en pg=2.
+// pg=1 es el inicio del rol: Admin -> pg=2, Paseador -> pg=3, Cliente -> pg=1.
+$permisosPagina = up_permisos();
+$paginaPermitida = $permisosPagina->puedeVer($pg);
+$viewKey = $pg === 1 ? $permisosPagina->dashboard() : $pg;
+$viewArchivo = isset($pageViews[$viewKey]) ? __DIR__ . '/views/' . $pageViews[$viewKey] : NULL;
+$viewValida = $viewArchivo !== NULL && is_file($viewArchivo);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -54,8 +63,10 @@ $pageViews = [
 <body>
     <?php include __DIR__ . '/views/header.php'; ?>
 
-    <?php if (isset($pageViews[$pg]) && is_file(__DIR__ . '/views/' . $pageViews[$pg])): ?>
-        <?php include __DIR__ . '/views/' . $pageViews[$pg]; ?>
+    <?php if (!$paginaPermitida): ?>
+        <?php include __DIR__ . '/views/vusinacceso.php'; ?>
+    <?php elseif ($viewValida): ?>
+        <?php include $viewArchivo; ?>
     <?php else: ?>
         <section class="card" style="max-width: 700px; margin: 2rem auto; text-align: center;">
             <span class="icon-circle" style="margin: 0 auto 1rem;"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span>
