@@ -116,8 +116,17 @@ class mMasArchivo
         $nombre = $prefijo . '_' . date('Ymd_His') . '_' . bin2hex(random_bytes(6)) . '.' . $ext;
         $abs    = self::raizApp() . '/' . self::CARPETA_REL . '/' . $nombre;
 
+        // La carpeta puede existir y aun así no ser escribible por el usuario
+        // con el que corre Apache/PHP (por ejemplo, daemon en XAMPP).
+        if (!is_writable(dirname($abs))) {
+            $res['error'] = "La carpeta de archivos del servidor no tiene permisos de escritura.";
+            error_log("No se puede escribir en el directorio de archivos de mascotas: " . dirname($abs));
+            return $res;
+        }
+
         if (!@move_uploaded_file($tmp, $abs)) {
             $res['error'] = "No se pudo guardar el archivo en el server.";
+            error_log("Falló move_uploaded_file al guardar un archivo de mascota en: " . $abs);
             return $res;
         }
         @chmod($abs, 0644);

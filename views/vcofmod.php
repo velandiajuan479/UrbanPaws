@@ -35,7 +35,7 @@
             <i class="fa-solid fa-shapes"></i>
             <label class="form-label" for="icomod">Icono</label>
             <div class="input-group">
-                <select name="icomod" id="icomod" class="form-control form-select" required>
+                <select name="icomod" id="icomod" class="form-control form-select" data-autocomplete data-placeholder="Buscar icono..." required>
                     <option value="">Selecciona un icono...</option>
                     <?php if ($datIco) { foreach ($datIco AS $ico) { ?>
                     <option value="<?= $ico['codval'] ?>"
@@ -45,7 +45,7 @@
                     <?php }} ?>
                 </select>
                 <span class="input-group-text">
-                    <i class="<?= $dtOn ? $dtOn['icomod'] : '' ?>"></i>
+                    <i id="preview-icomod" class="<?= $dtOn ? htmlspecialchars((string) $dtOn['icomod'], ENT_QUOTES, 'UTF-8') : '' ?>" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
@@ -89,6 +89,19 @@
         </div>
     </form>
 </div>
+
+<script>
+    const selectIconoModulo = document.getElementById('icomod');
+    const previewIconoModulo = document.getElementById('preview-icomod');
+    if (selectIconoModulo && previewIconoModulo) {
+        const actualizarPreviewIcono = () => {
+            previewIconoModulo.className = selectIconoModulo.value;
+        };
+        selectIconoModulo.addEventListener('change', actualizarPreviewIcono);
+        selectIconoModulo.form.addEventListener('reset', () => requestAnimationFrame(actualizarPreviewIcono));
+        actualizarPreviewIcono();
+    }
+</script>
 
 <div class="card card-form mt-4">
     <h5 class="mb-3">
