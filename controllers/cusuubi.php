@@ -1,31 +1,42 @@
 <?php
+require_once '../models/helpers.php';
 require_once '../models/musuubi.php';
 
-$ope = isset($_POST['ope']) ? $_POST['ope'] : (isset($_GET['ope']) ? $_GET['ope'] : NULL);
+$dest = '../home.php?pg=8';
+up_controller_guard($dest);
 
-$ubi = new mUsuUbi();
-$datAll = $ubi->getAll();
+$ope    = $_POST['ope'] ?? '';
+$idubi  = (int) ($_POST['idubi'] ?? 0);
+$ubi    = new mUsuUbi();
 
-if($ope == "guardar"){
-    $ubi->setNomubi($_POST['nomubi']);
-    $ubi->setDepaubi($_POST['depaubi']);
-    $ubi->save();
-    header('Location: ../index.php?pg=8');
+if ($ope === 'guardar' || $ope === 'editar') {
+    $nom = trim($_POST['nomubi'] ?? '');
+    $dep = trim($_POST['depaubi'] ?? '');
+    $volver = $dest . ($ope === 'editar' ? '&edi=' . $idubi : '');   // si editaba, sigue en modo edición
+
+    // Límites de las columnas: nomubi VARCHAR(35), depaubi VARCHAR(20)
+    if ($nom === '' || $dep === '' || mb_strlen($nom) > 35 || mb_strlen($dep) > 20 || ($ope === 'editar' && $idubi <= 0)) {
+        header('Location: ' . $volver . '&err=campos'); exit();
+    }
+    $ubi->setNomubi($nom);
+    $ubi->setDepaubi($dep);
+    if ($ubi->existe($ope === 'editar' ? $idubi : 0)) { header('Location: ' . $volver . '&err=duplicada'); exit(); }
+
+    if ($ope === 'guardar') {
+        $res = $ubi->save();
+    } else {
+        $ubi->setIdubi($idubi);
+        $res = $ubi->upd();
+    }
+    header('Location: ' . ($res ? $dest . '&ok=' . ($ope === 'guardar' ? 'guardada' : 'actualizada') : $volver . '&err=general'));
     exit();
 }
 
-if($ope == "editar"){
-    $ubi->setIdubi($_POST['idubi']);
-    $ubi->setNomubi($_POST['nomubi']);
-    $ubi->setDepaubi($_POST['depaubi']);
-    $ubi->upd();
-    header('Location: ../index.php?pg=8');
+if ($ope === 'borrar' && $idubi > 0) {
+    if ($ubi->del($idubi)) { header('Location: ' . $dest . '&ok=borrada'); exit(); }
+    header('Location: ' . $dest . '&err=' . ($ubi->getErrcod() === 1451 ? 'enuso' : 'general'));
     exit();
 }
 
-if($ope == "borrar"){
-    $ubi->del($_GET['idubi']);
-    header('Location: ../index.php?pg=8');
-    exit();
-}
-?>
+header('Location: ' . $dest);
+exit();

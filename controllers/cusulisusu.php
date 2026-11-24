@@ -1,25 +1,31 @@
 <?php
+require_once '../models/helpers.php';
 require_once '../models/musulisusu.php';
 
-$ope = isset($_POST['ope']) ? $_POST['ope'] : (isset($_GET['ope']) ? $_GET['ope'] : NULL);
+$dest = '../home.php?pg=5';
+up_controller_guard($dest);
 
-$lis = new mUsuLisUsu();
+$ope    = $_POST['ope'] ?? '';
+$iduser = (int) ($_POST['iduser'] ?? 0);
+$miId   = (int) $_SESSION['iduser'];
+$lis    = new mUsuLisUsu();
 
-if($ope == "activar"){
-    $lis->updEstado($_GET['iduser'], 1);
-    header('Location: ../index.php?pg=5');
+if ($iduser <= 0) { header('Location: ' . $dest . '&err=general'); exit(); }
+
+if ($ope === 'activar' || $ope === 'desactivar') {
+    if ($ope === 'desactivar' && $iduser === $miId) { header('Location: ' . $dest . '&err=propio'); exit(); }
+    $nuevo = ($ope === 'activar') ? 1 : 0;
+    $res   = $lis->updEstado($iduser, $nuevo);
+    header('Location: ' . $dest . ($res ? '&ok=' . ($nuevo ? 'activado' : 'desactivado') : '&err=general'));
     exit();
 }
 
-if($ope == "desactivar"){
-    $lis->updEstado($_GET['iduser'], 0);
-    header('Location: ../index.php?pg=5');
+if ($ope === 'borrar') {
+    if ($iduser === $miId) { header('Location: ' . $dest . '&err=propio'); exit(); }
+    if ($lis->del($iduser)) { header('Location: ' . $dest . '&ok=borrado'); exit(); }
+    header('Location: ' . $dest . '&err=' . ($lis->getErrcod() === 1451 ? 'fk' : 'general'));
     exit();
 }
 
-if($ope == "borrar"){
-    $lis->del($_GET['iduser']);
-    header('Location: ../index.php?pg=5');
-    exit();
-}
-?>
+header('Location: ' . $dest);
+exit();

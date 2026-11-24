@@ -6,24 +6,39 @@ class mUsuUbi
     private $idubi;
     private $nomubi;
     private $depaubi;
+    private $errcod = 0;
 
-    function getIdubi(){return $this->idubi;}
-    function getNomubi(){return $this->nomubi;}
-    function getDepaubi(){return $this->depaubi;}
-
-    function setIdubi($idubi){return $this->idubi = $idubi;}
-    function setNomubi($nomubi){return $this->nomubi = $nomubi;}
-    function setDepaubi($depaubi){return $this->depaubi = $depaubi;}
+    function getErrcod(){return $this->errcod;}
+    function setIdubi($idubi){$this->idubi = (int) $idubi;}
+    function setNomubi($nomubi){$this->nomubi = $nomubi;}
+    function setDepaubi($depaubi){$this->depaubi = $depaubi;}
 
     public function getAll(){
         try{
             $conexion = (new Conexion())->get_conexion();
-            $sql = "SELECT idubi, nomubi, depaubi FROM ubicacion ORDER BY nomubi ASC";
-            $stmt = $conexion->prepare($sql);
+            $stmt = $conexion->prepare("SELECT idubi, nomubi, depaubi FROM ubicacion ORDER BY nomubi ASC");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e){
-            echo "Error al consultar ubicaciones: " . $e->getMessage();
+            error_log("mUsuUbi::getAll " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ¿Ya existe esa ciudad en ese departamento? (ignora la fila que se está editando)
+    public function existe($idubi = 0){
+        try{
+            $conexion = (new Conexion())->get_conexion();
+            $sql = "SELECT COUNT(*) FROM ubicacion
+                    WHERE LOWER(nomubi) = LOWER(:nomubi) AND LOWER(depaubi) = LOWER(:depaubi) AND idubi <> :idubi";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindValue(':nomubi', $this->nomubi);
+            $stmt->bindValue(':depaubi', $this->depaubi);
+            $stmt->bindValue(':idubi', (int) $idubi, PDO::PARAM_INT);
+            $stmt->execute();
+            return (int) $stmt->fetchColumn() > 0;
+        }catch(PDOException $e){
+            error_log("mUsuUbi::existe " . $e->getMessage());
             return false;
         }
     }
@@ -31,13 +46,13 @@ class mUsuUbi
     public function save(){
         try{
             $conexion = (new Conexion())->get_conexion();
-            $sql = "INSERT INTO ubicacion (nomubi, depaubi) VALUES (:nomubi, :depaubi)";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':nomubi', $this->nomubi);
-            $stmt->bindParam(':depaubi', $this->depaubi);
+            $stmt = $conexion->prepare("INSERT INTO ubicacion (nomubi, depaubi) VALUES (:nomubi, :depaubi)");
+            $stmt->bindValue(':nomubi', $this->nomubi);
+            $stmt->bindValue(':depaubi', $this->depaubi);
             return $stmt->execute();
         }catch(PDOException $e){
-            echo "Error al guardar ubicación: " . $e->getMessage();
+            $this->errcod = (int) ($e->errorInfo[1] ?? 0);
+            error_log("mUsuUbi::save " . $e->getMessage());
             return false;
         }
     }
@@ -45,14 +60,14 @@ class mUsuUbi
     public function upd(){
         try{
             $conexion = (new Conexion())->get_conexion();
-            $sql = "UPDATE ubicacion SET nomubi = :nomubi, depaubi = :depaubi WHERE idubi = :idubi";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':nomubi', $this->nomubi);
-            $stmt->bindParam(':depaubi', $this->depaubi);
-            $stmt->bindParam(':idubi', $this->idubi);
+            $stmt = $conexion->prepare("UPDATE ubicacion SET nomubi = :nomubi, depaubi = :depaubi WHERE idubi = :idubi");
+            $stmt->bindValue(':nomubi', $this->nomubi);
+            $stmt->bindValue(':depaubi', $this->depaubi);
+            $stmt->bindValue(':idubi', $this->idubi, PDO::PARAM_INT);
             return $stmt->execute();
         }catch(PDOException $e){
-            echo "Error al actualizar ubicación: " . $e->getMessage();
+            $this->errcod = (int) ($e->errorInfo[1] ?? 0);
+            error_log("mUsuUbi::upd " . $e->getMessage());
             return false;
         }
     }
@@ -60,12 +75,12 @@ class mUsuUbi
     public function del($idubi){
         try{
             $conexion = (new Conexion())->get_conexion();
-            $sql = "DELETE FROM ubicacion WHERE idubi = :idubi";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':idubi', $idubi);
+            $stmt = $conexion->prepare("DELETE FROM ubicacion WHERE idubi = :idubi");
+            $stmt->bindValue(':idubi', (int) $idubi, PDO::PARAM_INT);
             return $stmt->execute();
         }catch(PDOException $e){
-            echo "Error al eliminar ubicación: " . $e->getMessage();
+            $this->errcod = (int) ($e->errorInfo[1] ?? 0);   // 1451 = hay usuarios en esa ubicación
+            error_log("mUsuUbi::del " . $e->getMessage());
             return false;
         }
     }
