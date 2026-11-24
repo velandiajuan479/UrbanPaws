@@ -1,6 +1,6 @@
 <?php
 
-require_once 'conexion.php';
+require_once __DIR__ . '/../conexion.php';
 
 class mServRut
 {
@@ -13,244 +13,249 @@ class mServRut
     private $horaini;
     private $horafin;
     private $precioini;
+    private $direccion_rut;
+    private $referencia_rut;
 
-    /* ========================= GETTERS ========================= */
-    public function getIdrut()    { return $this->idrut; }
-    public function getNomrut()   { return $this->nomrut; }
-    public function getDistrut()  { return $this->distrut; }
-    public function getIduser()   { return $this->iduser; }
-    public function getIdubi()    { return $this->idubi; }
-    public function getEstarut()  { return $this->estarut; }
-    public function getHoraini()  { return $this->horaini; }
-    public function getHorafin()  { return $this->horafin; }
-    public function getPrecioini(){ return $this->precioini; }
+    public function getIdrut()        { return $this->idrut; }
+    public function getNomrut()       { return $this->nomrut; }
+    public function getDistrut()      { return $this->distrut; }
+    public function getIduser()       { return $this->iduser; }
+    public function getIdubi()        { return $this->idubi; }
+    public function getEstarut()      { return $this->estarut; }
+    public function getHoraini()      { return $this->horaini; }
+    public function getHorafin()      { return $this->horafin; }
+    public function getPrecioini()    { return $this->precioini; }
+    public function getDireccionRut() { return $this->direccion_rut; }
+    public function getReferenciaRut(){ return $this->referencia_rut; }
 
-    /* ========================= SETTERS ========================= */
-    public function setIdrut($idrut)      { $this->idrut = $idrut; }
-    public function setNomrut($nomrut)    { $this->nomrut = $nomrut; }
-    public function setDistrut($distrut)  { $this->distrut = $distrut; }
-    public function setIduser($iduser)    { $this->iduser = $iduser; }
-    public function setIdubi($idubi)      { $this->idubi = $idubi; }
-    public function setEstarut($estarut)  { $this->estarut = $estarut; }
-    public function setHoraini($horaini)  { $this->horaini = $horaini; }
-    public function setHorafin($horafin)  { $this->horafin = $horafin; }
-    public function setPrecioini($precioini) { $this->precioini = $precioini; }
+    public function setIdrut($idrut)               { $this->idrut = $idrut; }
+    public function setNomrut($nomrut)             { $this->nomrut = $nomrut; }
+    public function setDistrut($distrut)           { $this->distrut = $distrut; }
+    public function setIduser($iduser)             { $this->iduser = $iduser; }
+    public function setIdubi($idubi)               { $this->idubi = $idubi; }
+    public function setEstarut($estarut)           { $this->estarut = $estarut; }
+    public function setHoraini($horaini)           { $this->horaini = $horaini; }
+    public function setHorafin($horafin)           { $this->horafin = $horafin; }
+    public function setPrecioini($precioini)       { $this->precioini = $precioini; }
+    public function setDireccionRut($direccion_rut){ $this->direccion_rut = $direccion_rut; }
+    public function setReferenciaRut($referencia_rut){ $this->referencia_rut = $referencia_rut; }
 
-    /* ========================= TODAS LAS RUTAS ========================= */
     public function getAll()
     {
         try {
             $sql = "SELECT r.idrut, r.nomrut, r.distrut, r.iduser, r.idubi, r.estarut,
-                           r.horaini, r.horafin, r.precioini,
+                           TIME_FORMAT(r.horaini, '%H:%i') AS horaini_fmt,
+                           TIME_FORMAT(r.horafin, '%H:%i') AS horafin_fmt,
+                           r.precioini, r.direccion_rut, r.referencia_rut,
                            ub.nomubi, ub.depaubi,
                            u.prinom, u.priapel
                     FROM ruta r
-                    LEFT JOIN usuario u   ON r.iduser = u.iduser
+                    LEFT JOIN usuario u ON r.iduser = u.iduser
                     LEFT JOIN ubicacion ub ON r.idubi = ub.idubi
                     ORDER BY r.idrut ASC";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
             $result->execute();
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al consultar rutas: " . $e->getMessage());
             return [];
         }
     }
 
-    /* ========================= UNA RUTA (con datos del paseador) ========================= */
     public function getOne()
     {
         try {
             $sql = "SELECT r.idrut, r.nomrut, r.distrut, r.iduser, r.idubi, r.estarut,
-                           r.horaini, r.horafin, r.precioini,
+                           TIME_FORMAT(r.horaini, '%H:%i') AS horaini_fmt,
+                           TIME_FORMAT(r.horafin, '%H:%i') AS horafin_fmt,
+                           r.precioini, r.direccion_rut, r.referencia_rut,
                            ub.nomubi, ub.depaubi,
-                           u.prinom, u.priapel,
-                           u.foto, u.emailu, u.teleu, u.docu
+                           u.prinom, u.priapel, u.foto, u.emailu, u.teleu, u.docu
                     FROM ruta r
-                    LEFT JOIN usuario u   ON r.iduser = u.iduser
+                    LEFT JOIN usuario u ON r.iduser = u.iduser
                     LEFT JOIN ubicacion ub ON r.idubi = ub.idubi
                     WHERE r.idrut = :idrut";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
-
-            $idrut = $this->getIdrut();
-            $result->bindParam(":idrut", $idrut);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":idrut", (int) $this->getIdrut(), PDO::PARAM_INT);
             $result->execute();
 
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al consultar la ruta: " . $e->getMessage());
             return false;
         }
     }
 
-    /* ========================= RUTAS DE UN PASEADOR ========================= */
     public function getByUser()
     {
         try {
             $sql = "SELECT r.idrut, r.nomrut, r.distrut, r.iduser, r.idubi, r.estarut,
-                           r.horaini, r.horafin, r.precioini,
+                           TIME_FORMAT(r.horaini, '%H:%i') AS horaini_fmt,
+                           TIME_FORMAT(r.horafin, '%H:%i') AS horafin_fmt,
+                           r.precioini, r.direccion_rut, r.referencia_rut,
                            ub.nomubi, ub.depaubi,
                            u.prinom, u.priapel
                     FROM ruta r
-                    LEFT JOIN usuario u   ON r.iduser = u.iduser
+                    LEFT JOIN usuario u ON r.iduser = u.iduser
                     LEFT JOIN ubicacion ub ON r.idubi = ub.idubi
                     WHERE r.iduser = :iduser
                     ORDER BY r.idrut ASC";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
-
-            $iduser = $this->getIduser();
-            $result->bindParam(":iduser", $iduser);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":iduser", (int) $this->getIduser(), PDO::PARAM_INT);
             $result->execute();
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al consultar rutas del paseador: " . $e->getMessage());
             return [];
         }
     }
 
-    /* ========================= RUTAS ACTIVAS SEGÚN LA UBICACIÓN DEL CLIENTE ========================= */
     public function getActivas()
     {
         try {
             $sql = "SELECT r.idrut, r.nomrut, r.distrut, r.iduser, r.idubi, r.estarut,
-                           r.horaini, r.horafin, r.precioini,
+                           TIME_FORMAT(r.horaini, '%H:%i') AS horaini_fmt,
+                           TIME_FORMAT(r.horafin, '%H:%i') AS horafin_fmt,
+                           r.precioini, r.direccion_rut, r.referencia_rut,
                            ub.nomubi, ub.depaubi,
-                           u.prinom, u.priapel,
-                           u.foto
+                           u.prinom, u.priapel, u.foto
                     FROM ruta r
-                    LEFT JOIN usuario u   ON r.iduser = u.iduser
+                    LEFT JOIN usuario u ON r.iduser = u.iduser
                     LEFT JOIN ubicacion ub ON r.idubi = ub.idubi
-                    WHERE r.estarut = 1
-                      AND (:idubi IS NULL OR r.idubi = :idubi)
-                    ORDER BY r.nomrut ASC";
-
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
+                    WHERE r.estarut = 1";
 
             $idubi = $this->getIdubi();
-            $result->bindParam(":idubi", $idubi);
+            if ($idubi !== null && $idubi !== '' && (int) $idubi > 0) {
+                $sql .= " AND r.idubi = :idubi";
+            }
+
+            $sql .= " ORDER BY r.nomrut ASC";
+
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+
+            if ($idubi !== null && $idubi !== '' && (int) $idubi > 0) {
+                $result->bindValue(":idubi", (int) $idubi, PDO::PARAM_INT);
+            }
+
             $result->execute();
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al consultar rutas disponibles: " . $e->getMessage());
             return [];
         }
     }
 
-    /* ========================= GUARDAR NUEVA RUTA ========================= */
     public function save()
     {
         try {
-            $sql = "INSERT INTO ruta (nomrut, distrut, iduser, idubi, estarut, horaini, horafin, precioini)
-                    VALUES (:nomrut, :distrut, :iduser, :idubi, :estarut, :horaini, :horafin, :precioini)";
+            $sql = "INSERT INTO ruta
+                        (nomrut, distrut, iduser, idubi, estarut, horaini, horafin, precioini, direccion_rut, referencia_rut)
+                    VALUES
+                        (:nomrut, :distrut, :iduser, :idubi, :estarut, :horaini, :horafin, :precioini, :direccion_rut, :referencia_rut)";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
 
-            $nomrut    = $this->getNomrut();
-            $distrut   = $this->getDistrut();
-            $iduser    = $this->getIduser();
-            $idubi     = $this->getIdubi();
-            $estarut   = $this->getEstarut();
-            $horaini   = $this->getHoraini();
-            $horafin   = $this->getHorafin();
-            $precioini = $this->getPrecioini();
-
-            $result->bindParam(":nomrut",    $nomrut);
-            $result->bindParam(":distrut",   $distrut);
-            $result->bindParam(":iduser",    $iduser);
-            $result->bindParam(":idubi",     $idubi);
-            $result->bindParam(":estarut",   $estarut);
-            $result->bindParam(":horaini",   $horaini);
-            $result->bindParam(":horafin",   $horafin);
-            $result->bindParam(":precioini", $precioini);
+            $result->bindValue(":nomrut", $this->getNomrut());
+            $result->bindValue(":distrut", $this->getDistrut() !== null && $this->getDistrut() !== '' ? $this->getDistrut() : null);
+            $result->bindValue(":iduser", (int) $this->getIduser(), PDO::PARAM_INT);
+            $idubi = $this->getIdubi();
+            $idubi = ($idubi !== null && $idubi !== '' && (int) $idubi > 0) ? (int) $idubi : null;
+            $result->bindValue(":idubi", $idubi, $idubi !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $result->bindValue(":estarut", (int) $this->getEstarut(), PDO::PARAM_INT);
+            $result->bindValue(":horaini", $this->getHoraini());
+            $result->bindValue(":horafin", $this->getHorafin());
+            $result->bindValue(":precioini", $this->getPrecioini());
+            $result->bindValue(":direccion_rut", $this->getDireccionRut());
+            $result->bindValue(":referencia_rut", $this->getReferenciaRut() !== '' ? $this->getReferenciaRut() : null, $this->getReferenciaRut() !== '' ? PDO::PARAM_STR : PDO::PARAM_NULL);
 
             $result->execute();
 
-            return $conexion->lastInsertId();
+            return (int) $conexion->lastInsertId();
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al guardar la ruta: " . $e->getMessage());
             return false;
         }
     }
 
-    /* ========================= ACTUALIZAR RUTA ========================= */
     public function upd()
     {
         try {
             $sql = "UPDATE ruta SET
-                        nomrut    = :nomrut,
-                        distrut   = :distrut,
-                        iduser    = :iduser,
-                        idubi     = :idubi,
-                        estarut   = :estarut,
-                        horaini   = :horaini,
-                        horafin   = :horafin,
-                        precioini = :precioini
+                        nomrut = :nomrut,
+                        distrut = :distrut,
+                        idubi = :idubi,
+                        estarut = :estarut,
+                        horaini = :horaini,
+                        horafin = :horafin,
+                        precioini = :precioini,
+                        direccion_rut = :direccion_rut,
+                        referencia_rut = :referencia_rut
                     WHERE idrut = :idrut";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
 
-            $idrut     = $this->getIdrut();
-            $nomrut    = $this->getNomrut();
-            $distrut   = $this->getDistrut();
-            $iduser    = $this->getIduser();
-            $idubi     = $this->getIdubi();
-            $estarut   = $this->getEstarut();
-            $horaini   = $this->getHoraini();
-            $horafin   = $this->getHorafin();
-            $precioini = $this->getPrecioini();
-
-            $result->bindParam(":idrut",     $idrut);
-            $result->bindParam(":nomrut",    $nomrut);
-            $result->bindParam(":distrut",   $distrut);
-            $result->bindParam(":iduser",    $iduser);
-            $result->bindParam(":idubi",     $idubi);
-            $result->bindParam(":estarut",   $estarut);
-            $result->bindParam(":horaini",   $horaini);
-            $result->bindParam(":horafin",   $horafin);
-            $result->bindParam(":precioini", $precioini);
+            $result->bindValue(":idrut", (int) $this->getIdrut(), PDO::PARAM_INT);
+            $result->bindValue(":nomrut", $this->getNomrut());
+            $result->bindValue(":distrut", $this->getDistrut() !== null && $this->getDistrut() !== '' ? $this->getDistrut() : null);
+            $idubi = $this->getIdubi();
+            $idubi = ($idubi !== null && $idubi !== '' && (int) $idubi > 0) ? (int) $idubi : null;
+            $result->bindValue(":idubi", $idubi, $idubi !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $result->bindValue(":estarut", (int) $this->getEstarut(), PDO::PARAM_INT);
+            $result->bindValue(":horaini", $this->getHoraini());
+            $result->bindValue(":horafin", $this->getHorafin());
+            $result->bindValue(":precioini", $this->getPrecioini());
+            $result->bindValue(":direccion_rut", $this->getDireccionRut());
+            $result->bindValue(":referencia_rut", $this->getReferenciaRut() !== '' ? $this->getReferenciaRut() : null, $this->getReferenciaRut() !== '' ? PDO::PARAM_STR : PDO::PARAM_NULL);
 
             return $result->execute();
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al actualizar la ruta: " . $e->getMessage());
             return false;
         }
     }
 
-    /* ========================= ELIMINAR RUTA ========================= */
     public function del()
     {
         try {
             $sql = "DELETE FROM ruta WHERE idrut = :idrut";
 
-            $modelo   = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result   = $conexion->prepare($sql);
-
-            $idrut = $this->getIdrut();
-            $result->bindParam(":idrut", $idrut);
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":idrut", (int) $this->getIdrut(), PDO::PARAM_INT);
 
             return $result->execute();
         } catch (Exception $e) {
-            echo "Error del sistema: " . $e->getMessage();
+            error_log("Error al eliminar la ruta: " . $e->getMessage());
             return false;
+        }
+    }
+
+    public function tienePaseos()
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM paseo WHERE idrut = :idrut";
+
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindValue(":idrut", (int) $this->getIdrut(), PDO::PARAM_INT);
+            $result->execute();
+
+            return (int) $result->fetchColumn() > 0;
+        } catch (Exception $e) {
+            error_log("Error al verificar paseos de la ruta: " . $e->getMessage());
+            return true;
         }
     }
 }

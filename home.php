@@ -27,7 +27,10 @@ $documentTitle = 'UrbanPaws — ' . ($pageTitles[$pg] ?? 'Panel');
 $pageViews = [
     1 => 'vusucli.php', 2 => 'vusuadmin.php', 3 => 'vusupas.php', 4 => 'vusupef.php',
     5 => 'vusulisusu.php', 6 => 'vusuval.php', 7 => 'vusudatper.php', 8 => 'vusuubi.php',
-    9 => 'vmasmas.php', 11 => 'vserrutcl.php', 13 => 'vserpas.php', 14 => 'vserserps.php',
+    9 => 'vmasmas.php',
+    11 => 'modvserv/vserrutcl.php', 12 => 'modvserv/vserrutps.php',
+    13 => 'modvserv/vserpas.php', 14 => 'modvserv/vserserps.php',
+    15 => 'modvserv/vsersercl.php',
     17 => 'vfacfac.php', 18 => 'vfatdatfac.php', 19 => 'vfaclisfac.php', 20 => 'vfacrepfac.php',
     23 => 'vcofpag.php', 24 => 'vcofmod.php', 25 => 'vcofcof.php',
     26 => 'vcofdom.php', 27 => 'vcofval.php',

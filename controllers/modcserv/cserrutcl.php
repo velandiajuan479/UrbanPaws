@@ -1,33 +1,30 @@
 <?php
 
-require_once("./models/modmserv/mserrut.php");
-require_once("models/musupef.php");
+require_once __DIR__ . '/cserbase.php';
+require_once __DIR__ . '/../../models/modmserv/mserrut.php';
+require_once __DIR__ . '/../../models/musupef.php';
 
-/* ========================= RECEPCIÓN DE DATOS ========================= */
-// El iduser se toma de la sesión (al iniciar sesión con credenciales).
-// Si no hay sesión, se permite pasar por URL (ej: index.php?pg=11&iduser=6)
-$iduser = isset($_SESSION["iduser"]) ? $_SESSION["iduser"] : (isset($_REQUEST["iduser"]) ? $_REQUEST["iduser"] : NULL);
+$iduser = servRequireLogin();
+$esAdmin = servIsAdmin($iduser);
 
 $mserrut = new mServRut();
 $musupef = new mUsuPef();
+$dtCli = null;
+$idubi = null;
 
-/* ===============================
-   UBICACIÓN DEL CLIENTE (para filtrar las rutas)
-================================ */
-$idubi = NULL;
-$dtCli = NULL;
-if ($iduser) {
-    $musupef->setIduser($iduser);
-    $dtCli = $musupef->getOne();
-    if ($dtCli) { $idubi = $dtCli["idubi"]; }
+$musupef->setIduser($iduser);
+$dtCli = $musupef->getOne();
+
+if ($dtCli) {
+    $idubi = $dtCli['idubi'];
 }
 
-/* ===============================
-   LISTAR RUTAS ACTIVAS SEGÚN LA UBICACIÓN DEL CLIENTE
-================================ */
-$mserrut->setIdubi($idubi);
-$datAll = $mserrut->getActivas();
+if ($esAdmin) {
+    $datAll = $mserrut->getAll();
+} else {
+    $mserrut->setIdubi($idubi);
+    $datAll = $mserrut->getActivas();
+}
 
-// IMPORTANTE: NO incluir la vista aquí.
-// La vista (vserrutcl.php) es quien incluye a este controlador.
+$flash = servTakeFlash();
 ?>

@@ -45,6 +45,12 @@ CREATE TABLE usuario(
     estusr TINYINT(1),
     ECMusr TINYINT(1),
     idubi BIGINT(10),
+    advusr INT(11) NOT NULL DEFAULT 0,
+    multausr DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    vetousr TINYINT(1) NOT NULL DEFAULT 0,
+    sancionusr VARCHAR(20) NULL,
+    fecsancion DATETIME NULL,
+    obssancion VARCHAR(255) NULL,
     FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
 );
 
@@ -99,6 +105,15 @@ CREATE TABLE ruta(
     nomrut VARCHAR(50),
     distrut DECIMAL(7,2),
     iduser BIGINT(10),
+    direccion_rut VARCHAR(255) NULL,
+    referencia_rut VARCHAR(255) NULL,
+    idubi BIGINT(10) NULL,
+    estarut BIGINT(11) NOT NULL DEFAULT 1,
+    horaini TIME NULL,
+    horafin TIME NULL,
+    precioini DECIMAL(10,2) NOT NULL DEFAULT 0,
+    KEY idx_ruta_ubi (idubi),
+    KEY idx_ruta_user_est (iduser, estarut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
@@ -112,6 +127,16 @@ CREATE TABLE paseo(
     idrut INT(6),
     iduser BIGINT(10),
     descserv TEXT,
+    idpaseador BIGINT(10) NULL,
+    precio_pactado DECIMAL(10,2) NULL,
+    direccion_pactada VARCHAR(255) NULL,
+    referencia_pactada VARCHAR(255) NULL,
+    fecha_cancelacion DATETIME NULL,
+    motivo_cancelacion TEXT NULL,
+    cancelado_por BIGINT(10) NULL,
+    cancelacion_tardia TINYINT(1) NOT NULL DEFAULT 0,
+    KEY idx_paseo_paseador_fecha (idpaseador, inicio_programado, fin_programado),
+    KEY idx_paseo_cliente_estado (iduser, estapas),
     FOREIGN KEY (idmasc) REFERENCES mascotas(idmasc),
     FOREIGN KEY (idrut) REFERENCES ruta(idrut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
@@ -425,7 +450,11 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (1032, 'fa- fa-rectangle-list', '', '1', 2),
 (1033, 'fa fa-server', '', '1', 2),
 (1034, 'fa fa-user-group', '', '1', 2),
-(1035, 'fa fa-user-gear', '', '1', 2);
+(1035, 'fa fa-user-gear', '', '1', 2),
+
+-- ESTADOS DE PASEOS / SOLICITUDES
+(1036, 'Aceptado',  '', '1', 1),
+(1037, 'Rechazado', '', '1', 1);
 
 INSERT INTO `perfil` (`idperf`, `nomperf`, `estper`) VALUES
 (1, 'Paseador', NULL),
