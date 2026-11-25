@@ -156,10 +156,11 @@ class mServPas
     public function getMascotasByUser()
     {
         try {
-            $sql = "SELECT idmasc, nommasc, razamasc
-                    FROM mascotas
-                    WHERE iduser = :iduser
-                    ORDER BY nommasc ASC";
+            $sql = "SELECT m.idmasc, m.nommasc, COALESCE(r.nomraz, m.razamasc) AS razamasc
+                    FROM mascotas m
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
+                    WHERE m.iduser = :iduser
+                    ORDER BY m.nommasc ASC";
 
             $conexion = (new Conexion())->get_conexion();
             $result = $conexion->prepare($sql);
