@@ -20,10 +20,11 @@ class mCofdue
         try{
             $sql = "SELECT d.iddueno, d.iduser, d.idmasc,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno, u.docu,
-                           m.nommasc, m.razamasc
+                           m.nommasc, COALESCE(r.nomraz, m.razamasc) AS razamasc
                     FROM duenomasc d
                     LEFT JOIN usuario u ON d.iduser = u.iduser
                     LEFT JOIN mascotas m ON d.idmasc = m.idmasc
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
                     ORDER BY d.iddueno ASC";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
@@ -40,10 +41,11 @@ class mCofdue
         try{
             $sql = "SELECT d.iddueno, d.iduser, d.idmasc,
                            CONCAT(u.prinom, ' ', u.priapel) AS nomdueno, u.docu,
-                           m.nommasc, m.razamasc
+                           m.nommasc, COALESCE(r.nomraz, m.razamasc) AS razamasc
                     FROM duenomasc d
                     LEFT JOIN usuario u ON d.iduser = u.iduser
                     LEFT JOIN mascotas m ON d.idmasc = m.idmasc
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
                     WHERE d.iddueno = :iddueno";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
