@@ -35,12 +35,12 @@
         <div class="col-md-4">
             <i class="fa-solid fa-paw"></i>
             <label class="form-label">Raza <span class="text-danger">*</span></label>
-            <select name="razamasc" class="form-control form-select" data-autocomplete required>
+            <select name="idraz" class="form-control form-select" data-autocomplete required>
                 <option value="">Seleccionar raza...</option>
                 <?php if ($datRaz) { foreach ($datRaz AS $rz) { ?>
-                <option value="<?= $rz['codval'] ?>"
-                    <?= ($dtOn && $dtOn['razamasc'] == $rz['codval']) ? 'selected' : '' ?>>
-                    <?= $rz['codval'] ?>
+                <option value="<?= (int) $rz['idraz'] ?>"
+                    <?= ($dtOn && (int) ($dtOn['idraz'] ?? 0) === (int) $rz['idraz']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($rz['nomraz'], ENT_QUOTES, 'UTF-8') ?>
                 </option>
                 <?php }} ?>
             </select>

@@ -22,6 +22,7 @@ $idmasc = isset($_REQUEST["idmasc"]) ? (int) $_REQUEST["idmasc"] : 0;
 $ope    = isset($_REQUEST["ope"]) ? $_REQUEST["ope"] : NULL;
 
 $mmasmas = new mCofmas;
+$datRaz = $mmasmas->getRazas();
 $esAdmin = $mmasmas->esAdmin($iduser);
 $errorMascota = NULL;
 $dtOn = NULL;
@@ -54,8 +55,20 @@ if($ope == "save") {
     } else {
         $idmasc = isset($_POST["idmasc"]) ? (int) $_POST["idmasc"] : 0;
         $puedeGuardar = true;
+        $idraz = isset($_POST["idraz"]) ? (int) $_POST["idraz"] : 0;
+        $razamasc = NULL;
+        foreach ($datRaz as $raza) {
+            if ((int) $raza['idraz'] === $idraz) {
+                $razamasc = $raza['nomraz'];
+                break;
+            }
+        }
+        if ($razamasc === NULL) {
+            $errorMascota = "Selecciona una raza válida.";
+            $puedeGuardar = false;
+        }
 
-        if ($idmasc) {
+        if ($puedeGuardar && $idmasc) {
             $mmasmas->setIdmasc($idmasc);
             $mascotaActual = $mmasmas->getOne();
             if (!$mascotaActual || (!$esAdmin && (int) $mascotaActual['iduser'] !== $iduser)) {
@@ -67,7 +80,6 @@ if($ope == "save") {
         if ($puedeGuardar) {
             $nommasc   = isset($_POST["nommasc"]) ? $_POST["nommasc"] : NULL;
             $sexmasc   = isset($_POST["sexmasc"]) ? $_POST["sexmasc"] : NULL;
-            $razamasc  = isset($_POST["razamasc"]) ? $_POST["razamasc"] : NULL;
             $sizemasc  = isset($_POST["sizemasc"]) ? $_POST["sizemasc"] : NULL;
             $descmasc  = isset($_POST["descmasc"]) ? $_POST["descmasc"] : NULL;
             $enfermasc = isset($_POST["enfermasc"]) ? $_POST["enfermasc"] : NULL;
@@ -99,6 +111,7 @@ if($ope == "save") {
                 $mmasmas->setSexmasc($sexmasc);
                 $mmasmas->setFotovacu($fotovacu);
                 $mmasmas->setFotomasc($fotomasc);
+                $mmasmas->setIdraz($idraz);
                 $mmasmas->setRazamasc($razamasc);
                 $mmasmas->setSizemasc($sizemasc);
                 $mmasmas->setDescmasc($descmasc);
@@ -166,9 +179,6 @@ if($ope == "edi" AND $idmasc) {
     }
 }
 
-$mcofvalRaz = new mCofVal;
-$mcofvalRaz->setIddom(3); // Dominio 3: Razas
-$datRaz = $mcofvalRaz->getByDom();
 $mcofvalTam = new mCofVal;
 $mcofvalTam->setIddom(4); // Dominio 4: Tamaño Mascota
 $datTam = $mcofvalTam->getByDom();
