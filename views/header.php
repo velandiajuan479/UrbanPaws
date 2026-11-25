@@ -8,10 +8,15 @@ $navGroups = [
     'servicios' => [11, 13, 14],
     'facturacion' => [17, 18, 19, 20],
     'gestion' => [2, 3, 4, 5, 6, 7, 8, 23, 24, 25, 26, 27],
+    'pqrs' => [21, 22],
 ];
 $serviceActive = in_array($currentPg, $navGroups['servicios'], true);
 $billingActive = in_array($currentPg, $navGroups['facturacion'], true);
 $managementActive = in_array($currentPg, $navGroups['gestion'], true);
+$pqrsActive = in_array($currentPg, $navGroups['pqrs'], true);
+$nomPerfHeader = strtolower((string) ($_SESSION['nomperf'] ?? ''));
+$esAdminHeader = strpos($nomPerfHeader, 'admin') !== false;
+$puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nomPerfHeader, 'paseador') !== false;
 ?>
 <a class="skip-link" href="#main-content">Saltar al contenido</a>
 <header class="barsup">
@@ -47,6 +52,22 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
                         <li><a class="dropdown-item" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a></li>
                     </ul>
                 </li>
+                <?php if ($puedeRadicarHeader || $esAdminHeader) { ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?= $pqrsActive ? 'is-active' : '' ?>" href="#pqrs-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa-solid fa-comments" aria-hidden="true"></i>PQRS
+                    </a>
+                    <ul class="dropdown-menu" id="pqrs-menu">
+                        <li><span class="dropdown-header">Radicación y seguimiento</span></li>
+                        <?php if ($puedeRadicarHeader) { ?>
+                            <li><a class="dropdown-item" href="home.php?pg=21"><i class="fa-solid fa-message" aria-hidden="true"></i>Radicar PQRSF</a></li>
+                        <?php } ?>
+                        <?php if ($esAdminHeader) { ?>
+                            <li><a class="dropdown-item" href="home.php?pg=22"><i class="fa-solid fa-inbox" aria-hidden="true"></i>PQRFS</a></li>
+                        <?php } ?>
+                    </ul>
+                </li>
+                <?php } ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= $billingActive ? 'is-active' : '' ?>" href="#facturacion-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                         <i class="fa-solid fa-receipt" aria-hidden="true"></i>Facturación
@@ -120,6 +141,19 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
                         <a class="nav-link <?= $billingActive ? 'is-active' : '' ?>" href="home.php?pg=19"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i>Facturación</a>
                     </details>
                 </li>
+                <?php if ($puedeRadicarHeader || $esAdminHeader) { ?>
+                <li>
+                    <details <?= $pqrsActive ? 'open' : '' ?>>
+                        <summary class="mobile-caption">PQRS</summary>
+                        <?php if ($puedeRadicarHeader) { ?>
+                            <a class="nav-link <?= $currentPg === 21 ? 'is-active' : '' ?>" href="home.php?pg=21"><i class="fa-solid fa-message" aria-hidden="true"></i>Radicar PQRSF</a>
+                        <?php } ?>
+                        <?php if ($esAdminHeader) { ?>
+                            <a class="nav-link <?= $currentPg === 22 ? 'is-active' : '' ?>" href="home.php?pg=22"><i class="fa-solid fa-inbox" aria-hidden="true"></i>PQRFS</a>
+                        <?php } ?>
+                    </details>
+                </li>
+                <?php } ?>
                 <li>
                     <details <?= $managementActive ? 'open' : '' ?>>
                         <summary class="mobile-caption">Gestión</summary>

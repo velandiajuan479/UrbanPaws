@@ -26,6 +26,12 @@
         <p>Revisa las solicitudes y el estado de los paseos agendados.</p>
         <span class="tile-action">Ver paseos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
     </a>
+    <a href="home.php?pg=21" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-message" aria-hidden="true"></i></span>
+        <h2>PQRSF</h2>
+        <p>Envía una petición, queja, reclamo, sugerencia o felicitación.</p>
+        <span class="tile-action">Radicar PQRSF <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
     <a href="home.php?pg=19" class="card dashboard-card">
         <span class="tile-icon"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i></span>
         <h2>Facturación</h2>
