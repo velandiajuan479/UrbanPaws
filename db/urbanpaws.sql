@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS servicio(
     idpas BIGINT(10),
     idrut INT(6),
     iduser BIGINT(10),
+    tipserv VARCHAR(100) NULL DEFAULT 'Paseo',
     FOREIGN KEY (idpas) REFERENCES paseo(idpas),
     FOREIGN KEY (idrut) REFERENCES ruta(idrut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)

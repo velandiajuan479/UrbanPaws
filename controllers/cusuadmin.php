@@ -10,20 +10,18 @@ if (!isset($_SESSION['iduser'])) {
 
 require_once("models/musuadmin.php");
 require_once("models/mcofper.php");
+require_once(__DIR__ . "/../models/musuperm.php");
 
 $iduser = isset($_REQUEST["iduser"]) ? (int) $_REQUEST["iduser"] : NULL;
 $ope = isset($_REQUEST["ope"]) ? $_REQUEST["ope"] : NULL;
 
-// Lógica de rol preparada (por ahora la vista queda abierta).
-// Para activar la restricción más adelante basta descomentar el bloque.
-$nomPerf = isset($_SESSION['nomperf']) ? (string) $_SESSION['nomperf'] : "";
-$esAdmin = (stripos($nomPerf, "Admin") !== false);
-/*
-if (!$esAdmin) {
-    echo '<script>window.location.href = "home.php?pg=1";</script>';
+// La administración de usuarios, roles y páginas es exclusiva del perfil Admin.
+$permisosAdmin = up_permisos();
+if (!$permisosAdmin->esAdmin()) {
+    $_SESSION['msgErr'] = 'Tu perfil no tiene acceso a la administración de usuarios.';
+    echo '<script>window.location.href = "home.php?pg=' . (int) $permisosAdmin->dashboard() . '";</script>';
     exit();
 }
-*/
 
 if (empty($_SESSION['token_usu'])) {
     $_SESSION['token_usu'] = bin2hex(random_bytes(32));
@@ -44,6 +42,21 @@ $rolesUsuario = array();
 $musuadmin = new mUsuAdmin();
 $musuadmin->setIduser($iduser);
 $mcofper = new mCofPer();
+
+// Identifica si un idperf corresponde al perfil Admin, evitando quitarle
+// accidentalmente al administrador en sesión su propia página de gestión.
+$esRolAdmin = function ($idperf) use ($musuadmin) {
+    $perfiles = $musuadmin->getPerfiles();
+    if (!$perfiles) {
+        return false;
+    }
+    foreach ($perfiles as $perf) {
+        if ((int) $perf['idperf'] === (int) $idperf) {
+            return stripos((string) $perf['nomperf'], 'admin') !== false;
+        }
+    }
+    return false;
+};
 
 function cusuadminRedirect($msgOk = NULL, $msgErr = NULL, $iduser = NULL)
 {
@@ -98,6 +111,14 @@ if ($ope == "save") {
         if ($passusu !== "" && strlen($passusu) < 6) {
             $errores[] = "La contraseña debe tener al menos 6 caracteres.";
         }
+        if ($iduser && (int) $iduser === (int) $_SESSION['iduser']) {
+            if (!$esRolAdmin($idperf)) {
+                $errores[] = "No puedes quitarte tu propio rol de administrador.";
+            }
+            if ($estusr !== 1) {
+                $errores[] = "No puedes desactivar tu propia cuenta.";
+            }
+        }
 
         if (count($errores) > 0) {
             $msgErr = implode(" ", $errores);
@@ -139,6 +160,12 @@ if ($ope == "save") {
 }
 
 if ($ope == "eli" && $iduser) {
+    if ((int) $iduser === (int) $_SESSION['iduser']) {
+        cusuadminRedirect(NULL, "No puedes eliminar tu propia cuenta.");
+    }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$tokenValido) {
+        cusuadminRedirect(NULL, "No se pudo validar la eliminación. Recarga la página e inténtalo de nuevo.");
+    }
     $ok = $musuadmin->del();
     if ($ok) {
         cusuadminRedirect("Usuario eliminado correctamente.");
@@ -170,6 +197,12 @@ if ($ope == "savepag") {
                 $idp = (int) $perf["idperf"];
                 $ids = isset($porPerfil[$idp]) && is_array($porPerfil[$idp])
                     ? $porPerfil[$idp] : array();
+                $ids = array_values(array_unique(array_map('intval', $ids)));
+
+                // El perfil Admin siempre conserva la página de administración.
+                if ($esRolAdmin($idp) && !in_array(2, $ids, true)) {
+                    $ids[] = 2;
+                }
 
                 $mcofper->setIdperf($idp);
                 $mcofper->setIdsPaginas($ids);

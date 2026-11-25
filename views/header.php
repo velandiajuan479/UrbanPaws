@@ -3,6 +3,9 @@ $currentPg = isset($currentPg) ? (int) $currentPg : (isset($_GET['pg']) ? (int) 
 $displayName = trim((string) ($_SESSION['prinom'] ?? $_SESSION['nomusr'] ?? ''));
 $displayName = $displayName !== '' ? $displayName : 'Mi cuenta';
 $displayRole = trim((string) ($_SESSION['nomperf'] ?? ''));
+if ($displayRole === '' && function_exists('up_permisos')) {
+    $displayRole = up_permisos()->getNombreRol();
+}
 $initial = function_exists('mb_substr') ? mb_strtoupper(mb_substr($displayName, 0, 1, 'UTF-8'), 'UTF-8') : strtoupper(substr($displayName, 0, 1));
 $puedeGestionarRutas = $displayRole !== ''
     && (stripos($displayRole, 'Paseador') !== false || stripos($displayRole, 'Admin') !== false);
@@ -109,6 +112,26 @@ $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nom
                         <li><a class="dropdown-item" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a></li>
                     </ul>
                 </li>
+                <?php foreach ($navEnlaces as $item) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $esActivo($item['pg']) ? 'is-active' : '' ?>" href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>" <?= $esActivo($item['pg']) ? 'aria-current="page"' : '' ?>>
+                            <i class="<?= htmlspecialchars($item['icono'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i><?= htmlspecialchars($item['etiqueta'], ENT_QUOTES, 'UTF-8') ?>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php foreach ($navGrupos as $grupo) { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <?= in_array($currentPg, $grupo['pages'], true) ? 'is-active' : '' ?>" href="#<?= htmlspecialchars($grupo['id'], ENT_QUOTES, 'UTF-8') ?>" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="<?= htmlspecialchars($grupo['icono'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i><?= htmlspecialchars($grupo['etiqueta'], ENT_QUOTES, 'UTF-8') ?>
+                        </a>
+                        <ul class="dropdown-menu" id="<?= htmlspecialchars($grupo['id'], ENT_QUOTES, 'UTF-8') ?>">
+                            <li><span class="dropdown-header"><?= htmlspecialchars($grupo['cabecera'], ENT_QUOTES, 'UTF-8') ?></span></li>
+                            <?php foreach ($grupo['items'] as $item) { ?>
+                                <li><a class="dropdown-item" href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>"><i class="<?= htmlspecialchars($item['icono'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i><?= htmlspecialchars($item['etiqueta'], ENT_QUOTES, 'UTF-8') ?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
 
@@ -124,8 +147,12 @@ $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nom
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><span class="dropdown-header">Tu espacio</span></li>
-                    <li><a class="dropdown-item" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-address-card" aria-hidden="true"></i>Datos personales</a></li>
+                    <?php if ($tieneAcceso(4)) { ?>
+                        <li><a class="dropdown-item" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a></li>
+                    <?php } ?>
+                    <?php if ($tieneAcceso(7)) { ?>
+                        <li><a class="dropdown-item" href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-address-card" aria-hidden="true"></i>Datos personales</a></li>
+                    <?php } ?>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>Cerrar sesión</a></li>
                 </ul>
@@ -184,10 +211,28 @@ $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nom
                         <a class="nav-link <?= $currentPg === 27 ? 'is-active' : '' ?>" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a>
                     </details>
                 </li>
+                <?php foreach ($navEnlaces as $item) { ?>
+                    <li><a class="nav-link <?= $esActivo($item['pg']) ? 'is-active' : '' ?>" href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>"><i class="<?= htmlspecialchars($item['icono'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i><?= htmlspecialchars($item['etiqueta'], ENT_QUOTES, 'UTF-8') ?></a></li>
+                <?php } ?>
+                <?php foreach ($navGrupos as $grupo) { ?>
+                    <li>
+                        <details <?= in_array($currentPg, $grupo['pages'], true) ? 'open' : '' ?>>
+                            <summary class="mobile-caption"><?= htmlspecialchars($grupo['etiqueta'], ENT_QUOTES, 'UTF-8') ?></summary>
+                            <?php foreach ($grupo['items'] as $item) { ?>
+                                <a class="nav-link <?= $esActivo($item['pg']) ? 'is-active' : '' ?>" href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>"><i class="<?= htmlspecialchars($item['icono'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i><?= htmlspecialchars($item['etiqueta'], ENT_QUOTES, 'UTF-8') ?></a>
+                            <?php } ?>
+                        </details>
+                    </li>
+                <?php } ?>
                 <li>
-                    <details <?= $currentPg === 4 ? 'open' : '' ?>>
+                    <details <?= ($currentPg === 4 || $currentPg === 7) ? 'open' : '' ?>>
                         <summary class="mobile-caption">Tu cuenta</summary>
-                        <a class="nav-link <?= $currentPg === 4 ? 'is-active' : '' ?>" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a>
+                        <?php if ($tieneAcceso(4)) { ?>
+                            <a class="nav-link <?= $currentPg === 4 ? 'is-active' : '' ?>" href="home.php?pg=4"><i class="fa-solid fa-id-card" aria-hidden="true"></i>Mi perfil</a>
+                        <?php } ?>
+                        <?php if ($tieneAcceso(7)) { ?>
+                            <a class="nav-link <?= $currentPg === 7 ? 'is-active' : '' ?>" href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>"><i class="fa-solid fa-address-card" aria-hidden="true"></i>Datos personales</a>
+                        <?php } ?>
                         <a class="nav-link text-danger" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>Cerrar sesión</a>
                     </details>
                 </li>
