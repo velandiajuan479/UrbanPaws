@@ -13,3 +13,5 @@
 .up-autocomplete__empty { padding: .55rem .7rem; color: var(--text-muted); }
 .mascota-action-btn { width: 3rem; height: 3rem; min-height: 3rem; padding: 0; }
 .mascota-action-btn .mascota-action-icon { font-size: 1.5rem; }
+.route-map-placeholder { min-width: 0; }
+.route-map-frame { width: 100%; min-height: 260px; border: 0; border-radius: 12px; }

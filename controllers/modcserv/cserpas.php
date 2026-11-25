@@ -21,6 +21,11 @@ if ($idrut > 0) {
     $dtRut = $mserrut->getOne();
 }
 
+if (!$dtRut) {
+    servFlash('info', 'Selecciona una ruta disponible para agendar un paseo.');
+    servRedirect(11);
+}
+
 $mcofval = new mCofVal();
 $mcofval->setIddom(5);
 $datServ = $mcofval->getByDom();
@@ -128,7 +133,7 @@ if ($ope === 'save') {
 
 if (!$form) {
     $form = [
-        'fecha' => date('Y-m-d', strtotime('+1 day')),
+        'fecha' => date('Y-m-d', strtotime('+2 days')),
         'hora_inicio' => $dtRut ? $dtRut['horaini_fmt'] : '',
         'hora_fin' => $dtRut ? $dtRut['horafin_fmt'] : '',
         'idmasc' => '',

@@ -23,7 +23,8 @@ $ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : null;
 $idrut = isset($_REQUEST['idrut']) ? (int) $_REQUEST['idrut'] : 0;
 
 if (!$puedeGestionar) {
-    $errorRuta = 'Tu usuario no tiene perfil Paseador ni Admin para gestionar rutas.';
+    servFlash('danger', 'Tu usuario no tiene perfil Paseador ni Admin para gestionar rutas.');
+    servRedirect(11);
 }
 
 if ($puedeGestionar && $ope === 'save') {

@@ -8,6 +8,8 @@ if (!isset($_SESSION['iduser'])) {
     exit;
 }
 
+ob_start();
+
 $pg = isset($_GET['pg']) ? (int) $_GET['pg'] : 1;
 $currentPg = $pg;
 require_once __DIR__ . '/models/conexion.php';
@@ -77,7 +79,6 @@ $pageViews = [
     elseif ($pg==13) include './views/modvserv/vserpas.php'; // V-paseo
     elseif ($pg==14) include './views/modvserv/vserserps.php'; // serv paseador 
     elseif ($pg==15) include './views/modvserv/vsersercl.php'; // serv cliente 
-    elseif ($pg==01) include './views/modvserv//vserrepser.php'; // ?
     //Modulo factura
     elseif ($pg==17) include 'views/vfacfac.php';
     elseif ($pg==18) include 'views/vfatdatfac.php';
@@ -104,3 +105,4 @@ $pageViews = [
   <script src="js/mytable.js"></script>
 </body>
 </html>
+<?php ob_end_flush(); ?>

@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../../controllers/modcserv/cserpas.php'; ?>
 
 <?php
-$fechaVal = $form['fecha'] ?? date('Y-m-d', strtotime('+1 day'));
+$fechaVal = $form['fecha'] ?? date('Y-m-d', strtotime('+2 days'));
 $horaInicioVal = $form['hora_inicio'] ?? ($dtRut['horaini_fmt'] ?? '');
 $horaFinVal = $form['hora_fin'] ?? ($dtRut['horafin_fmt'] ?? '');
 $idmascVal = $form['idmasc'] ?? '';
@@ -10,7 +10,7 @@ $descservVal = $form['descserv'] ?? '';
 $mapTitulo = 'Ubicación de la ruta';
 $mapDireccion = $dtRut['direccion_rut'] ?? '';
 $mapReferencia = $dtRut['referencia_rut'] ?? '';
-$minFecha = date('Y-m-d', strtotime('+1 day'));
+$minFecha = date('Y-m-d', strtotime('+2 days'));
 ?>
 
 <section class="container mb-5">

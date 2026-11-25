@@ -4,8 +4,11 @@ $displayName = trim((string) ($_SESSION['prinom'] ?? $_SESSION['nomusr'] ?? ''))
 $displayName = $displayName !== '' ? $displayName : 'Mi cuenta';
 $displayRole = trim((string) ($_SESSION['nomperf'] ?? ''));
 $initial = function_exists('mb_substr') ? mb_strtoupper(mb_substr($displayName, 0, 1, 'UTF-8'), 'UTF-8') : strtoupper(substr($displayName, 0, 1));
+$puedeGestionarRutas = $displayRole !== ''
+    && (stripos($displayRole, 'Paseador') !== false || stripos($displayRole, 'Admin') !== false);
+$puedeVerSolicitudes = $puedeGestionarRutas;
 $navGroups = [
-    'servicios' => [11, 13, 14],
+    'servicios' => [11, 12, 13, 14, 15],
     'facturacion' => [17, 18, 19, 20],
     'gestion' => [2, 3, 4, 5, 6, 7, 8, 23, 24, 25, 26, 27],
 ];
@@ -43,8 +46,14 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
                     <ul class="dropdown-menu" id="servicios-menu">
                         <li><span class="dropdown-header">Paseos y cuidado</span></li>
                         <li><a class="dropdown-item" href="home.php?pg=11"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>Rutas disponibles</a></li>
+                        <?php if ($puedeGestionarRutas) { ?>
+                            <li><a class="dropdown-item" href="home.php?pg=12"><i class="fa-solid fa-list" aria-hidden="true"></i>Listado de rutas</a></li>
+                        <?php } ?>
                         <li><a class="dropdown-item" href="home.php?pg=13"><i class="fa-solid fa-person-walking" aria-hidden="true"></i>Agendar paseo</a></li>
-                        <li><a class="dropdown-item" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a></li>
+                        <?php if ($puedeVerSolicitudes) { ?>
+                            <li><a class="dropdown-item" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a></li>
+                        <?php } ?>
+                        <li><a class="dropdown-item" href="home.php?pg=15"><i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>Servicios</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -114,9 +123,15 @@ $managementActive = in_array($currentPg, $navGroups['gestion'], true);
                 <li>
                     <details <?= ($serviceActive || $billingActive) ? 'open' : '' ?>>
                         <summary class="mobile-caption">Servicios y facturación</summary>
-                        <a class="nav-link <?= $serviceActive ? 'is-active' : '' ?>" href="home.php?pg=11"><i class="fa-solid fa-route" aria-hidden="true"></i>Rutas disponibles</a>
+                        <a class="nav-link <?= $currentPg === 11 ? 'is-active' : '' ?>" href="home.php?pg=11"><i class="fa-solid fa-route" aria-hidden="true"></i>Rutas disponibles</a>
+                        <?php if ($puedeGestionarRutas) { ?>
+                            <a class="nav-link <?= $currentPg === 12 ? 'is-active' : '' ?>" href="home.php?pg=12"><i class="fa-solid fa-list" aria-hidden="true"></i>Listado de rutas</a>
+                        <?php } ?>
                         <a class="nav-link <?= $currentPg === 13 ? 'is-active' : '' ?>" href="home.php?pg=13"><i class="fa-solid fa-person-walking" aria-hidden="true"></i>Agendar paseo</a>
-                        <a class="nav-link <?= $currentPg === 14 ? 'is-active' : '' ?>" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a>
+                        <?php if ($puedeVerSolicitudes) { ?>
+                            <a class="nav-link <?= $currentPg === 14 ? 'is-active' : '' ?>" href="home.php?pg=14"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Solicitudes de paseo</a>
+                        <?php } ?>
+                        <a class="nav-link <?= $currentPg === 15 ? 'is-active' : '' ?>" href="home.php?pg=15"><i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>Servicios</a>
                         <a class="nav-link <?= $billingActive ? 'is-active' : '' ?>" href="home.php?pg=19"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i>Facturación</a>
                     </details>
                 </li>
