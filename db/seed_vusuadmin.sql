@@ -30,8 +30,8 @@ INSERT IGNORE INTO pagina (idpag, titpag, nompag, mostpag, icopag, rutpag, ordpa
 (18, 'Detalle de factura',            'Detalle fact.','1', 'fa-solid fa-list',              'home.php?pg=18', 180, 'Vista vfatdatfac.php'),
 (19, 'Facturas',                      'Facturas',     '1', 'fa-solid fa-file-invoice',      'home.php?pg=19', 190, 'Vista vfaclisfac.php'),
 (20, 'Reporte de facturas',           'Rep. fact.',   '1', 'fa-solid fa-chart-column',      'home.php?pg=20', 200, 'Vista vfacrepfac.php'),
-(21, 'PQRSF',                         'PQRSF',        '0', 'fa-solid fa-message',           'home.php?pg=21', 210, 'Vista en preparacion'),
-(22, 'Solicitudes PQRSF',             'Solic. PQRSF', '0', 'fa-solid fa-inbox',             'home.php?pg=22', 220, 'Vista en preparacion'),
+(21, 'PQRSF',                         'PQRSF',        '1', 'fa-solid fa-message',           'home.php?pg=21', 210, 'Vista modvpqr/vpqr.php (radicacion cliente y paseador)'),
+(22, 'PQRFS',                         'PQRFS',        '1', 'fa-solid fa-inbox',             'home.php?pg=22', 220, 'Vista modvpqr/vpqradm.php (listado admin)'),
 (23, 'Paginas',                       'Paginas',      '1', 'fa-solid fa-window-maximize',   'home.php?pg=23', 230, 'Vista vcofpag.php (CRUD paginas)'),
 (24, 'Modulos',                       'Modulos',      '1', 'fa-solid fa-cubes',             'home.php?pg=24', 240, 'Vista vcofmod.php'),
 (25, 'Configuracion del sistema',     'Config.',      '1', 'fa-solid fa-gear',              'home.php?pg=25', 250, 'Vista vcofcof.php'),
@@ -41,6 +41,9 @@ INSERT IGNORE INTO pagina (idpag, titpag, nompag, mostpag, icopag, rutpag, ordpa
 -- Asegura que las paginas del modulo Servicios ya implementadas queden visibles
 UPDATE pagina SET mostpag = '1', descpag = 'Vista vserrutps.php' WHERE idpag = 12;
 UPDATE pagina SET mostpag = '1', descpag = 'Vista vsersercl.php' WHERE idpag = 15;
+
+UPDATE pagina SET titpag = 'PQRSF', nompag = 'PQRSF', mostpag = '1', icopag = 'fa-solid fa-message', rutpag = 'home.php?pg=21', ordpag = 210, descpag = 'Vista modvpqr/vpqr.php (radicacion cliente y paseador)' WHERE idpag = 21;
+UPDATE pagina SET titpag = 'PQRFS', nompag = 'PQRFS', mostpag = '1', icopag = 'fa-solid fa-inbox', rutpag = 'home.php?pg=22', ordpag = 220, descpag = 'Vista modvpqr/vpqradm.php (listado admin)' WHERE idpag = 22;
 
 -- ---------------------------------------------------------------
 -- 2) Asignacion por defecto de paginas por perfil (pagxper)

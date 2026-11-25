@@ -16,6 +16,10 @@
     <div class="alert alert-danger" role="alert"><?= htmlspecialchars($msgErr, ENT_QUOTES, 'UTF-8') ?></div>
 <?php } ?>
 
+<a href="home.php?pg=22" class="btn btn-outline-primary mb-3">
+    <i class="fa-solid fa-inbox" aria-hidden="true"></i> Abrir PQRFS
+</a>
+
 <!-- ============== FORMULARIO USUARIO ============== -->
 <div class="card card-form p-4">
     <h4 class="section-title">
