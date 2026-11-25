@@ -6,6 +6,11 @@ $displayRole = trim((string) ($_SESSION['nomperf'] ?? ''));
 if ($displayRole === '' && function_exists('up_permisos')) {
     $displayRole = up_permisos()->getNombreRol();
 }
+$tieneAcceso = static function ($pg) {
+    return function_exists('up_puede_ver') && up_puede_ver($pg);
+};
+$navEnlaces = $navEnlaces ?? [];
+$navGrupos = $navGrupos ?? [];
 $initial = function_exists('mb_substr') ? mb_strtoupper(mb_substr($displayName, 0, 1, 'UTF-8'), 'UTF-8') : strtoupper(substr($displayName, 0, 1));
 $puedeGestionarRutas = $displayRole !== ''
     && (stripos($displayRole, 'Paseador') !== false || stripos($displayRole, 'Admin') !== false);
@@ -20,7 +25,7 @@ $serviceActive = in_array($currentPg, $navGroups['servicios'], true);
 $billingActive = in_array($currentPg, $navGroups['facturacion'], true);
 $managementActive = in_array($currentPg, $navGroups['gestion'], true);
 $pqrsActive = in_array($currentPg, $navGroups['pqrs'], true);
-$nomPerfHeader = strtolower((string) ($_SESSION['nomperf'] ?? ''));
+$nomPerfHeader = strtolower($displayRole);
 $esAdminHeader = strpos($nomPerfHeader, 'admin') !== false;
 $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nomPerfHeader, 'paseador') !== false;
 ?>
@@ -108,6 +113,7 @@ $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nom
                         <li><a class="dropdown-item" href="home.php?pg=23"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Páginas</a></li>
                         <li><a class="dropdown-item" href="home.php?pg=24"><i class="fa-solid fa-cubes" aria-hidden="true"></i>Módulos</a></li>
                         <li><a class="dropdown-item" href="home.php?pg=25"><i class="fa-solid fa-gear" aria-hidden="true"></i>Configuración</a></li>
+                        <li><a class="dropdown-item" href="home.php?pg=25&amp;seccion=razas"><i class="fa-solid fa-paw" aria-hidden="true"></i>Razas de mascotas</a></li>
                         <li><a class="dropdown-item" href="home.php?pg=26"><i class="fa-solid fa-tags" aria-hidden="true"></i>Dominios</a></li>
                         <li><a class="dropdown-item" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a></li>
                     </ul>
@@ -207,6 +213,7 @@ $puedeRadicarHeader = strpos($nomPerfHeader, 'cliente') !== false || strpos($nom
                         <a class="nav-link <?= $currentPg === 23 ? 'is-active' : '' ?>" href="home.php?pg=23"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Páginas</a>
                         <a class="nav-link <?= $currentPg === 24 ? 'is-active' : '' ?>" href="home.php?pg=24"><i class="fa-solid fa-cubes" aria-hidden="true"></i>Módulos</a>
                         <a class="nav-link <?= $currentPg === 25 ? 'is-active' : '' ?>" href="home.php?pg=25"><i class="fa-solid fa-gear" aria-hidden="true"></i>Configuración</a>
+                        <a class="nav-link <?= $currentPg === 25 && $seccionConfig ? 'is-active' : '' ?>" href="home.php?pg=25&amp;seccion=razas"><i class="fa-solid fa-paw" aria-hidden="true"></i>Razas de mascotas</a>
                         <a class="nav-link <?= $currentPg === 26 ? 'is-active' : '' ?>" href="home.php?pg=26"><i class="fa-solid fa-tags" aria-hidden="true"></i>Dominios</a>
                         <a class="nav-link <?= $currentPg === 27 ? 'is-active' : '' ?>" href="home.php?pg=27"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Valores</a>
                     </details>

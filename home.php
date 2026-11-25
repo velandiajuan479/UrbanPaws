@@ -11,6 +11,7 @@ if (!isset($_SESSION['iduser'])) {
 ob_start();
 
 $pg = isset($_GET['pg']) ? (int) $_GET['pg'] : 1;
+$seccionConfig = isset($_GET['seccion']) && $_GET['seccion'] === 'razas';
 $currentPg = $pg;
 require_once __DIR__ . '/models/conexion.php';
 require_once __DIR__ . '/models/musuperm.php';
@@ -26,7 +27,7 @@ $pageTitles = [
     26 => 'Dominios', 27 => 'Valores', 28 => 'Registro', 29 => 'Acceso',
     30 => 'Actualizar contraseña', 31 => 'Recuperar contraseña',
 ];
-$documentTitle = 'UrbanPaws — ' . ($pageTitles[$pg] ?? 'Panel');
+$documentTitle = 'UrbanPaws — ' . ($seccionConfig && $pg === 25 ? 'Razas de mascotas' : ($pageTitles[$pg] ?? 'Panel'));
 $pageViews = [
     1 => 'vusucli.php', 2 => 'vusuadmin.php', 3 => 'vusupas.php', 4 => 'vusupef.php',
     5 => 'vusulisusu.php', 6 => 'vusuval.php', 7 => 'vusudatper.php', 8 => 'vusuubi.php',
@@ -46,6 +47,9 @@ $permisosPagina = up_permisos();
 $paginaPermitida = $permisosPagina->puedeVer($pg);
 $viewKey = $pg === 1 ? $permisosPagina->dashboard() : $pg;
 $viewArchivo = isset($pageViews[$viewKey]) ? __DIR__ . '/views/' . $pageViews[$viewKey] : NULL;
+if ($pg === 25 && $seccionConfig) {
+    $viewArchivo = __DIR__ . '/views/vcofraz.php';
+}
 $viewValida = $viewArchivo !== NULL && is_file($viewArchivo);
 ?>
 <!DOCTYPE html>
@@ -84,10 +88,6 @@ $viewValida = $viewArchivo !== NULL && is_file($viewArchivo);
     <?php endif; ?>
 
     <?php include __DIR__ . '/views/footer.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
     <script src="js/mytable.js"></script>
     <script src="js/card-filters.js"></script>
     <script src="js/autocomplete.js"></script>
