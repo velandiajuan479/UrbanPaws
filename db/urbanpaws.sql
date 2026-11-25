@@ -77,6 +77,12 @@ CREATE TABLE IF NOT EXISTS userxper(
     FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
+CREATE TABLE IF NOT EXISTS raza_mascota(
+    idraz BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
+    nomraz VARCHAR(255) NOT NULL UNIQUE,
+    actraz TINYINT(1) NOT NULL DEFAULT 1
+);
+
 CREATE TABLE IF NOT EXISTS mascotas(
     idmasc BIGINT(30) PRIMARY KEY AUTO_INCREMENT,
     nommasc VARCHAR(50),
@@ -89,7 +95,9 @@ CREATE TABLE IF NOT EXISTS mascotas(
     iduser BIGINT(10),
     sizemasc varchar(20) DEFAULT NULL,
     actmasc TINYINT(1) NOT NULL DEFAULT 1,
-    FOREIGN KEY (iduser) REFERENCES usuario(iduser)
+    idraz BIGINT(11) NULL,
+    FOREIGN KEY (iduser) REFERENCES usuario(iduser),
+    FOREIGN KEY (idraz) REFERENCES raza_mascota(idraz)
 );
 
 CREATE TABLE IF NOT EXISTS duenomasc(
@@ -457,6 +465,11 @@ INSERT IGNORE INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VA
 (1036, 'Aceptado',  '', '1', 1),
 (1037, 'Rechazado', '', '1', 1);
 
+INSERT IGNORE INTO raza_mascota (idraz, nomraz, actraz)
+SELECT idval, codval, CASE WHEN estaval = '1' THEN 1 ELSE 0 END
+FROM valor
+WHERE iddom = 3;
+
 INSERT IGNORE INTO `perfil` (`idperf`, `nomperf`, `estper`) VALUES
 (1, 'Paseador', NULL),
 (2, 'Cliente', NULL),
@@ -557,9 +570,10 @@ INSERT INTO userxper (iduser, idperf)
 SELECT u.iduser, 2 FROM usuario u WHERE u.docu = 900000003
   AND NOT EXISTS (SELECT 1 FROM userxper ux WHERE ux.iduser = u.iduser AND ux.idperf = 2);
 
-INSERT INTO mascotas (nommasc, sexmasc, razamasc, descmasc, enfermasc, iduser)
-SELECT 'Luna', 'H', 'Mestizo', 'Mascota de prueba para validar el modulo servicios', '', u.iduser
+INSERT INTO mascotas (nommasc, sexmasc, razamasc, idraz, descmasc, enfermasc, iduser)
+SELECT 'Luna', 'H', r.nomraz, r.idraz, 'Mascota de prueba para validar el modulo servicios', '', u.iduser
 FROM usuario u
+INNER JOIN raza_mascota r ON r.nomraz = 'Mestizo'
 WHERE u.docu = 900000003
   AND NOT EXISTS (SELECT 1 FROM mascotas m WHERE m.iduser = u.iduser AND m.nommasc = 'Luna');
 

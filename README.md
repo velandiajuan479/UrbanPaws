@@ -39,6 +39,10 @@ UrbanPaws es una plataforma MVC (Modelo-Vista-Controlador) desarrollada en PHP q
    ```bash
    mysql -u usuario -p < db/urbanpaws.sql
    ```
+   Para migrar una instalación existente al catálogo dedicado de razas sin borrar sus datos:
+   ```bash
+   mysql -u usuario -p < db/migration_razas_mascotas.sql
+   ```
 4. Configura las credenciales de la base de datos en `models/conexion.php` y `models/config.php`
 5. Accede a la aplicación desde tu navegador
 
