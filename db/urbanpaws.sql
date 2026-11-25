@@ -1,25 +1,25 @@
 CREATE DATABASE IF NOT EXISTS UrbanPaws;
 USE UrbanPaws;
 
-CREATE TABLE ubicacion(
+CREATE TABLE IF NOT EXISTS ubicacion(
     idubi BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nomubi VARCHAR(35),
     depaubi VARCHAR(20)
 );
 
-CREATE TABLE dominio(
+CREATE TABLE IF NOT EXISTS dominio(
     iddom BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
     nomdom VARCHAR(70),
     actdom VARCHAR(3)
 );
 
-CREATE TABLE perfil(
+CREATE TABLE IF NOT EXISTS perfil(
     idperf BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nomperf VARCHAR(50),
     estper INT(3)
 );
 
-CREATE TABLE pagina(
+CREATE TABLE IF NOT EXISTS pagina(
     idpag INT(3) PRIMARY KEY AUTO_INCREMENT,
     titpag VARCHAR(100),
     nompag VARCHAR(25),
@@ -30,7 +30,7 @@ CREATE TABLE pagina(
     descpag TEXT
 );
 
-CREATE TABLE usuario(
+CREATE TABLE IF NOT EXISTS usuario(
     iduser BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     docu BIGINT(12) UNIQUE NOT NULL,
     prinom VARCHAR(100),
@@ -45,10 +45,16 @@ CREATE TABLE usuario(
     estusr TINYINT(1),
     ECMusr TINYINT(1),
     idubi BIGINT(10),
+    advusr INT(11) NOT NULL DEFAULT 0,
+    multausr DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    vetousr TINYINT(1) NOT NULL DEFAULT 0,
+    sancionusr VARCHAR(20) NULL,
+    fecsancion DATETIME NULL,
+    obssancion VARCHAR(255) NULL,
     FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
 );
 
-CREATE TABLE antecedente(
+CREATE TABLE IF NOT EXISTS antecedente(
     idante BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     tipante VARCHAR(50),
     desante TEXT,
@@ -57,21 +63,21 @@ CREATE TABLE antecedente(
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE userxante(
+CREATE TABLE IF NOT EXISTS userxante(
     iduser BIGINT(10),
     idante BIGINT(10),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser),
     FOREIGN KEY (idante) REFERENCES antecedente(idante)
 );
 
-CREATE TABLE userxper(
+CREATE TABLE IF NOT EXISTS userxper(
     iduser BIGINT(10),
     idperf BIGINT(10),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser),
     FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
-CREATE TABLE mascotas(
+CREATE TABLE IF NOT EXISTS mascotas(
     idmasc BIGINT(30) PRIMARY KEY AUTO_INCREMENT,
     nommasc VARCHAR(50),
     sexmasc VARCHAR(10),
@@ -86,7 +92,7 @@ CREATE TABLE mascotas(
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE duenomasc(
+CREATE TABLE IF NOT EXISTS duenomasc(
     iddueno BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     iduser BIGINT(10),
     idmasc BIGINT(30),
@@ -94,21 +100,24 @@ CREATE TABLE duenomasc(
     FOREIGN KEY (idmasc) REFERENCES mascotas(idmasc)
 );
 
-CREATE TABLE ruta(
+CREATE TABLE IF NOT EXISTS ruta(
     idrut INT(6) PRIMARY KEY AUTO_INCREMENT,
     nomrut VARCHAR(50),
     distrut DECIMAL(7,2),
     iduser BIGINT(10),
+    direccion_rut VARCHAR(255) NULL,
+    referencia_rut VARCHAR(255) NULL,
     idubi BIGINT(10) NULL,
-    estarut TINYINT(1) NOT NULL DEFAULT 1,
-    horaini DATETIME NULL,
-    horafin DATETIME NULL,
-    precioini DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    FOREIGN KEY (iduser) REFERENCES usuario(iduser),
-    FOREIGN KEY (idubi) REFERENCES ubicacion(idubi)
+    estarut BIGINT(11) NOT NULL DEFAULT 1,
+    horaini TIME NULL,
+    horafin TIME NULL,
+    precioini DECIMAL(10,2) NOT NULL DEFAULT 0,
+    KEY idx_ruta_ubi (idubi),
+    KEY idx_ruta_user_est (iduser, estarut),
+    FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE paseo(
+CREATE TABLE IF NOT EXISTS paseo(
     idpas BIGINT(5) PRIMARY KEY AUTO_INCREMENT,
     estapas VARCHAR(20),
     servtipo VARCHAR(100) NOT NULL,
@@ -118,12 +127,22 @@ CREATE TABLE paseo(
     idrut INT(6),
     iduser BIGINT(10),
     descserv TEXT,
+    idpaseador BIGINT(10) NULL,
+    precio_pactado DECIMAL(10,2) NULL,
+    direccion_pactada VARCHAR(255) NULL,
+    referencia_pactada VARCHAR(255) NULL,
+    fecha_cancelacion DATETIME NULL,
+    motivo_cancelacion TEXT NULL,
+    cancelado_por BIGINT(10) NULL,
+    cancelacion_tardia TINYINT(1) NOT NULL DEFAULT 0,
+    KEY idx_paseo_paseador_fecha (idpaseador, inicio_programado, fin_programado),
+    KEY idx_paseo_cliente_estado (iduser, estapas),
     FOREIGN KEY (idmasc) REFERENCES mascotas(idmasc),
     FOREIGN KEY (idrut) REFERENCES ruta(idrut),
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE servicio(
+CREATE TABLE IF NOT EXISTS servicio(
     idserv BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     idpas BIGINT(10),
     idrut INT(6),
@@ -134,7 +153,7 @@ CREATE TABLE servicio(
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE detallefac(
+CREATE TABLE IF NOT EXISTS detallefac(
     iddetfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     timpfin TIME,
     subtotal DECIMAL(6,2),
@@ -146,7 +165,7 @@ CREATE TABLE detallefac(
     FOREIGN KEY (idmasc) REFERENCES mascotas(idmasc)
 );
 
-CREATE TABLE factura(
+CREATE TABLE IF NOT EXISTS factura(
     idfac BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     fechfac DATE,
     preciolin DECIMAL(6,2),
@@ -158,7 +177,7 @@ CREATE TABLE factura(
     FOREIGN KEY (iddetfac) REFERENCES detallefac(iddetfac)
 );
 
-CREATE TABLE pqrsf (
+CREATE TABLE IF NOT EXISTS pqrsf (
     idpqr BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     tippqr VARCHAR(50) NOT NULL,
     descpqr TEXT NOT NULL,
@@ -167,7 +186,7 @@ CREATE TABLE pqrsf (
     FOREIGN KEY (iduser) REFERENCES usuario(iduser)
 );
 
-CREATE TABLE config(
+CREATE TABLE IF NOT EXISTS config(
     idconf BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nomcon VARCHAR(25),
     logocon VARCHAR(255),
@@ -176,7 +195,7 @@ CREATE TABLE config(
     estacon INT(3)
 );
 
-CREATE TABLE modulo(
+CREATE TABLE IF NOT EXISTS modulo(
     idmod   BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nommod  VARCHAR(50),
     icomod VARCHAR(50) NULL,
@@ -185,14 +204,14 @@ CREATE TABLE modulo(
     idperf BIGINT(10)
 );
 
-CREATE TABLE pagxper(
+CREATE TABLE IF NOT EXISTS pagxper(
     idpag INT(3),
     idperf BIGINT(10),
     FOREIGN KEY (idpag) REFERENCES pagina(idpag),
     FOREIGN KEY (idperf) REFERENCES perfil(idperf)
 );
 
-CREATE TABLE valor(
+CREATE TABLE IF NOT EXISTS valor(
     idval  BIGINT(11) PRIMARY KEY AUTO_INCREMENT,
     codval VARCHAR(255),
     paraval VARCHAR(255),
@@ -201,7 +220,7 @@ CREATE TABLE valor(
     FOREIGN KEY (iddom) REFERENCES dominio(iddom)
 );
 
-CREATE TABLE calificacion (
+CREATE TABLE IF NOT EXISTS calificacion (
     idcal BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     puntuacion TINYINT(1) NOT NULL,
     comentario TEXT NULL,
@@ -213,14 +232,14 @@ CREATE TABLE calificacion (
     FOREIGN KEY (idpaseador) REFERENCES usuario(iduser)
 );
 
-INSERT INTO `dominio` (`iddom`, `nomdom`, `actdom`) VALUES
+INSERT IGNORE INTO `dominio` (`iddom`, `nomdom`, `actdom`) VALUES
 (1, 'Estado', '1'),
 (2, 'Iconos', '1'),
 (3, 'Razas', '1'),
 (4, 'Tamaño Mascota', '1'),
 (5, 'Tipo de servicio', '1');
 
-INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
+INSERT IGNORE INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 -- ESTADOS
 (1, 'Activo',     '', '1', 1),
 (2, 'Inactivo',   '', '1', 1),
@@ -432,9 +451,120 @@ INSERT INTO `valor` (`idval`, `codval`, `paraval`, `estaval`, `iddom`) VALUES
 (1032, 'fa- fa-rectangle-list', '', '1', 2),
 (1033, 'fa fa-server', '', '1', 2),
 (1034, 'fa fa-user-group', '', '1', 2),
-(1035, 'fa fa-user-gear', '', '1', 2);
+(1035, 'fa fa-user-gear', '', '1', 2),
 
-INSERT INTO `perfil` (`idperf`, `nomperf`, `estper`) VALUES
+-- ESTADOS DE PASEOS / SOLICITUDES
+(1036, 'Aceptado',  '', '1', 1),
+(1037, 'Rechazado', '', '1', 1);
+
+INSERT IGNORE INTO `perfil` (`idperf`, `nomperf`, `estper`) VALUES
 (1, 'Paseador', NULL),
 (2, 'Cliente', NULL),
 (3, 'Admin', NULL);
+
+INSERT IGNORE INTO pagina (idpag, titpag, nompag, mostpag, icopag, rutpag, ordpag, descpag) VALUES
+(1,  'Inicio',                        'Inicio',       '1', 'fa-solid fa-house',             'home.php?pg=1',  10,  'Vista vusucli.php (dashboard)'),
+(2,  'Administradores',               'Admin',        '1', 'fa-solid fa-user-shield',       'home.php?pg=2',  20,  'Vista vusuadmin.php (gestion de usuarios, roles y paginas)'),
+(3,  'Paseador',                      'Paseador',     '1', 'fa-solid fa-person-walking',    'home.php?pg=3',  30,  'Vista vusupas.php (dashboard paseador)'),
+(4,  'Mi perfil',                     'Mi perfil',    '1', 'fa-solid fa-id-card',           'home.php?pg=4',  40,  'Vista vusupef.php'),
+(5,  'Usuarios',                      'Usuarios',     '1', 'fa-solid fa-users',             'home.php?pg=5',  50,  'Vista vusulisusu.php (listado de usuarios)'),
+(6,  'Validacion de paseadores',      'Validacion',   '1', 'fa-solid fa-user-check',        'home.php?pg=6',  60,  'Vista vusuval.php (aprobar/rechazar paseadores)'),
+(7,  'Datos personales',              'Datos per.',   '1', 'fa-solid fa-address-card',      'home.php?pg=7',  70,  'Vista vusudatper.php'),
+(8,  'Ubicaciones',                   'Ubicaciones',  '1', 'fa-solid fa-location-dot',      'home.php?pg=8',  80,  'Vista vusuubi.php (CRUD ciudades)'),
+(9,  'Mascotas',                      'Mascotas',     '1', 'fa-solid fa-paw',               'home.php?pg=9',  90,  'Vista vmasmas.php'),
+(10, 'Duenos de mascotas',            'Duenos',       '0', 'fa-solid fa-users',             'home.php?pg=10', 100, 'Vista en preparacion'),
+(11, 'Rutas disponibles',             'Rutas',        '1', 'fa-solid fa-map-location-dot',  'home.php?pg=11', 110, 'Vista vserrutcl.php'),
+(12, 'Listado de rutas',              'List. rutas',  '1', 'fa-solid fa-list',              'home.php?pg=12', 120, 'Vista vserrutps.php'),
+(13, 'Agendar paseo',                 'Agendar',      '1', 'fa-solid fa-person-walking',    'home.php?pg=13', 130, 'Vista vserpas.php'),
+(14, 'Solicitudes de paseo',          'Solicitudes',  '1', 'fa-solid fa-list-check',        'home.php?pg=14', 140, 'Vista vserserps.php'),
+(15, 'Servicios',                     'Servicios',    '1', 'fa-solid fa-concierge-bell',    'home.php?pg=15', 150, 'Vista vsersercl.php'),
+(16, 'Reporte de servicios',          'Rep. serv.',   '0', 'fa-solid fa-chart-column',      'home.php?pg=16', 160, 'Vista en preparacion'),
+(17, 'Nueva factura',                 'Nueva fact.',  '1', 'fa-solid fa-file-circle-plus',  'home.php?pg=17', 170, 'Vista vfacfac.php'),
+(18, 'Detalle de factura',            'Detalle fact.','1', 'fa-solid fa-list',              'home.php?pg=18', 180, 'Vista vfatdatfac.php'),
+(19, 'Facturas',                      'Facturas',     '1', 'fa-solid fa-file-invoice',      'home.php?pg=19', 190, 'Vista vfaclisfac.php'),
+(20, 'Reporte de facturas',           'Rep. fact.',   '1', 'fa-solid fa-chart-column',      'home.php?pg=20', 200, 'Vista vfacrepfac.php'),
+(21, 'PQRSF',                         'PQRSF',        '0', 'fa-solid fa-message',           'home.php?pg=21', 210, 'Vista en preparacion'),
+(22, 'Solicitudes PQRSF',             'Solic. PQRSF', '0', 'fa-solid fa-inbox',             'home.php?pg=22', 220, 'Vista en preparacion'),
+(23, 'Paginas',                       'Paginas',      '1', 'fa-solid fa-window-maximize',   'home.php?pg=23', 230, 'Vista vcofpag.php (CRUD paginas)'),
+(24, 'Modulos',                       'Modulos',      '1', 'fa-solid fa-cubes',             'home.php?pg=24', 240, 'Vista vcofmod.php'),
+(25, 'Configuracion del sistema',     'Config.',      '1', 'fa-solid fa-gear',              'home.php?pg=25', 250, 'Vista vcofcof.php'),
+(26, 'Dominios',                      'Dominios',     '1', 'fa-solid fa-tags',              'home.php?pg=26', 260, 'Vista vcofdom.php'),
+(27, 'Valores',                       'Valores',      '1', 'fa-solid fa-list-ol',           'home.php?pg=27', 270, 'Vista vcofval.php');
+
+UPDATE pagina SET mostpag = '1', descpag = 'Vista vserrutps.php' WHERE idpag = 12;
+UPDATE pagina SET mostpag = '1', descpag = 'Vista vsersercl.php' WHERE idpag = 15;
+
+INSERT INTO pagxper (idpag, idperf)
+SELECT p.idpag, 3
+FROM pagina p
+WHERE NOT EXISTS (
+    SELECT 1 FROM pagxper px WHERE px.idpag = p.idpag AND px.idperf = 3
+);
+
+INSERT INTO pagxper (idpag, idperf)
+SELECT p.idpag, 2
+FROM pagina p
+WHERE p.idpag IN (1,4,7,9,11,13,14,15,17,18,19,20)
+  AND NOT EXISTS (
+    SELECT 1 FROM pagxper px WHERE px.idpag = p.idpag AND px.idperf = 2
+);
+
+INSERT INTO pagxper (idpag, idperf)
+SELECT p.idpag, 1
+FROM pagina p
+WHERE p.idpag IN (1,3,4,7,11,12,13,14,15,17,19)
+  AND NOT EXISTS (
+    SELECT 1 FROM pagxper px WHERE px.idpag = p.idpag AND px.idperf = 1
+);
+
+INSERT INTO userxper (iduser, idperf)
+SELECT u.iduser, 3
+FROM usuario u
+WHERE u.iduser = 1
+  AND NOT EXISTS (
+    SELECT 1 FROM userxper ux WHERE ux.iduser = u.iduser AND ux.idperf = 3
+);
+
+INSERT INTO ubicacion (idubi, nomubi, depaubi)
+SELECT 9001, 'Chapinero', 'Bogota'
+WHERE NOT EXISTS (SELECT 1 FROM ubicacion WHERE idubi = 9001);
+
+INSERT INTO usuario (docu, prinom, seconom, priapel, segapel, emailu, teleu, foto, passusu, claveu, estusr, ECMusr, idubi)
+SELECT 900000001, 'Admin', '', 'UrbanPaws', '', 'admin.servicios@urbanpaws.local', '3000000001', NULL, '$2y$10$Z1NIUJnakGLbbDhqEf3Yfuf0Syn1GPird70o/vxQLTlLg/S2Pd9.S', NULL, 1, 1, 9001
+WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE docu = 900000001);
+
+INSERT INTO usuario (docu, prinom, seconom, priapel, segapel, emailu, teleu, foto, passusu, claveu, estusr, ECMusr, idubi)
+SELECT 900000002, 'Paseo', '', 'Prueba', '', 'paseador.servicios@urbanpaws.local', '3000000002', NULL, '$2y$10$PP8J2thbW065Xaw00yL4WOvrub81sgRQ6zYBzUk9wONJEV1RKTFLm', NULL, 1, 1, 9001
+WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE docu = 900000002);
+
+INSERT INTO usuario (docu, prinom, seconom, priapel, segapel, emailu, teleu, foto, passusu, claveu, estusr, ECMusr, idubi)
+SELECT 900000003, 'Cliente', '', 'Prueba', '', 'cliente.servicios@urbanpaws.local', '3000000003', NULL, '$2y$10$GDZjzKx/z3d2TFnRlb/DSe4.WvOxIzyQVlK7WmduDC6L0ZUv5I8JC', NULL, 1, 1, 9001
+WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE docu = 900000003);
+
+UPDATE usuario SET emailu = 'admin.servicios@urbanpaws.local', teleu = '3000000001', passusu = '$2y$10$Z1NIUJnakGLbbDhqEf3Yfuf0Syn1GPird70o/vxQLTlLg/S2Pd9.S', estusr = 1, ECMusr = 1, idubi = 9001 WHERE docu = 900000001;
+UPDATE usuario SET emailu = 'paseador.servicios@urbanpaws.local', teleu = '3000000002', passusu = '$2y$10$PP8J2thbW065Xaw00yL4WOvrub81sgRQ6zYBzUk9wONJEV1RKTFLm', estusr = 1, ECMusr = 1, idubi = 9001 WHERE docu = 900000002;
+UPDATE usuario SET emailu = 'cliente.servicios@urbanpaws.local', teleu = '3000000003', passusu = '$2y$10$GDZjzKx/z3d2TFnRlb/DSe4.WvOxIzyQVlK7WmduDC6L0ZUv5I8JC', estusr = 1, ECMusr = 1, idubi = 9001 WHERE docu = 900000003;
+
+INSERT INTO userxper (iduser, idperf)
+SELECT u.iduser, 3 FROM usuario u WHERE u.docu = 900000001
+  AND NOT EXISTS (SELECT 1 FROM userxper ux WHERE ux.iduser = u.iduser AND ux.idperf = 3);
+
+INSERT INTO userxper (iduser, idperf)
+SELECT u.iduser, 1 FROM usuario u WHERE u.docu = 900000002
+  AND NOT EXISTS (SELECT 1 FROM userxper ux WHERE ux.iduser = u.iduser AND ux.idperf = 1);
+
+INSERT INTO userxper (iduser, idperf)
+SELECT u.iduser, 2 FROM usuario u WHERE u.docu = 900000003
+  AND NOT EXISTS (SELECT 1 FROM userxper ux WHERE ux.iduser = u.iduser AND ux.idperf = 2);
+
+INSERT INTO mascotas (nommasc, sexmasc, razamasc, descmasc, enfermasc, iduser)
+SELECT 'Luna', 'H', 'Mestizo', 'Mascota de prueba para validar el modulo servicios', '', u.iduser
+FROM usuario u
+WHERE u.docu = 900000003
+  AND NOT EXISTS (SELECT 1 FROM mascotas m WHERE m.iduser = u.iduser AND m.nommasc = 'Luna');
+
+INSERT INTO ruta (nomrut, distrut, iduser, direccion_rut, referencia_rut, idubi, estarut, horaini, horafin, precioini)
+SELECT 'Ruta Chapinero', 3.50, u.iduser, 'Calle 85 # 12-34', 'Frente al parque', 9001, 1, '08:00:00', '10:00:00', 25000
+FROM usuario u
+WHERE u.docu = 900000002
+  AND NOT EXISTS (SELECT 1 FROM ruta r WHERE r.iduser = u.iduser AND r.nomrut = 'Ruta Chapinero');

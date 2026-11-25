@@ -8,6 +8,8 @@ if (!isset($_SESSION['iduser'])) {
     exit;
 }
 
+ob_start();
+
 $pg = isset($_GET['pg']) ? (int) $_GET['pg'] : 1;
 $currentPg = $pg;
 require_once __DIR__ . '/models/conexion.php';
@@ -19,7 +21,7 @@ $pageTitles = [
     11 => 'Rutas disponibles', 12 => 'Listado de rutas', 13 => 'Agendar paseo',
     14 => 'Solicitudes de paseo', 15 => 'Servicios', 16 => 'Reporte de servicios',
     17 => 'Nueva factura', 18 => 'Detalle de factura', 19 => 'Facturas',
-    20 => 'Reporte de facturas', 21 => 'PQRSF', 22 => 'Solicitudes PQRSF',
+    20 => 'Reporte de facturas', 21 => 'PQRSF', 22 => 'PQRFS',
     23 => 'Páginas', 24 => 'Módulos', 25 => 'Configuración del sistema',
     26 => 'Dominios', 27 => 'Valores', 28 => 'Registro', 29 => 'Acceso',
     30 => 'Actualizar contraseña', 31 => 'Recuperar contraseña',
@@ -28,8 +30,12 @@ $documentTitle = 'UrbanPaws — ' . ($pageTitles[$pg] ?? 'Panel');
 $pageViews = [
     1 => 'vusucli.php', 2 => 'vusuadmin.php', 3 => 'vusupas.php', 4 => 'vusupef.php',
     5 => 'vusulisusu.php', 6 => 'vusuval.php', 7 => 'vusudatper.php', 8 => 'vusuubi.php',
-    9 => 'vmasmas.php', 11 => 'vserrutcl.php', 13 => 'vserpas.php', 14 => 'vserserps.php',
+    9 => 'vmasmas.php',
+    11 => 'modvserv/vserrutcl.php', 12 => 'modvserv/vserrutps.php',
+    13 => 'modvserv/vserpas.php', 14 => 'modvserv/vserserps.php',
+    15 => 'modvserv/vsersercl.php',
     17 => 'vfacfac.php', 18 => 'vfatdatfac.php', 19 => 'vfaclisfac.php', 20 => 'vfacrepfac.php',
+    21 => 'modvpqr/vpqr.php', 22 => 'modvpqr/vpqradm.php',
     23 => 'vcofpag.php', 24 => 'vcofmod.php', 25 => 'vcofcof.php',
     26 => 'vcofdom.php', 27 => 'vcofval.php',
 ];
@@ -87,3 +93,4 @@ $viewValida = $viewArchivo !== NULL && is_file($viewArchivo);
     <script src="js/autocomplete.js"></script>
 </body>
 </html>
+<?php ob_end_flush(); ?>

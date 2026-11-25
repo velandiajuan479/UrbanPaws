@@ -21,22 +21,29 @@ INSERT IGNORE INTO pagina (idpag, titpag, nompag, mostpag, icopag, rutpag, ordpa
 (9,  'Mascotas',                      'Mascotas',     '1', 'fa-solid fa-paw',               'home.php?pg=9',  90,  'Vista vmasmas.php'),
 (10, 'Duenos de mascotas',            'Duenos',       '0', 'fa-solid fa-users',             'home.php?pg=10', 100, 'Vista en preparacion'),
 (11, 'Rutas disponibles',             'Rutas',        '1', 'fa-solid fa-map-location-dot',  'home.php?pg=11', 110, 'Vista vserrutcl.php'),
-(12, 'Listado de rutas',              'List. rutas',  '0', 'fa-solid fa-list',              'home.php?pg=12', 120, 'Vista en preparacion'),
+(12, 'Listado de rutas',              'List. rutas',  '1', 'fa-solid fa-list',              'home.php?pg=12', 120, 'Vista vserrutps.php'),
 (13, 'Agendar paseo',                 'Agendar',      '1', 'fa-solid fa-person-walking',    'home.php?pg=13', 130, 'Vista vserpas.php'),
 (14, 'Solicitudes de paseo',          'Solicitudes',  '1', 'fa-solid fa-list-check',        'home.php?pg=14', 140, 'Vista vserserps.php'),
-(15, 'Servicios',                     'Servicios',    '0', 'fa-solid fa-concierge-bell',    'home.php?pg=15', 150, 'Vista en preparacion'),
+(15, 'Servicios',                     'Servicios',    '1', 'fa-solid fa-concierge-bell',    'home.php?pg=15', 150, 'Vista vsersercl.php'),
 (16, 'Reporte de servicios',          'Rep. serv.',   '0', 'fa-solid fa-chart-column',      'home.php?pg=16', 160, 'Vista en preparacion'),
 (17, 'Nueva factura',                 'Nueva fact.',  '1', 'fa-solid fa-file-circle-plus',  'home.php?pg=17', 170, 'Vista vfacfac.php'),
 (18, 'Detalle de factura',            'Detalle fact.','1', 'fa-solid fa-list',              'home.php?pg=18', 180, 'Vista vfatdatfac.php'),
 (19, 'Facturas',                      'Facturas',     '1', 'fa-solid fa-file-invoice',      'home.php?pg=19', 190, 'Vista vfaclisfac.php'),
 (20, 'Reporte de facturas',           'Rep. fact.',   '1', 'fa-solid fa-chart-column',      'home.php?pg=20', 200, 'Vista vfacrepfac.php'),
-(21, 'PQRSF',                         'PQRSF',        '0', 'fa-solid fa-message',           'home.php?pg=21', 210, 'Vista en preparacion'),
-(22, 'Solicitudes PQRSF',             'Solic. PQRSF', '0', 'fa-solid fa-inbox',             'home.php?pg=22', 220, 'Vista en preparacion'),
+(21, 'PQRSF',                         'PQRSF',        '1', 'fa-solid fa-message',           'home.php?pg=21', 210, 'Vista modvpqr/vpqr.php (radicacion cliente y paseador)'),
+(22, 'PQRFS',                         'PQRFS',        '1', 'fa-solid fa-inbox',             'home.php?pg=22', 220, 'Vista modvpqr/vpqradm.php (listado admin)'),
 (23, 'Paginas',                       'Paginas',      '1', 'fa-solid fa-window-maximize',   'home.php?pg=23', 230, 'Vista vcofpag.php (CRUD paginas)'),
 (24, 'Modulos',                       'Modulos',      '1', 'fa-solid fa-cubes',             'home.php?pg=24', 240, 'Vista vcofmod.php'),
 (25, 'Configuracion del sistema',     'Config.',      '1', 'fa-solid fa-gear',              'home.php?pg=25', 250, 'Vista vcofcof.php'),
 (26, 'Dominios',                      'Dominios',     '1', 'fa-solid fa-tags',              'home.php?pg=26', 260, 'Vista vcofdom.php'),
 (27, 'Valores',                       'Valores',      '1', 'fa-solid fa-list-ol',           'home.php?pg=27', 270, 'Vista vcofval.php');
+
+-- Asegura que las paginas del modulo Servicios ya implementadas queden visibles
+UPDATE pagina SET mostpag = '1', descpag = 'Vista vserrutps.php' WHERE idpag = 12;
+UPDATE pagina SET mostpag = '1', descpag = 'Vista vsersercl.php' WHERE idpag = 15;
+
+UPDATE pagina SET titpag = 'PQRSF', nompag = 'PQRSF', mostpag = '1', icopag = 'fa-solid fa-message', rutpag = 'home.php?pg=21', ordpag = 210, descpag = 'Vista modvpqr/vpqr.php (radicacion cliente y paseador)' WHERE idpag = 21;
+UPDATE pagina SET titpag = 'PQRFS', nompag = 'PQRFS', mostpag = '1', icopag = 'fa-solid fa-inbox', rutpag = 'home.php?pg=22', ordpag = 220, descpag = 'Vista modvpqr/vpqradm.php (listado admin)' WHERE idpag = 22;
 
 -- ---------------------------------------------------------------
 -- 2) Asignacion por defecto de paginas por perfil (pagxper)
@@ -54,7 +61,7 @@ WHERE NOT EXISTS (
 INSERT INTO pagxper (idpag, idperf)
 SELECT p.idpag, 2
 FROM pagina p
-WHERE p.idpag IN (1,4,7,9,11,13,14,17,18,19,20)
+WHERE p.idpag IN (1,4,7,9,11,13,14,15,17,18,19,20)
   AND NOT EXISTS (
     SELECT 1 FROM pagxper px WHERE px.idpag = p.idpag AND px.idperf = 2
 );
@@ -63,7 +70,7 @@ WHERE p.idpag IN (1,4,7,9,11,13,14,17,18,19,20)
 INSERT INTO pagxper (idpag, idperf)
 SELECT p.idpag, 1
 FROM pagina p
-WHERE p.idpag IN (1,3,4,7,11,13,14,17,19)
+WHERE p.idpag IN (1,3,4,7,11,12,13,14,15,17,19)
   AND NOT EXISTS (
     SELECT 1 FROM pagxper px WHERE px.idpag = p.idpag AND px.idperf = 1
 );

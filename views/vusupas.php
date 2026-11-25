@@ -16,6 +16,28 @@
 <section class="pas-resumen" aria-label="Resumen de tu operación">
     <article class="card pas-stat">
         <span class="tile-icon"><i class="fa-solid fa-route" aria-hidden="true"></i></span>
+        <h2>Rutas</h2>
+        <p>Consulta rutas, distancias, horarios y ubicaciones disponibles.</p>
+        <span class="tile-action">Explorar rutas <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=21" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-message" aria-hidden="true"></i></span>
+        <h2>PQRSF</h2>
+        <p>Radica una petición, queja, reclamo, sugerencia o felicitación.</p>
+        <span class="tile-action">Radicar PQRSF <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=7&amp;iduser=<?= (int) ($_SESSION['iduser'] ?? 0) ?>" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-address-card" aria-hidden="true"></i></span>
+        <h2>Mis datos</h2>
+        <p>Actualiza la información de contacto asociada a tu cuenta.</p>
+        <span class="tile-action">Editar información <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
+    <a href="home.php?pg=19" class="card dashboard-card">
+        <span class="tile-icon"><i class="fa-solid fa-receipt" aria-hidden="true"></i></span>
+        <h2>Facturación</h2>
+        <p>Consulta los documentos y movimientos registrados en el sistema.</p>
+        <span class="tile-action">Ver facturación <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+    </a>
         <span class="eyebrow">Tus rutas</span>
         <strong class="pas-stat-val"><?= (int) ($resumenPas['rutas'] ?? 0) ?></strong>
         <span class="pas-stat-nota">Rutas registradas a tu nombre</span>
