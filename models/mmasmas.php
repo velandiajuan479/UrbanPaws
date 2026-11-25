@@ -8,6 +8,7 @@ class mCofmas
     private $sexmasc;
     private $fotovacu;
     private $fotomasc;
+    private $idraz;
     private $razamasc;
     private $sizemasc;
     private $descmasc;
@@ -20,6 +21,7 @@ class mCofmas
     function getSexmasc(){ return $this->sexmasc; }
     function getFotovacu(){ return $this->fotovacu; }
     function getFotomasc(){ return $this->fotomasc; }
+    function getIdraz(){ return $this->idraz; }
     function getRazamasc(){ return $this->razamasc; }
     function getSizemasc(){ return $this->sizemasc; }
     function getDescmasc(){ return $this->descmasc; }
@@ -32,6 +34,7 @@ class mCofmas
     function setSexmasc($sexmasc){ return $this->sexmasc = $sexmasc; }
     function setFotovacu($fotovacu){ return $this->fotovacu = $fotovacu; }
     function setFotomasc($fotomasc){ return $this->fotomasc = $fotomasc; }
+    function setIdraz($idraz){ return $this->idraz = $idraz; }
     function setRazamasc($razamasc){ return $this->razamasc = $razamasc; }
     function setSizemasc($sizemasc){ return $this->sizemasc = $sizemasc; }
     function setDescmasc($descmasc){ return $this->descmasc = $descmasc; }
@@ -42,10 +45,12 @@ class mCofmas
     public function getAll(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
+                            m.idraz, COALESCE(r.nomraz, m.razamasc) AS razamasc,
+                            m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                             v.codval AS estado,
                             CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
                     LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     ORDER BY m.idmasc ASC";
@@ -63,10 +68,12 @@ class mCofmas
     public function getAllByUser($iduser){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
+                            m.idraz, COALESCE(r.nomraz, m.razamasc) AS razamasc,
+                            m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                             v.codval AS estado,
                             CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
                     LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     WHERE m.iduser = :iduser
@@ -79,6 +86,22 @@ class mCofmas
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }catch(Exception $e){
             error_log("Error al consultar mascotas del usuario: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getRazas(){
+        try{
+            $sql = "SELECT idraz, nomraz
+                    FROM raza_mascota
+                    WHERE actraz = 1
+                    ORDER BY nomraz ASC";
+            $conexion = (new Conexion())->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            error_log("Error al consultar razas de mascotas: " . $e->getMessage());
             return [];
         }
     }
@@ -107,10 +130,12 @@ class mCofmas
     public function getOne(){
         try{
             $sql = "SELECT m.idmasc, m.nommasc, m.sexmasc, m.fotovacu, m.fotomasc,
-                            m.razamasc, m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
+                            m.idraz, COALESCE(r.nomraz, m.razamasc) AS razamasc,
+                            m.sizemasc, m.descmasc, m.enfermasc, m.iduser, m.actmasc,
                             v.codval AS estado,
                             CONCAT(u.prinom, ' ', u.priapel) AS nomdueno
                     FROM mascotas m
+                    LEFT JOIN raza_mascota r ON m.idraz = r.idraz
                     LEFT JOIN valor v ON m.actmasc = v.idval AND v.iddom = 1
                     LEFT JOIN usuario u ON m.iduser = u.iduser
                     WHERE m.idmasc = :idmasc";
@@ -129,8 +154,8 @@ class mCofmas
     // Método save — DEVUELVE el id de la mascota recién creada (lastInsertId)
     public function save(){
         try{
-            $sql = "INSERT INTO mascotas(nommasc, sexmasc, fotovacu, fotomasc, razamasc, sizemasc, descmasc, enfermasc, iduser)
-                    VALUES(:nommasc, :sexmasc, :fotovacu, :fotomasc, :razamasc, :sizemasc, :descmasc, :enfermasc, :iduser)";
+            $sql = "INSERT INTO mascotas(nommasc, sexmasc, fotovacu, fotomasc, idraz, razamasc, sizemasc, descmasc, enfermasc, iduser)
+                    VALUES(:nommasc, :sexmasc, :fotovacu, :fotomasc, :idraz, :razamasc, :sizemasc, :descmasc, :enfermasc, :iduser)";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -139,6 +164,7 @@ class mCofmas
             $sexmasc  = $this->getSexmasc();
             $fotovacu = $this->getFotovacu();
             $fotomasc = $this->getFotomasc();
+            $idraz    = $this->getIdraz();
             $razamasc = $this->getRazamasc();
             $sizemasc = $this->getSizemasc();
             $descmasc = $this->getDescmasc();
@@ -149,6 +175,7 @@ class mCofmas
             $result->bindParam(":sexmasc",  $sexmasc);
             $result->bindParam(":fotovacu", $fotovacu);
             $result->bindParam(":fotomasc", $fotomasc);
+            $result->bindParam(":idraz",    $idraz);
             $result->bindParam(":razamasc", $razamasc);
             $result->bindParam(":sizemasc", $sizemasc);
             $result->bindParam(":descmasc", $descmasc);
@@ -170,6 +197,7 @@ class mCofmas
                         sexmasc  = :sexmasc,
                         fotovacu = :fotovacu,
                         fotomasc = :fotomasc,
+                        idraz    = :idraz,
                         razamasc = :razamasc,
                         sizemasc = :sizemasc,
                         descmasc = :descmasc,
@@ -185,6 +213,7 @@ class mCofmas
             $sexmasc  = $this->getSexmasc();
             $fotovacu = $this->getFotovacu();
             $fotomasc = $this->getFotomasc();
+            $idraz    = $this->getIdraz();
             $razamasc = $this->getRazamasc();
             $sizemasc = $this->getSizemasc();
             $descmasc = $this->getDescmasc();
@@ -195,6 +224,7 @@ class mCofmas
             $result->bindParam(":sexmasc",  $sexmasc);
             $result->bindParam(":fotovacu", $fotovacu);
             $result->bindParam(":fotomasc", $fotomasc);
+            $result->bindParam(":idraz",    $idraz);
             $result->bindParam(":razamasc", $razamasc);
             $result->bindParam(":sizemasc", $sizemasc);
             $result->bindParam(":descmasc", $descmasc);
